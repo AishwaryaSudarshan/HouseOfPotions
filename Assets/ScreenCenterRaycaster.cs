@@ -61,11 +61,9 @@ public class ScreenCenterRaycaster : MonoBehaviour
             {
                 currentTarget = hit.collider.gameObject;
             }
-            
             if (hit.collider.CompareTag("Reached"))
             {
                 GameObject temp = hit.collider.gameObject;
-                // SetOutline(currentTarget, true);
                 if (Input.GetButtonDown(xButton))
                 {
                     temp.SetActive(false);
