@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/GreenMossGames.meta
+guid: 84b7a4cba6ebc464ca08fdddb6962649
+folderAsset: yes
+========
 guid: 2847f3d0105ec411b80896a0089ec115
+>>>>>>>> fcdfc3f3aac7965971b69930fa72e77de0861634:Assets/Scenes/Aishwarya.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
