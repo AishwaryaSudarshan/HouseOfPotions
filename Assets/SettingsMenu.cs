@@ -14,7 +14,7 @@ public class SettingsMenu : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public int maxInventoryItems = 3;
 
-    public string openMenuButton = "js3";
+    public string openMenuButton = "js4";
     public string selectButton = "js10";
     public string navigateAxis = "Vertical";
     public string inventoryAxis = "Horizontal";
