@@ -6,6 +6,8 @@ TagManager:
   tags:
   - InteractableObject
   - Reached
+  - floorTag
+  - SettingsInteractable
   layers:
   - Default
   - TransparentFX
