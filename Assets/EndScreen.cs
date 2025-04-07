@@ -1,50 +1,42 @@
 using UnityEngine;
 
-public class EndScreenManager : MonoBehaviour
+public class EndGameManager : MonoBehaviour
 {
-    public GameObject endScreenPanel;    // Reference to the End Screen Panel
-    public GameObject characterObject;   // Reference to the Character Object (can be used to disable movement)
-    private SimpleTimer simpleTimer;     // Reference to the Timer script
+    public GameObject characterObject;         // Drag the Character object here
+    public GameObject endPanel;                // Drag the disabled Panel here
+    private SimpleTimer simpleTimer;           // We'll access the timer from character
+    private bool hasEnded = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Initially, the end screen panel should be disabled
-        endScreenPanel.SetActive(false);
+        if (characterObject != null)
+        {
+            simpleTimer = characterObject.GetComponent<SimpleTimer>();
+        }
 
-        // Get the SimpleTimer script attached to the Character object
-        simpleTimer = characterObject.GetComponent<SimpleTimer>();
+        if (endPanel != null)
+        {
+            endPanel.SetActive(false);  // make sure it's off at start
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Check if the timer has ended (targetTime is 0)
-        if (simpleTimer.targetTime <= 0f && !endScreenPanel.activeSelf)
+        if (!hasEnded && simpleTimer != null && simpleTimer.targetTime <= 0f)
         {
-            // Show the end screen when the timer reaches 0
+            hasEnded = true;
             ShowEndScreen();
         }
     }
 
-    // Function to show the end screen
     void ShowEndScreen()
     {
-        // Disable the character's movement or other gameplay functionality
-        if (characterObject != null)
+        if (endPanel != null)
         {
-            // Assuming the character movement is a script attached to the character, disable it
-            var characterMovementScript = characterObject.GetComponent<CharacterMovement>();
-            if (characterMovementScript != null)
-            {
-                characterMovementScript.enabled = false; // Disables movement
-            }
+            endPanel.SetActive(true);
         }
 
-        // Enable the end screen panel
-        endScreenPanel.SetActive(true);
-
-        // Optionally, disable other UI elements or gameplay functionality here
-        // You can also add a blur effect here, but it's not necessary for now.
+        // Optional: stop time or add blur later
+        Time.timeScale = 0f;
     }
 }
