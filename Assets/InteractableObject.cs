@@ -7,20 +7,23 @@ public class InteractableObject : MonoBehaviour
     private Sprite inventoryIcon;
 
     private RaycastSelector raycastSelector;
-    private SettingsMenu settingsMenu;
+    private InventoryManager inventoryManager; // Changed from SettingsMenu to InventoryManager
 
     private void Start()
     {
-#if UNITY_STANDALONE_WIN
-        storeKey = "js1";
-#elif UNITY_ANDROID
-        storeKey = "js2";
-#else
-        storeKey = "js1"; // Default to js1 for other platforms
-#endif
+        #if UNITY_STANDALONE_OSX    
+            storeKey = "js13";
+        #elif UNITY_STANDALONE_WIN
+            storeKey = "js1";
+        #elif UNITY_ANDROID
+            storeKey = "js2";
+        #else
+            storeKey = "js1"; // Default to js1 for other platforms
+        #endif
 
         raycastSelector = Object.FindFirstObjectByType<RaycastSelector>();
-        settingsMenu = Object.FindFirstObjectByType<SettingsMenu>();
+        // Get the InventoryManager instance instead of SettingsMenu
+        inventoryManager = Object.FindFirstObjectByType<InventoryManager>();
     }
 
     private void Update()
@@ -39,7 +42,7 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        // Use the same ray origin calculation as before.
+        // Calculate the ray origin using the camera's position and orientation.
         Vector3 rayOrigin = mainCamera.transform.position +
                             (mainCamera.transform.forward * 0.3f) +
                             (mainCamera.transform.up * -0.2f);
@@ -50,27 +53,19 @@ public class InteractableObject : MonoBehaviour
             GameObject hitObject = hit.collider.gameObject;
             if (hitObject.CompareTag("InteractableObject"))
             {
-                if (settingsMenu != null)
+                if (inventoryManager != null)
                 {
-                    // Get sprite from this object or from the hit object
-                    Sprite spriteToUse = inventoryIcon;
+                    // CHANGE HERE: Get the InteractableObject component from the hit object
+                    InteractableObject hitInteractable = hitObject.GetComponent<InteractableObject>();
+                    
+                    // Use the hit object's icon, not this object's icon
+                    Sprite spriteToUse = hitInteractable != null ? hitInteractable.GetInventoryIcon() : null;
 
-                    // If we don't have a sprite, check if the hit object has its own InteractableObject
-                    if (spriteToUse == null && hitObject != gameObject)
-                    {
-                        InteractableObject hitInteractable = hitObject.GetComponent<InteractableObject>();
-                        if (hitInteractable != null)
-                        {
-                            // Get sprite from hit object's InteractableObject if available
-                            spriteToUse = hitInteractable.GetInventoryIcon();
-                        }
-                    }
-
-                    // Pass the sprite directly to AddToInventory
-                    bool stored = settingsMenu.AddToInventory(hitObject, spriteToUse);
+                    // Use the InventoryManager's AddToInventory method.
+                    bool stored = inventoryManager.AddToInventory(hitObject, spriteToUse);
                     if (stored)
                     {
-                        Debug.Log($"Stored {hitObject.name} in inventory");
+                        Debug.Log($"Stored {hitObject.name} in inventory with sprite: {(spriteToUse != null ? spriteToUse.name : "none")}");
                     }
                     else
                     {
@@ -79,13 +74,13 @@ public class InteractableObject : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("SettingsMenu not found.");
+                    Debug.LogWarning("InventoryManager not found.");
                 }
             }
         }
     }
 
-    // Add a getter for the inventory icon
+    // Getter for the inventory icon.
     public Sprite GetInventoryIcon()
     {
         return inventoryIcon;
