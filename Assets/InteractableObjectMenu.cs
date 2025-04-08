@@ -23,6 +23,23 @@ public class InteractableObjectMenu : MonoBehaviour
 
     private void Start()
     {
+        #if UNITY_STANDALONE_OSX
+            activateMenuButton = "js13";
+            grabButton_Bluetooth = "js13";
+            dropButton_Bluetooth = "js11";
+        #elif UNITY_STANDALONE_WIN
+            activateMenuButton = "js0";
+            grabButton_Bluetooth = "js10";
+            dropButton_Bluetooth = "js8";
+        #elif UNITY_ANDROID
+            activateMenuButton = "js0";
+            grabButton_Bluetooth = "js2";
+            dropButton_Bluetooth = "js10";
+        #else
+            activateMenuButton = "js0"; // Default to js0 for other platforms
+            grabButton_Bluetooth = "js2";
+            dropButton_Bluetooth = "js10";
+        #endif
         if (objectMenuCanvas != null)
         {
             objectMenuCanvas.gameObject.SetActive(false);

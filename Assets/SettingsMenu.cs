@@ -14,11 +14,11 @@ public class SettingsMenu : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public int maxInventoryItems = 3;
 
-    public string openMenuButton = "js4";
-    public string selectButton = "js10";
-    public string navigateAxis = "Vertical";
-    public string inventoryAxis = "Horizontal";
-    public string dropButton = "js8";
+    public string openMenuButton = "js4"; //ok
+    public string selectButton = "js10"; //b
+    public string navigateAxis = "Vertical"; 
+    public string inventoryAxis = "Horizontal"; 
+    public string dropButton = "js8"; //a
 
     public RaycastSelector raycastSelector;
     public CharacterMovement characterMovement;
@@ -40,6 +40,23 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
+        #if UNITY_STANDALONE_OSX
+            openMenuButton = "js7";
+            selectButton = "js10";
+            dropButton = "js11";
+        #elif UNITY_STANDALONE_WIN
+            openMenuButton = "js4";
+            selectButton = "js10";
+            dropButton = "js8";
+        #elif UNITY_ANDROID
+            openMenuButton = "js0"; 
+            selectButton = "js5";
+            dropButton = "js10";
+        #else
+            openMenuButton = "js0"; 
+            selectButton = "js5";
+            dropButton = "js10";
+        #endif
         if (settingsMenuCanvas != null)
         {
             settingsMenuCanvas.gameObject.SetActive(false);
