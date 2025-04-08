@@ -45,7 +45,7 @@ public class RaycastSelector : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, rayLength))
         {
             lineRenderer.SetPosition(1, hit.point);
-            if (hit.collider.CompareTag("InteractableObject"))
+            if (hit.collider.CompareTag("InteractableObject") || hit.collider.CompareTag("Pot"))
             {
                 GameObject targetObject = hit.collider.gameObject;
                 if (currentHighlightedObject != targetObject)
