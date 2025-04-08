@@ -16,7 +16,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -70,7 +69,7 @@ public class ObjectController : MonoBehaviour
         float angle = Random.Range(-Mathf.PI, Mathf.PI);
         float distance = Random.Range(_minObjectDistance, _maxObjectDistance);
         float height = Random.Range(_minObjectHeight, _maxObjectHeight);
-        Vector3 newPos = new Vector3(Mathf.Cos(angle) * distance, height,
+        Vector3 newPos = new(Mathf.Cos(angle) * distance, height,
                                      Mathf.Sin(angle) * distance);
 
         // Moves the parent to the new position (siblings relative distance from their parent is 0).

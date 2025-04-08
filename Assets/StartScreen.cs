@@ -7,7 +7,7 @@ public class StartScreenManager : MonoBehaviour
     public Button startButton;      // Reference to the Start Button
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Show the start screen initially
         startScreen.SetActive(true);
@@ -17,15 +17,14 @@ public class StartScreenManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Check for raycast click directly using mouse button
         if (Input.GetMouseButtonDown(0)) // Left mouse button click
         {
-            RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Cast ray from mouse position
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 // Check if raycast hit the Start Button
                 if (hit.transform.gameObject == startButton.gameObject)
@@ -37,7 +36,7 @@ public class StartScreenManager : MonoBehaviour
     }
 
     // Handle Start Button Click
-    void OnStartButtonClicked()
+    private void OnStartButtonClicked()
     {
         // Disable the start screen panel
         startScreen.SetActive(false);

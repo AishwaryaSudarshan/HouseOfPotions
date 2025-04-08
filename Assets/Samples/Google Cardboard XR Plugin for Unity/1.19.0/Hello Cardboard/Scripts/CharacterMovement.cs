@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    CharacterController charCntrl;
+    private CharacterController charCntrl;
     [Tooltip("The speed at which the character will move.")]
     public float speed = 5f;
     [Tooltip("The camera representing where the character is looking.")]
@@ -13,13 +11,13 @@ public class CharacterMovement : MonoBehaviour
     public bool joyStickMode;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         charCntrl = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Get horizontal and Vertical movements
         float horComp = Input.GetAxis("Horizontal");
@@ -45,9 +43,9 @@ public class CharacterMovement : MonoBehaviour
         moveVect += forwardVect * vertComp;
 
         moveVect *= speed;
-     
 
-        charCntrl.SimpleMove(moveVect);
+
+        _ = charCntrl.SimpleMove(moveVect);
 
 
     }
