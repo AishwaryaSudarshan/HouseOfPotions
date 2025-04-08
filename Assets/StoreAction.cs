@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class StoreAction : MonoBehaviour 
+public class StoreAction : MonoBehaviour
 {
-    public List<GameObject> objectsToStore = new List<GameObject>();
+    public List<GameObject> objectsToStore = new();
     public GameObject objectToStore;
     public int inventoryCapacity = 3;
 
@@ -13,46 +13,48 @@ public class StoreAction : MonoBehaviour
     public GameObject inventoryPanel;
 
     private string bButton;
-    void Start()
+    private void Start()
     {
-        #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
             bButton = "js10";
-        #elif UNITY_ANDROID
+#elif UNITY_ANDROID
             bButton = "js5";
-        #else
-            bButton = "js10"; 
-        #endif
+#else
+        bButton = "js10";
+#endif
     }
-    void Update() 
+    private void Update()
     {
-        if (Input.GetButtonDown(bButton)) 
+        if (Input.GetButtonDown(bButton))
         {
             Store();
         }
     }
 
-    public void Store() 
+    public void Store()
     {
-        if (objectToStore == null) 
+        if (objectToStore == null)
         {
             return;
         }
 
         CloseObjectMenu(objectToStore);
 
-        if (objectsToStore.Count >= inventoryCapacity) 
+        if (objectsToStore.Count >= inventoryCapacity)
         {
             Debug.Log("Inventory is Full!");
             objectToStore = null;
 
             if (inventoryFullCoroutine != null)
+            {
                 StopCoroutine(inventoryFullCoroutine);
+            }
 
             if (inventoryPanel == null || !inventoryPanel.activeSelf)
             {
                 inventoryFullCoroutine = StartCoroutine(DisplayInventoryFullMessage());
             }
-            return; 
+            return;
         }
 
         objectsToStore.Add(objectToStore);
@@ -60,27 +62,27 @@ public class StoreAction : MonoBehaviour
         objectToStore = null;
     }
 
-    public void Disable(GameObject obj) 
+    public void Disable(GameObject obj)
     {
-        if (obj == null) 
+        if (obj == null)
         {
             return;
         }
         obj.SetActive(false);
     }
 
-    private void CloseObjectMenu(GameObject obj) 
+    private void CloseObjectMenu(GameObject obj)
     {
-        if (obj != null && obj.transform.childCount > 0) 
+        if (obj != null && obj.transform.childCount > 0)
         {
             GameObject menu = obj.transform.GetChild(0).gameObject;
-            if (menu.activeSelf) 
+            if (menu.activeSelf)
             {
                 menu.SetActive(false);
             }
         }
     }
-    private IEnumerator DisplayInventoryFullMessage() 
+    private IEnumerator DisplayInventoryFullMessage()
     {
         GameObject inventoryFullMessage = transform.GetChild(0).gameObject;
 

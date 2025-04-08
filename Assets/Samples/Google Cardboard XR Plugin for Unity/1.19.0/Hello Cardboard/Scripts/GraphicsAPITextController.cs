@@ -16,8 +16,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -29,7 +27,8 @@ public class GraphicsAPITextController : MonoBehaviour
     /// <summary>
     /// Start is called before the first frame update.
     /// </summary>
-    void Start()
+    [System.Obsolete]
+    private void Start()
     {
         TextMesh tm = gameObject.GetComponent(typeof(TextMesh)) as TextMesh;
         switch (SystemInfo.graphicsDeviceType)

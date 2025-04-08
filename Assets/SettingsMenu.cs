@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
+    private Dictionary<GameObject, Sprite> inventorySprites = new Dictionary<GameObject, Sprite>();
+
     public Canvas settingsMenuCanvas;
     public Button resumeButton;
     public Button inventoryButton;
@@ -16,8 +17,8 @@ public class SettingsMenu : MonoBehaviour
 
     public string openMenuButton = "js4"; //ok
     public string selectButton = "js10"; //b
-    public string navigateAxis = "Vertical"; 
-    public string inventoryAxis = "Horizontal"; 
+    public string navigateAxis = "Vertical";
+    public string inventoryAxis = "Horizontal";
     public string dropButton = "js8"; //a
 
     public RaycastSelector raycastSelector;
@@ -36,27 +37,25 @@ public class SettingsMenu : MonoBehaviour
     private readonly float navigationDelay = 0.3f;
     private float inventoryNextNavigationTime = 0f;
 
-    public TextMeshProUGUI inventoryFullMessage;
-
     private void Start()
     {
-        #if UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE_OSX
             openMenuButton = "js7";
             selectButton = "js10";
             dropButton = "js11";
-        #elif UNITY_STANDALONE_WIN
-            openMenuButton = "js4";
-            selectButton = "js10";
-            dropButton = "js8";
-        #elif UNITY_ANDROID
+#elif UNITY_STANDALONE_WIN
+        openMenuButton = "js4";
+        selectButton = "js10";
+        dropButton = "js8";
+#elif UNITY_ANDROID
             openMenuButton = "js0"; 
             selectButton = "js5";
             dropButton = "js10";
-        #else
+#else
             openMenuButton = "js0"; 
             selectButton = "js5";
             dropButton = "js10";
-        #endif
+#endif
         if (settingsMenuCanvas != null)
         {
             settingsMenuCanvas.gameObject.SetActive(false);
@@ -112,15 +111,6 @@ public class SettingsMenu : MonoBehaviour
         {
             DropObject();
         }
-
-        if (inventoryFullMessage != null && inventoryFullMessage.gameObject.activeSelf)
-        {
-            Camera mainCam = Camera.main;
-            if (mainCam != null)
-            {
-                inventoryFullMessage.transform.position = mainCam.transform.position + (mainCam.transform.forward * 3f);
-            }
-        }
     }
 
     private void HandleMenuNavigation()
@@ -169,9 +159,11 @@ public class SettingsMenu : MonoBehaviour
         }
 
         float horizontalInput = Input.GetAxisRaw(inventoryAxis);
+        float verticalInput = Input.GetAxisRaw(navigateAxis); // Use your existing navigation axis
 
         if (Time.time >= inventoryNextNavigationTime)
         {
+            // Horizontal navigation
             if (horizontalInput > 0.5f)
             {
                 currentSelectedIndex = (currentSelectedIndex - 1 + inventoryUIItems.Count) % inventoryUIItems.Count;
@@ -185,12 +177,37 @@ public class SettingsMenu : MonoBehaviour
                 HighlightInventoryItem();
             }
 
+            // Vertical navigation (move up/down by 7 items)
+            if (verticalInput > 0.5f)
+            {
+                // Move up a row (subtract 7 if possible)
+                int newIndex = currentSelectedIndex - 7;
+                if (newIndex >= 0)
+                {
+                    currentSelectedIndex = newIndex;
+                    inventoryNextNavigationTime = Time.time + navigationDelay;
+                    HighlightInventoryItem();
+                }
+            }
+            else if (verticalInput < -0.5f)
+            {
+                // Move down a row (add 7 if possible)
+                int newIndex = currentSelectedIndex + 7;
+                if (newIndex < inventoryUIItems.Count)
+                {
+                    currentSelectedIndex = newIndex;
+                    inventoryNextNavigationTime = Time.time + navigationDelay;
+                    HighlightInventoryItem();
+                }
+            }
+
             if (Input.GetButtonDown(selectButton))
             {
                 GrabObjectFromInventory(currentSelectedIndex);
             }
         }
     }
+
 
     private void HighlightInventoryItem()
     {
@@ -219,50 +236,38 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-private void OpenSettingsMenu()
-{
-    menuActive = true;
-
-    if (raycastSelector != null && raycastSelector.lineRenderer != null)
+    private void OpenSettingsMenu()
     {
-        raycastSelector.lineRenderer.enabled = false;
-        raycastSelector.enabled = false;
-    }
+        menuActive = true;
 
-    InteractableObjectMenu[] objectMenus = Object.FindObjectsByType<InteractableObjectMenu>(FindObjectsSortMode.None);
-    foreach (InteractableObjectMenu menu in objectMenus)
-    {
-        if (menu != null && menu.isMenuOpen)
+        if (raycastSelector != null && raycastSelector.lineRenderer != null)
         {
-            menu.CloseMenu();
+            raycastSelector.lineRenderer.enabled = false;
+            raycastSelector.enabled = false;
         }
-    }
 
-    if (characterMovement != null)
-    {
-        characterMovement.enabled = false;
-    }
-
-    if (settingsMenuCanvas != null)
-    {
-        settingsMenuCanvas.gameObject.SetActive(true);
-
-        if (settingsMenuCanvas.renderMode == RenderMode.WorldSpace)
+        if (characterMovement != null)
         {
-            Camera mainCam = Camera.main;
-            // Position menu directly in front of the camera
-            settingsMenuCanvas.transform.position = mainCam.transform.position + (mainCam.transform.forward * 2f);
-            settingsMenuCanvas.transform.rotation = mainCam.transform.rotation;
-            Debug.Log("Settings menu location: " + settingsMenuCanvas.transform.position);
+            characterMovement.enabled = false;
         }
+
+        if (settingsMenuCanvas != null)
+        {
+            settingsMenuCanvas.gameObject.SetActive(true);
+
+            if (settingsMenuCanvas.renderMode == RenderMode.WorldSpace)
+            {
+                Camera mainCam = Camera.main;
+                // Position menu directly in front of the camera
+                settingsMenuCanvas.transform.position = mainCam.transform.position + (mainCam.transform.forward * 2f);
+                settingsMenuCanvas.transform.rotation = mainCam.transform.rotation;
+                Debug.Log("Settings menu location: " + settingsMenuCanvas.transform.position);
+            }
+        }
+
+        currentSelectedIndex = 0;
+        HighlightCurrentButton();
     }
-
-    currentSelectedIndex = 0;
-    HighlightCurrentButton();
-}
-
-
-
     private void CloseSettingsMenu()
     {
         menuActive = false;
@@ -331,17 +336,25 @@ private void OpenSettingsMenu()
         }
         inventoryUIItems.Clear();
 
-        HorizontalLayoutGroup layoutGroup = inventoryItemsContainer.GetComponent<HorizontalLayoutGroup>();
-        if (layoutGroup == null)
+        GridLayoutGroup existingGrid = inventoryItemsContainer.GetComponent<GridLayoutGroup>();
+        if (existingGrid != null)
         {
-            layoutGroup = inventoryItemsContainer.gameObject.AddComponent<HorizontalLayoutGroup>();
-            layoutGroup.childAlignment = TextAnchor.MiddleCenter;
-            layoutGroup.spacing = 15f;
-            layoutGroup.padding = new RectOffset(10, 10, 10, 10);
-            layoutGroup.childControlHeight = true;
-            layoutGroup.childControlWidth = true;
-            layoutGroup.childForceExpandHeight = false;
-            layoutGroup.childForceExpandWidth = false;
+            DestroyImmediate(existingGrid);
+        }
+
+        GridLayoutGroup gridLayout = inventoryItemsContainer.gameObject.AddComponent<GridLayoutGroup>();
+        gridLayout.cellSize = new Vector2(80, 80); // Size of each item
+        gridLayout.spacing = new Vector2(20, 15); // Spacing between items (horizontal, vertical)
+        gridLayout.startCorner = GridLayoutGroup.Corner.UpperLeft;
+        gridLayout.startAxis = GridLayoutGroup.Axis.Horizontal;
+        gridLayout.childAlignment = TextAnchor.MiddleCenter;
+        gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        gridLayout.constraintCount = 7;
+
+        RectTransform containerRect = inventoryItemsContainer.GetComponent<RectTransform>();
+        if (containerRect != null)
+        {
+            containerRect.sizeDelta = new Vector2(750, 250);
         }
 
         for (int i = 0; i < inventoryObjects.Count; i++)
@@ -352,16 +365,15 @@ private void OpenSettingsMenu()
             if (rt != null)
             {
                 rt.localScale = Vector3.one;
-                rt.sizeDelta = new Vector2(80, 80);
             }
 
             Image image = itemUI.GetComponent<Image>();
             if (image != null)
             {
-                InventoryItem invItem = inventoryObjects[i].GetComponent<InventoryItem>();
-                if (invItem != null && invItem.inventorySprite != null)
+                // Use the dictionary instead of InventoryItem component
+                if (inventorySprites.TryGetValue(inventoryObjects[i], out Sprite sprite) && sprite != null)
                 {
-                    image.sprite = invItem.inventorySprite;
+                    image.sprite = sprite;
                     image.color = Color.white;
                 }
                 else
@@ -379,6 +391,7 @@ private void OpenSettingsMenu()
         currentSelectedIndex = 0;
         HighlightInventoryItem();
     }
+
 
 
     private void GrabObjectFromInventory(int index)
@@ -416,7 +429,6 @@ private void OpenSettingsMenu()
         }
     }
 
-
     private void DropObject()
     {
         if (currentlyGrabbedObject == null)
@@ -437,20 +449,10 @@ private void OpenSettingsMenu()
             characterMovement.enabled = true;
         }
     }
-
-    public bool AddToInventory(GameObject obj)
+    public bool AddToInventory(GameObject obj, Sprite icon = null)
     {
         if (inventoryObjects.Count >= maxInventoryItems)
         {
-            InteractableObjectMenu[] objectMenus = Object.FindObjectsByType<InteractableObjectMenu>(FindObjectsSortMode.None);
-            foreach (InteractableObjectMenu menu in objectMenus)
-            {
-                if (menu != null && menu.isMenuOpen)
-                {
-                    menu.CloseMenu();
-                }
-            }
-
             if (characterMovement != null)
             {
                 characterMovement.enabled = true;
@@ -462,14 +464,13 @@ private void OpenSettingsMenu()
                 raycastSelector.lineRenderer.enabled = true;
             }
 
-            if (inventoryFullMessage != null)
-            {
-                inventoryFullMessage.gameObject.SetActive(true);
-                inventoryFullMessage.text = "Inventory is full";
-                Invoke("HideInventoryFullMessage", 2f);
-            }
-
             return false;
+        }
+
+        // Store the sprite in the dictionary if provided
+        if (icon != null)
+        {
+            inventorySprites[obj] = icon;
         }
 
         inventoryObjects.Add(obj);
@@ -477,19 +478,6 @@ private void OpenSettingsMenu()
         Debug.Log($"Added {obj.name} to inventory. Total items: {inventoryObjects.Count}");
         return true;
     }
-
-    private void HideInventoryFullMessage()
-    {
-        if (inventoryFullMessage != null)
-        {
-            inventoryFullMessage.gameObject.SetActive(false);
-        }
-    }
-}
-
-public class InventoryItem : MonoBehaviour
-{
-    public Sprite inventorySprite;
 }
 
 

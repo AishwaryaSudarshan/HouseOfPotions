@@ -33,8 +33,8 @@ public class RaycastSelector : MonoBehaviour
     {
         // Adjust ray origin to be in front and below the camera
         Vector3 rayOrigin = mainCamera.transform.position +
-                            mainCamera.transform.forward * 0.3f + // Move forward
-                            mainCamera.transform.up * -0.2f;      // Move down
+                            (mainCamera.transform.forward * 0.3f) + // Move forward
+                            (mainCamera.transform.up * -0.2f);      // Move down
 
         Ray ray = new(rayOrigin, mainCamera.transform.forward);
         lineRenderer.SetPosition(0, rayOrigin);
