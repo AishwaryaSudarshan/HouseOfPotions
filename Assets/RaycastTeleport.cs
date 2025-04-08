@@ -8,13 +8,15 @@ public class RaycastTeleport : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_STANDALONE_WIN
-        teleportButton = "js0";
-#elif UNITY_ANDROID
-        teleportButton = "js3";
-#else
-                      teleportButton = "js0"; // Default to js0 for other platforms
-#endif
+        #if UNITY_STANDALONE_OSX
+            teleportButton = "js5";
+        #elif UNITY_STANDALONE_WIN
+            teleportButton = "js0";
+        #elif UNITY_ANDROID
+            teleportButton = "js3";
+        #else
+            teleportButton = "js0"; // Default to js0 for other platforms
+        #endif
 
         if (raycaster == null)
         {

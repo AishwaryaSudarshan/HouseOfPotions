@@ -14525,7 +14525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4505ceab730f542c4a674b717117199e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.33
+      value: 13.11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4505ceab730f542c4a674b717117199e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14533,7 +14533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4505ceab730f542c4a674b717117199e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.93
+      value: 1.86
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4505ceab730f542c4a674b717117199e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -33745,7 +33745,7 @@ MonoBehaviour:
   inventoryItemsContainer: {fileID: 1035341682}
   inventoryItemPrefab: {fileID: 1296471998}
   maxInventoryItems: 6
-  openMenuButton: js4
+  openMenuButton: js7
   selectButton: js10
   navigateAxis: Vertical
   inventoryAxis: Horizontal
@@ -37242,7 +37242,7 @@ RectTransform:
   m_GameObject: {fileID: 1304681462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -363.78}
-  m_LocalScale: {x: 0.66382146, y: 0.9550949, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 987701884}
