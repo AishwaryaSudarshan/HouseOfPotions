@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 929bb4a56e1b246debdc8c52a4998850
+=======
+guid: b6d60483c68f7534895ec4c88d8b82df
+>>>>>>> d73d707 (Add meta files for Medieval props and Pack Free 3)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
