@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MapBlueToothKey : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class MapBlueToothKey : MonoBehaviour
     public GameObject jsKeyText;
 
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
         for (int i = 0; i < js_buttons.Length; i++)
         {
@@ -17,7 +19,7 @@ public class MapBlueToothKey : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
+    void Update()
     {
 
         if (Input.anyKey)
@@ -32,7 +34,7 @@ public class MapBlueToothKey : MonoBehaviour
                     tm.text += string.Format("joystick button {0}\n", js_buttons[i]); ;
                 }
 
-
+                
             }
             if (Input.GetButton("Submit"))
             {
@@ -48,7 +50,7 @@ public class MapBlueToothKey : MonoBehaviour
                 tm.text += string.Format("Jump \n"); ;
             }
 
-            if (Input.GetAxis("Joystick Axis 1") != 0)
+            if(Input.GetAxis("Joystick Axis 1") != 0)
             {
                 tm.text += string.Format("Joystick Axis 1: {0}\n", Input.GetAxis("Joystick Axis 1")); ;
             }
