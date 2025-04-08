@@ -3,49 +3,49 @@ using UnityEngine;
 
 public class XRCardboardReticle : MonoBehaviour
 {
-    readonly int InnerRingHash = Shader.PropertyToID("_InnerRing");
-    readonly int OuterRingHash = Shader.PropertyToID("_OuterRing");
-    readonly int DistanceHash = Shader.PropertyToID("_Distance");
+    private readonly int InnerRingHash = Shader.PropertyToID("_InnerRing");
+    private readonly int OuterRingHash = Shader.PropertyToID("_OuterRing");
+    private readonly int DistanceHash = Shader.PropertyToID("_Distance");
 
     [SerializeField]
-    MeshRenderer childRenderer = default;
+    private MeshRenderer childRenderer = default;
     [SerializeField, Range(.5f, 2)]
-    float growthAngle = 1.5f;
+    private float growthAngle = 1.5f;
     [SerializeField, Range(1, 16)]
-    float growthSpeed = 8;
+    private float growthSpeed = 8;
     [SerializeField, Range(0, .5f)]
-    float minInnerAngle = 0;
+    private float minInnerAngle = 0;
     [SerializeField, Range(.5f, 1)]
-    float minOuterAngle = .5f;
+    private float minOuterAngle = .5f;
     [SerializeField, Range(1, 20)]
-    float distance = 2;
+    private float distance = 2;
     [SerializeField]
-    bool fillOnHover;
+    private bool fillOnHover;
     [SerializeField, Range(.5f, 3)]
-    float clickFeedbackDuration = 1f;
+    private float clickFeedbackDuration = 1f;
     [SerializeField, Range(8, 32)]
-    int reticleSegments = 20;
+    private int reticleSegments = 20;
     [SerializeField]
-    Color defaultColor = Color.white;
+    private Color defaultColor = Color.white;
     [SerializeField]
-    Gradient gazeGradient = default;
+    private Gradient gazeGradient = default;
     [SerializeField]
-    Gradient postGradient = default;
+    private Gradient postGradient = default;
     [SerializeField]
-    Color backgroundColor = Color.white;
+    private Color backgroundColor = Color.white;
 
-    MeshRenderer meshRenderer;
-    Coroutine hoverRoutine;
-    Coroutine clickRoutine;
-    Material reticleMaterial;
-    Material childMaterial;
-    Mesh childMesh;
-    float innerDiameter;
-    float outerDiameter;
-    float innerAngle;
-    float outerAngle;
+    private MeshRenderer meshRenderer;
+    private Coroutine hoverRoutine;
+    private Coroutine clickRoutine;
+    private Material reticleMaterial;
+    private Material childMaterial;
+    private Mesh childMesh;
+    private float innerDiameter;
+    private float outerDiameter;
+    private float innerAngle;
+    private float outerAngle;
 
-    void Awake()
+    private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.sortingOrder = childRenderer.sortingOrder = 32767;
@@ -60,12 +60,18 @@ public class XRCardboardReticle : MonoBehaviour
         UpdateReticleDisplay();
     }
 
-    void Update() => UpdateReticleDisplay();
+    private void Update()
+    {
+        UpdateReticleDisplay();
+    }
 
     public void OnStartHover(float gazeTime)
     {
         if (clickRoutine != null)
+        {
             StopCoroutine(clickRoutine);
+        }
+
         hoverRoutine = Hover(gazeTime);
         innerAngle = minInnerAngle + growthAngle;
         outerAngle = minOuterAngle + growthAngle;
@@ -83,18 +89,21 @@ public class XRCardboardReticle : MonoBehaviour
         clickRoutine = ClickFeedback();
     }
 
-    void StopHover()
+    private void StopHover()
     {
         if (hoverRoutine != null)
+        {
             StopCoroutine(hoverRoutine);
+        }
+
         childRenderer.enabled = false;
         innerAngle = minInnerAngle;
         outerAngle = minOuterAngle;
     }
 
-    void UpdateReticleDisplay()
+    private void UpdateReticleDisplay()
     {
-        var ratio = Time.unscaledDeltaTime * growthSpeed;
+        float ratio = Time.unscaledDeltaTime * growthSpeed;
         innerDiameter = Mathf.Lerp(innerDiameter, 2f * Mathf.Tan(Mathf.Deg2Rad * innerAngle * .5f), ratio);
         outerDiameter = Mathf.Lerp(outerDiameter, 2f * Mathf.Tan(Mathf.Deg2Rad * outerAngle * .5f), ratio);
 
@@ -102,16 +111,16 @@ public class XRCardboardReticle : MonoBehaviour
         reticleMaterial.SetFloat(OuterRingHash, outerDiameter * distance);
     }
 
-    void CreateReticleVertices()
+    private void CreateReticleVertices()
     {
-        var mesh = new Mesh();
-        var filter = gameObject.AddComponent<MeshFilter>();
+        Mesh mesh = new();
+        MeshFilter filter = gameObject.AddComponent<MeshFilter>();
         filter.mesh = mesh;
 
         int segments_count = reticleSegments;
         int vertex_count = (segments_count + 1) * 2;
 
-        var vertices = new Vector3[vertex_count];
+        Vector3[] vertices = new Vector3[vertex_count];
 
         const float kTwoPi = Mathf.PI * 2.0f;
         int vi = 0;
@@ -156,34 +165,39 @@ public class XRCardboardReticle : MonoBehaviour
         childMesh.RecalculateBounds();
     }
 
-    void SetChildFillValue(float amount, Color targetColor)
+    private void SetChildFillValue(float amount, Color targetColor)
     {
         childMaterial.SetFloat(InnerRingHash, innerDiameter * distance);
         childMaterial.SetFloat(OuterRingHash, outerDiameter * distance);
         childMaterial.SetFloat(DistanceHash, distance);
-        var verticesLength = childMesh.vertices.Length;
-        var colors = new Color[verticesLength];
+        int verticesLength = childMesh.vertices.Length;
+        Color[] colors = new Color[verticesLength];
 
         int i;
         int max = Mathf.FloorToInt(verticesLength / 2f * amount) * 2;
-        var clearColor = Color.clear;
-        var tempColor = targetColor;
+        Color clearColor = Color.clear;
+        Color tempColor = targetColor;
         for (i = 0; i < max; i++)
+        {
             colors[i] = clearColor;
+        }
+
         if (max < verticesLength - 1)
         {
-            tempColor.a = 1f - (amount * verticesLength - max) / 2;
+            tempColor.a = 1f - (((amount * verticesLength) - max) / 2);
             colors[max] = tempColor;
             colors[max + 1] = tempColor;
         }
 
         for (i = max + 2; i < verticesLength; i++)
+        {
             colors[i] = targetColor;
+        }
 
         childMesh.colors = colors;
     }
 
-    Coroutine Hover(float gazeTime)
+    private Coroutine Hover(float gazeTime)
     {
         return StartCoroutine(hoverRoutine());
 
@@ -202,17 +216,18 @@ public class XRCardboardReticle : MonoBehaviour
                 if (fillOnHover)
                 {
                     SetChildFillValue(ratio, gazeGradient.Evaluate(ratio));
-                } else
+                }
+                else
                 {
                     SetChildFillValue(0f, gazeGradient.Evaluate(0f));
                 }
-                
+
                 yield return null;
             }
         }
     }
 
-    Coroutine ClickFeedback()
+    private Coroutine ClickFeedback()
     {
         return StartCoroutine(clickFeedbackRoutine());
         IEnumerator clickFeedbackRoutine()

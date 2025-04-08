@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine.Events;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 #if !UNITY_EDITOR
 using UnityEngine.XR;
 #endif
@@ -12,18 +12,18 @@ using UnityEngine.XR;
 public class XRCardboardInputModule : PointerInputModule
 {
     [SerializeField]
-    XRCardboardInputSettings settings = default;
+    private XRCardboardInputSettings settings = default;
     [SerializeField]
-    UnityFloatEvent onStartHover = default;
+    private UnityFloatEvent onStartHover = default;
     [SerializeField]
-    UnityEvent onEndHover = default;
+    private UnityEvent onEndHover = default;
     [SerializeField]
-    UnityEvent onClick = default;
+    private UnityEvent onClick = default;
 
-    PointerEventData pointerEventData;
-    GameObject currentTarget;
-    float currentTargetClickTime = float.MaxValue;
-    bool hovering;
+    private PointerEventData pointerEventData;
+    private GameObject currentTarget;
+    private float currentTargetClickTime = float.MaxValue;
+    private bool hovering;
 
     public override void Process()
     {
@@ -31,32 +31,33 @@ public class XRCardboardInputModule : PointerInputModule
         HandleSelection();
     }
 
-    void HandleLook()
+    private void HandleLook()
     {
-        if (pointerEventData == null)
-            pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData ??= new PointerEventData(eventSystem);
 #if UNITY_EDITOR
         pointerEventData.position = new Vector2(Screen.width / 2, Screen.height / 2);
 #else
         pointerEventData.position = new Vector2(XRSettings.eyeTextureWidth / 2, XRSettings.eyeTextureHeight / 2);
 #endif
         pointerEventData.delta = Vector2.zero;
-        var raycastResults = new List<RaycastResult>();
+        List<RaycastResult> raycastResults = new();
         eventSystem.RaycastAll(pointerEventData, raycastResults);
         raycastResults = raycastResults.OrderBy(r => !r.module.GetComponent<GraphicRaycaster>()).ToList();
         pointerEventData.pointerCurrentRaycast = FindFirstRaycast(raycastResults);
         ProcessMove(pointerEventData);
     }
 
-    void HandleSelection()
+    private void HandleSelection()
     {
         GameObject handler;
         try
         {
             handler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(pointerEventData.pointerEnter);
-            var selectable = handler.GetComponent<Selectable>();
+            Selectable selectable = handler.GetComponent<Selectable>();
             if (selectable && selectable.interactable == false)
+            {
                 throw new NullReferenceException();
+            }
         }
         catch (NullReferenceException)
         {
@@ -67,28 +68,34 @@ public class XRCardboardInputModule : PointerInputModule
 
         if (currentTarget != handler)
         {
-            var gazeTime = settings.GazeTime;
+            float gazeTime = settings.GazeTime;
             currentTarget = handler;
             currentTargetClickTime = Time.realtimeSinceStartup + gazeTime;
             if (hovering)
+            {
                 StopHovering();
+            }
+
             hovering = true;
             onStartHover?.Invoke(gazeTime);
         }
 
         if ((Time.realtimeSinceStartup > currentTargetClickTime && settings.ClickOnHover) || Input.GetButtonDown(settings.ClickInput))
         {
-            ExecuteEvents.ExecuteHierarchy(currentTarget, pointerEventData, ExecuteEvents.pointerClickHandler);
+            _ = ExecuteEvents.ExecuteHierarchy(currentTarget, pointerEventData, ExecuteEvents.pointerClickHandler);
             currentTargetClickTime = float.MaxValue;
             onClick?.Invoke();
             StopHovering();
         }
     }
 
-    void StopHovering()
+    private void StopHovering()
     {
         if (!hovering)
+        {
             return;
+        }
+
         hovering = false;
         onEndHover?.Invoke();
     }

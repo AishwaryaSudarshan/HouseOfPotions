@@ -10,31 +10,31 @@ using UnityEngine.SpatialTracking;
 public class XRCardboardController : MonoBehaviour
 {
     [SerializeField]
-    Transform cameraTransform = default;
+    private Transform cameraTransform = default;
     [SerializeField]
-    GameObject vrGroup = default;
+    private GameObject vrGroup = default;
     [SerializeField]
-    GameObject standardGroup = default;
+    private GameObject standardGroup = default;
     [SerializeField]
-    XRCardboardInputModule vrInputModule = default;
+    private XRCardboardInputModule vrInputModule = default;
     [SerializeField]
-    StandaloneInputModule standardInputModule = default;
+    private StandaloneInputModule standardInputModule = default;
     [SerializeField, Range(.05f, 2)]
-    float dragRate = .2f;
+    private float dragRate = .2f;
 
-    TrackedPoseDriver poseDriver;
-    Camera cam;
-    Quaternion initialRotation;
-    Quaternion attitude;
-    Vector2 dragDegrees;
-    float defaultFov;
+    private TrackedPoseDriver poseDriver;
+    private Camera cam;
+    private Quaternion initialRotation;
+    private Quaternion attitude;
+    private Vector2 dragDegrees;
+    private float defaultFov;
 
 #if UNITY_EDITOR
-    Vector3 lastMousePos;
-    bool vrActive;
+    private Vector3 lastMousePos;
+    private bool vrActive;
 #endif
 
-    void Awake()
+    private void Awake()
     {
         cam = cameraTransform.GetComponent<Camera>();
         poseDriver = cameraTransform.GetComponent<TrackedPoseDriver>();
@@ -42,7 +42,7 @@ public class XRCardboardController : MonoBehaviour
         initialRotation = cameraTransform.rotation;
     }
 
-    void Start()
+    private void Start()
     {
 #if UNITY_EDITOR
         SetObjects(vrActive);
@@ -51,7 +51,7 @@ public class XRCardboardController : MonoBehaviour
 #endif
     }
 
-    void Update()
+    private void Update()
     {
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -62,9 +62,13 @@ public class XRCardboardController : MonoBehaviour
 
 #if UNITY_EDITOR
         if (vrActive)
+        {
             SimulateVR();
+        }
         else
+        {
             SimulateDrag();
+        }
 #else
         if (UnityEngine.XR.XRSettings.enabled)
             return;
@@ -103,7 +107,10 @@ public class XRCardboardController : MonoBehaviour
         Screen.sleepTimeout = SleepTimeout.SystemSetting;
     }
 
-    public void EnableVR() => EnableVRCoroutine();
+    public void EnableVR()
+    {
+        _ = EnableVRCoroutine();
+    }
 
     public Coroutine EnableVRCoroutine()
     {
@@ -126,7 +133,7 @@ public class XRCardboardController : MonoBehaviour
         }
     }
 
-    void SetObjects(bool vrActive)
+    private void SetObjects(bool vrActive)
     {
         standardGroup.SetActive(!vrActive);
         vrGroup.SetActive(vrActive);
@@ -135,10 +142,12 @@ public class XRCardboardController : MonoBehaviour
         poseDriver.enabled = vrActive;
     }
 
-    void CheckDrag()
+    private void CheckDrag()
     {
         if (Input.touchCount <= 0)
+        {
             return;
+        }
 
         Touch touch = Input.GetTouch(0);
         dragDegrees.x += touch.deltaPosition.y * dragRate;
@@ -146,24 +155,24 @@ public class XRCardboardController : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    void SimulateVR()
+    private void SimulateVR()
     {
-        var mousePos = Input.mousePosition;
+        Vector3 mousePos = Input.mousePosition;
         if (Input.GetKey(KeyCode.LeftAlt))
         {
-            var delta = mousePos - lastMousePos;
+            Vector3 delta = mousePos - lastMousePos;
             dragDegrees.x -= delta.y * dragRate;
             dragDegrees.y -= delta.x * dragRate;
         }
         lastMousePos = mousePos;
     }
 
-    void SimulateDrag()
+    private void SimulateDrag()
     {
-        var mousePos = Input.mousePosition;
+        Vector3 mousePos = Input.mousePosition;
         if (Input.GetMouseButton(0))
         {
-            var delta = mousePos - lastMousePos;
+            Vector3 delta = mousePos - lastMousePos;
             dragDegrees.x += delta.y * dragRate;
             dragDegrees.y += delta.x * dragRate;
         }

@@ -19,7 +19,6 @@
 using System.Collections;
 using Google.XR.Cardboard;
 using UnityEngine;
-using UnityEngine.XR;
 using UnityEngine.XR.Management;
 
 /// <summary>
@@ -30,24 +29,12 @@ public class VrModeController : MonoBehaviour
     /// <summary>
     /// Gets a value indicating whether the screen has been touched this frame.
     /// </summary>
-    private bool _isScreenTouched
-    {
-        get
-        {
-            return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
-        }
-    }
+    private bool _isScreenTouched => Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
 
     /// <summary>
     /// Gets a value indicating whether the VR mode is enabled.
     /// </summary>
-    private bool _isVrModeEnabled
-    {
-        get
-        {
-            return XRGeneralSettings.Instance.Manager.isInitializationComplete;
-        }
-    }
+    private bool _isVrModeEnabled => XRGeneralSettings.Instance.Manager.isInitializationComplete;
 
     /// <summary>
     /// Start is called before the first frame update.
@@ -104,7 +91,7 @@ public class VrModeController : MonoBehaviour
     /// </summary>
     private void EnterVR()
     {
-        StartCoroutine(StartXR());
+        _ = StartCoroutine(StartXR());
         if (Api.HasNewDeviceParams())
         {
             Api.ReloadDeviceParams();
