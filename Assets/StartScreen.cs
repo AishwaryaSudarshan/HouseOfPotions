@@ -1,52 +1,46 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI;  // Import to access UI elements
 
 public class StartScreenManager : MonoBehaviour
 {
-    public GameObject startScreen;
-    public Button startButton;
-    public GameObject characterObject;
+    public GameObject startScreen;  // Reference to the Start Screen UI
+    public Button startButton;      // Reference to the Start Button
 
-    private SimpleTimer simpleTimer;
-
-    private string selectButton;
-
-    void Start()
+    // Start is called before the first frame update
+    private void Start()
     {
-        #if UNITY_STANDALONE_OSX
-            selectButton = "js10";
-        #elif UNITY_STANDALONE_WIN
-            selectButton = "js10";
-        #elif UNITY_ANDROID
-            selectButton = "js5";
-        #else
-            selectButton = "js5";
-        #endif
-
+        // Show the start screen initially
         startScreen.SetActive(true);
+
+        // Add listener for the start button click
         startButton.onClick.AddListener(OnStartButtonClicked);
+    }
 
-        if (characterObject != null)
+    // Update is called once per frame
+    private void Update()
+    {
+        // Check for raycast click directly using mouse button
+        if (Input.GetMouseButtonDown(0)) // Left mouse button click
         {
-            simpleTimer = characterObject.GetComponent<SimpleTimer>();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Cast ray from mouse position
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                // Check if raycast hit the Start Button
+                if (hit.transform.gameObject == startButton.gameObject)
+                {
+                    OnStartButtonClicked();  // Trigger the button click event
+                }
+            }
         }
     }
 
-    void Update()
+    // Handle Start Button Click
+    private void OnStartButtonClicked()
     {
-        if (Input.GetKeyDown(selectButton))
-        {
-            OnStartButtonClicked();
-        }
-    }
-
-    void OnStartButtonClicked()
-    {
+        // Disable the start screen panel
         startScreen.SetActive(false);
 
-        if (simpleTimer != null)
-        {
-            simpleTimer.isPaused = false;
-        }
+        // Now, you can enable other game elements or allow interaction to begin here
     }
 }
