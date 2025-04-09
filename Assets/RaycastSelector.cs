@@ -11,6 +11,7 @@ public class RaycastSelector : MonoBehaviour
     private Camera mainCamera;
     private GameObject currentHighlightedObject;
     private Outline currentOutline;
+    private DropParticleEffectTrigger dropParticleTrigger;
 
     public Ray CurrentRay { get; private set; }
 
@@ -29,6 +30,11 @@ public class RaycastSelector : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.red;
         lineRenderer.endColor = Color.red;
+        dropParticleTrigger = mainCamera.GetComponent<DropParticleEffectTrigger>();
+        if (dropParticleTrigger == null)
+        {
+            Debug.LogWarning("No DropParticleEffectTrigger component found on the main camera.");
+        }
     }
 
     private void Update()
@@ -70,6 +76,19 @@ public class RaycastSelector : MonoBehaviour
                     currentOutline.enabled = true;
                 }
             }
+            else if (hit.collider.CompareTag("Potions"))
+            {
+                GameObject targetObject = hit.collider.gameObject;
+                if (currentHighlightedObject != targetObject)
+                {
+                    currentHighlightedObject = targetObject;
+                    currentOutline = targetObject.GetComponent<Outline>() ?? targetObject.AddComponent<Outline>();
+                    currentOutline.OutlineMode = Outline.Mode.OutlineVisible;
+                    currentOutline.OutlineColor = outlineColor;
+                    currentOutline.OutlineWidth = outlineWidth;
+                    currentOutline.enabled = true;
+                }
+            }
             else
             {
                 if (currentHighlightedObject != null && currentOutline != null)
@@ -82,6 +101,17 @@ public class RaycastSelector : MonoBehaviour
         else
         {
             lineRenderer.SetPosition(1, ray.origin + (ray.direction * rayLength));
+        }
+    }
+    public void CallDropParticleEffect()
+    {
+        if (dropParticleTrigger != null)
+        {
+            dropParticleTrigger.TriggerDropEffect();
+        }
+        else
+        {
+            Debug.LogWarning("Drop particle effect trigger component not found on main camera.");
         }
     }
 }

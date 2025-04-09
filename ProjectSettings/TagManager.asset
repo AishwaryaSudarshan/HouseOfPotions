@@ -9,6 +9,7 @@ TagManager:
   - floorTag
   - SettingsInteractable
   - Pot
+  - Potions
   layers:
   - Default
   - TransparentFX
