@@ -21,6 +21,7 @@ public class InventoryManager : MonoBehaviour
     private GameObject[] inventorySlots;
     private GameObject[] inventoryObjects;
     private Sprite[] inventorySprites;
+    
 
     private int currentSelectedIndex = 0;
     private bool inventoryActive = false;
@@ -28,6 +29,10 @@ public class InventoryManager : MonoBehaviour
 
     private float inventoryNextNavigationTime = 0f;
     private readonly float navigationDelay = 0.3f;
+
+    // Add this new field near the other member variable declarations
+    [SerializeField] private ParticleSystem dropParticleSystem;
+
 
     private void Start()
     {
@@ -347,10 +352,20 @@ public class InventoryManager : MonoBehaviour
         }
         currentlyGrabbedObject.transform.parent = null;
         Camera mainCam = Camera.main;
+        // if (mainCam != null)
+        // {
+        //     Vector3 dropPosition = mainCam.transform.position + mainCam.transform.forward * 1.5f;
+        //     currentlyGrabbedObject.transform.position = dropPosition;
+        // }
+        // In the DropObject() method, update the Camera block as follows:
         if (mainCam != null)
         {
             Vector3 dropPosition = mainCam.transform.position + mainCam.transform.forward * 1.5f;
             currentlyGrabbedObject.transform.position = dropPosition;
+            if(dropParticleSystem != null)
+            {
+                dropParticleSystem.Play();
+            }
         }
         currentlyGrabbedObject = null;
         if (characterMovement != null && !characterMovement.enabled)
