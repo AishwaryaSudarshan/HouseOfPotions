@@ -262,43 +262,6 @@ public class InventoryManager : MonoBehaviour
             raycastSelector.lineRenderer.enabled = true;
         }
     }
-
-    // private void DropObject()
-    // {
-    //     if (currentlyGrabbedObject == null)
-    //     {
-    //         return;
-    //     }
-
-    //     GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
-    //     if (grabComponent != null)
-    //     {
-    //         grabComponent.isGrabbed = false;
-    //     }
-    //     Rigidbody rb = currentlyGrabbedObject.GetComponent<Rigidbody>();
-    //     if (rb != null)
-    //     {
-    //         rb.isKinematic = false;
-    //         rb.useGravity = true;
-          
-    //         rb.linearVelocity = Vector3.zero;
-    //     }
-        
- 
-    //     currentlyGrabbedObject.transform.parent = null;
-
-    //     Camera mainCam = Camera.main;
-    //     if (mainCam != null)
-    //     {
-    //         Vector3 dropPosition = mainCam.transform.position + mainCam.transform.forward * 1.5f;
-    //         currentlyGrabbedObject.transform.position = dropPosition;
-    //     }
-    //     currentlyGrabbedObject = null;
-    //     if (characterMovement != null && !characterMovement.enabled)
-    //     {
-    //         characterMovement.enabled = true;
-    //     }
-    // }
     public bool AddToInventory(GameObject obj, Sprite icon = null)
     {
         int emptySlotIndex = -1;
@@ -348,14 +311,13 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"Added {obj.name} to inventory slot {emptySlotIndex} with sprite: {(icon != null ? icon.name : "default")}");
         return true;
     }
-
     private void DropObject()
     {
         if (currentlyGrabbedObject == null)
             return;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
-        float rayDistance = 3.0f;
+        float rayDistance = raycastSelector.rayLength;
         if (Physics.Raycast(ray, out hit, rayDistance))
         {
             if (hit.collider.CompareTag("Pot"))

@@ -86,7 +86,7 @@ public class CircleDetector : MonoBehaviour
         }
 
         // Check if a singular circular motion (approximately 360°) has been performed continuously.
-        if (Mathf.Abs(netRotation) >= 360f)
+        if (Mathf.Abs(netRotation) >= 50f)
         {
             Debug.Log("Circle motion detected!");
             if (debugText != null)
