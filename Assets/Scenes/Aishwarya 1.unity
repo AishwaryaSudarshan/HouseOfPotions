@@ -34057,18 +34057,12 @@ MonoBehaviour:
   settingsMenuCanvas: {fileID: 919330638}
   resumeButton: {fileID: 973882350}
   inventoryButton: {fileID: 19735534}
-  inventoryCanvas: {fileID: 187664536}
-  inventoryItemsContainer: {fileID: 1035341682}
-  inventoryItemPrefab: {fileID: 1296471998}
-  maxInventoryItems: 6
   openMenuButton: js4
   selectButton: js10
   navigateAxis: Vertical
-  inventoryAxis: Horizontal
-  dropButton: js8
   raycastSelector: {fileID: 676972815}
   characterMovement: {fileID: 676972812}
-  inventoryFullMessage: {fileID: 0}
+  inventoryManager: {fileID: 0}
 --- !u!224 &1181207692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55032,15 +55026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2906b8dcc9e390b4e9d5ea08468263b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectMenuCanvas: {fileID: 1643015570}
-  grabButton: {fileID: 1043729101}
-  storeButton: {fileID: 1878848651}
-  exitButton: {fileID: 1114764015}
-  activateMenuButton: js0
-  grabButton_Bluetooth: js10
-  dropButton_Bluetooth: js8
-  isMenuOpen: 0
-  inventorySprite: {fileID: 21300000, guid: 595486a7ea984904187a53ecb49d5f72, type: 3}
+  storeKey: 
+  inventoryIcon: {fileID: 0}
 --- !u!1 &1870759772
 GameObject:
   m_ObjectHideFlags: 0
@@ -59296,7 +59283,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startScreen: {fileID: 1999697049}
   startButton: {fileID: 1588920186}
-  characterObject: {fileID: 676972811}
 --- !u!4 &1999697051
 Transform:
   m_ObjectHideFlags: 0
