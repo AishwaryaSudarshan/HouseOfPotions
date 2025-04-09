@@ -3,16 +3,29 @@ using UnityEngine.UI;
 
 public class StartScreenManager : MonoBehaviour
 {
-    public GameObject startScreen;   
-    public Button startButton;          
-    public GameObject characterObject;  
+    public GameObject startScreen;
+    public Button startButton;
+    public GameObject characterObject;
 
-    private SimpleTimer simpleTimer;    
+    private SimpleTimer simpleTimer;
+
+    private string selectButton;
 
     void Start()
     {
+        #if UNITY_STANDALONE_OSX
+            selectButton = "js10";
+        #elif UNITY_STANDALONE_WIN
+            selectButton = "js10";
+        #elif UNITY_ANDROID
+            selectButton = "js5";
+        #else
+            selectButton = "js5";
+        #endif
+
         startScreen.SetActive(true);
         startButton.onClick.AddListener(OnStartButtonClicked);
+
         if (characterObject != null)
         {
             simpleTimer = characterObject.GetComponent<SimpleTimer>();
@@ -21,24 +34,16 @@ public class StartScreenManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(selectButton))
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.gameObject == startButton.gameObject)
-                {
-                    OnStartButtonClicked();
-                }
-            }
+            OnStartButtonClicked();
         }
     }
 
     void OnStartButtonClicked()
     {
         startScreen.SetActive(false);
+
         if (simpleTimer != null)
         {
             simpleTimer.isPaused = false;
