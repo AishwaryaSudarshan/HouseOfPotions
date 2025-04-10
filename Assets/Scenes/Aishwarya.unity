@@ -7776,15 +7776,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7792,7 +7792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.86688614
+      value: -0.9910002
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7869,8 +7869,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8346386
-  m_Center: {x: -0.1346386, y: 0, z: 0}
+  m_Radius: 1.0364096
+  m_Center: {x: -0.15559748, y: 0, z: 0.1808121}
 --- !u!114 &264261485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7901,7 +7901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2906b8dcc9e390b4e9d5ea08468263b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storeKey: 
+  storeKey: js13
   inventoryIcon: {fileID: 21300000, guid: c3ad1bf35dc7b4d1885b3ba86ca83a19, type: 3}
 --- !u!1001 &267347175
 PrefabInstance:
@@ -17151,15 +17151,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17167,7 +17167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.86688614
+      value: -0.9910002
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -17244,8 +17244,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8346386
-  m_Center: {x: -0.1346386, y: 0, z: 0}
+  m_Radius: 0.96185297
+  m_Center: {x: -0.13463862, y: -0.04644841, z: 0.05988799}
 --- !u!114 &616554962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17276,7 +17276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2906b8dcc9e390b4e9d5ea08468263b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storeKey: 
+  storeKey: js13
   inventoryIcon: {fileID: 21300000, guid: c3ad1bf35dc7b4d1885b3ba86ca83a19, type: 3}
 --- !u!1 &616886438
 GameObject:
@@ -24771,7 +24771,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866027403}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1eb852d84854455aaf91da65710b027, type: 3}
   m_Name: 
@@ -28745,7 +28745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7440878136645223938, guid: e2d2b5c31c02ef641a64e574a13059b9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49037,6 +49037,7 @@ MonoBehaviour:
   raycastSelector: {fileID: 676972815}
   characterMovement: {fileID: 676972812}
   dropParticleSystem: {fileID: 1017578268}
+  dropEffectTrigger: {fileID: 866027414}
 --- !u!4 &1659125584
 Transform:
   m_ObjectHideFlags: 0
@@ -60392,15 +60393,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60408,7 +60409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.86688614
+      value: -0.991
       objectReference: {fileID: 0}
     - target: {fileID: 4436227729660434, guid: f75e1608d9f1e4f06a5027de3c813b5d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -60498,8 +60499,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.8346386
-  m_Center: {x: -0.1346386, y: 0, z: 0}
+  m_Radius: 0.9414041
+  m_Center: {x: -0.13463862, y: 0, z: 0.031411648}
 --- !u!114 &2033268376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60512,7 +60513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2906b8dcc9e390b4e9d5ea08468263b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storeKey: 
+  storeKey: js13
   inventoryIcon: {fileID: 21300000, guid: c3ad1bf35dc7b4d1885b3ba86ca83a19, type: 3}
 --- !u!1 &2041876458
 GameObject:
