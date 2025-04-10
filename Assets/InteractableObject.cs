@@ -51,7 +51,7 @@ public class InteractableObject : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, raycastSelector.rayLength))
         {
             GameObject hitObject = hit.collider.gameObject;
-            if (hitObject.CompareTag("InteractableObject"))
+            if (hitObject.CompareTag("InteractableObject") || hitObject.CompareTag("Potions"))
             {
                 if (inventoryManager != null)
                 {
