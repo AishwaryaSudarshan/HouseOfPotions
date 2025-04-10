@@ -50,7 +50,7 @@ public class RaycastSelector : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, rayLength))
         {
             lineRenderer.SetPosition(1, hit.point);
-            if (hit.collider.CompareTag("InteractableObject"))
+            if (hit.collider.CompareTag("InteractableObject") || hit.collider.CompareTag("Potions"))
             {
                 GameObject targetObject = hit.collider.gameObject;
                 if (currentHighlightedObject != targetObject)
@@ -76,19 +76,19 @@ public class RaycastSelector : MonoBehaviour
                     currentOutline.enabled = true;
                 }
             }
-            else if (hit.collider.CompareTag("Potions"))
-            {
-                GameObject targetObject = hit.collider.gameObject;
-                if (currentHighlightedObject != targetObject)
-                {
-                    currentHighlightedObject = targetObject;
-                    currentOutline = targetObject.GetComponent<Outline>() ?? targetObject.AddComponent<Outline>();
-                    currentOutline.OutlineMode = Outline.Mode.OutlineVisible;
-                    currentOutline.OutlineColor = outlineColor;
-                    currentOutline.OutlineWidth = outlineWidth;
-                    currentOutline.enabled = true;
-                }
-            }
+            // else if (hit.collider.CompareTag("Potions"))
+            // {
+            //     GameObject targetObject = hit.collider.gameObject;
+            //     if (currentHighlightedObject != targetObject)
+            //     {
+            //         currentHighlightedObject = targetObject;
+            //         currentOutline = targetObject.GetComponent<Outline>() ?? targetObject.AddComponent<Outline>();
+            //         currentOutline.OutlineMode = Outline.Mode.OutlineVisible;
+            //         currentOutline.OutlineColor = outlineColor;
+            //         currentOutline.OutlineWidth = outlineWidth;
+            //         currentOutline.enabled = true;
+            //     }
+            // }
             else
             {
                 if (currentHighlightedObject != null && currentOutline != null)
