@@ -1,29 +1,3 @@
-// using UnityEngine;
-
-// public class DropParticleEffectTrigger : MonoBehaviour
-// {
-//     [SerializeField] private ParticleSystem dropParticleEffect;
-
-//     public void TriggerDropEffect()
-//     {
-//         if (dropParticleEffect != null)
-//         {
-//             // Ensure the particle system's GameObject is active.
-//             if (!dropParticleEffect.gameObject.activeSelf)
-//             {
-//                 dropParticleEffect.gameObject.SetActive(true);
-//             }
-            
-//             dropParticleEffect.Play();
-//             Debug.Log("Drop particle effect played.");
-//         }
-//         else
-//         {
-//             Debug.LogWarning("No ParticleSystem assigned in the Inspector for drop effect.");
-//         }
-//     }
-// }
-
 using UnityEngine;
 using System.Collections; // Needed for IEnumerator and WaitForSeconds
 
