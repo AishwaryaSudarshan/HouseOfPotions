@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class SettingsMenu : MonoBehaviour
 
     // Input mappings
     public string openMenuButton = "js4"; // ok
+    public string openPotionMenu = "js9"; //hamburger menu
     public string selectButton = "js10"; // b
     public string navigateAxis = "Vertical";
 
@@ -18,6 +20,13 @@ public class SettingsMenu : MonoBehaviour
 
     // Reference to the separate inventory manager
     public InventoryManager inventoryManager;
+
+    // Reference to the TMP object
+    public GameObject potionMenuTMPObject;
+
+    // Reference to the IngredientPot script
+    public IngredientPot ingredientPot;
+
 
     private readonly List<Button> menuButtons = new();
     private int currentSelectedIndex = 0;
@@ -75,7 +84,10 @@ public class SettingsMenu : MonoBehaviour
         {
             OpenSettingsMenu();
         }
-
+        if (Input.GetButtonDown(openPotionMenu))
+        {
+            OpenPotionMenu();
+        }
         if (menuActive)
         {
             HandleMenuNavigation();
@@ -190,6 +202,31 @@ public class SettingsMenu : MonoBehaviour
         {
             raycastSelector.enabled = true;
             raycastSelector.lineRenderer.enabled = true;
+        }
+    }
+
+    private void OpenPotionMenu()
+    {
+        if (potionMenuTMPObject != null)
+        {
+            bool isActive = potionMenuTMPObject.activeSelf;
+            potionMenuTMPObject.SetActive(!isActive);
+
+            if (!isActive)
+            {
+                TMP_Text potionMenuText = potionMenuTMPObject.GetComponentInChildren<TMP_Text>();
+                if (potionMenuText != null && ingredientPot != null)
+                {
+                    potionMenuText.text = "Required Ingredients:\n";
+                    foreach (GameObject ingredient in ingredientPot.requiredIngredients)
+                    {
+                        if (ingredient != null)
+                        {
+                            potionMenuText.text += ingredient.name + "\n";
+                        }
+                    }
+                }
+            }
         }
     }
 }
