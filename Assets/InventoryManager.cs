@@ -793,7 +793,6 @@ public class InventoryManager : MonoBehaviour
         if (currentlyGrabbedObject == null)
             return;
 
-<<<<<<< HEAD
         // Special handling for objects tagged as "Potions"
         if (currentlyGrabbedObject.CompareTag("Potions"))
         {
@@ -816,8 +815,7 @@ public class InventoryManager : MonoBehaviour
         }
         
         // Normal drop handling for other objects
-=======
->>>>>>> b0fa27aea9728d17501ca0e505c0eb4e9ac2ac39
+
         Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
         float rayDistance = raycastSelector.rayLength;
@@ -839,12 +837,6 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-<<<<<<< HEAD
-        
-=======
-
-        // Drop physically
->>>>>>> b0fa27aea9728d17501ca0e505c0eb4e9ac2ac39
         GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
         if (grabComponent != null)
             grabComponent.isGrabbed = false;
@@ -858,15 +850,10 @@ public class InventoryManager : MonoBehaviour
         }
 
         currentlyGrabbedObject.transform.parent = null;
-<<<<<<< HEAD
+
         Camera mainCamera = Camera.main;
         if (mainCamera != null)
-=======
 
-        // Drop position
-        Camera mainCam = Camera.main;
-        if (mainCam != null)
->>>>>>> b0fa27aea9728d17501ca0e505c0eb4e9ac2ac39
         {
             Vector3 dropPosition = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
             currentlyGrabbedObject.transform.position = dropPosition;
@@ -883,12 +870,7 @@ public class InventoryManager : MonoBehaviour
             characterMovement.enabled = true;
     }
 
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> b0fa27aea9728d17501ca0e505c0eb4e9ac2ac39
     public void DebugInventoryContents()
     {
         for (int i = 0; i < maxInventoryItems; i++)
