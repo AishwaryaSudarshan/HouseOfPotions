@@ -1,6 +1,6 @@
 # House Of Potions Preliminary Prototype
 
-Unity Scene for Prototype: "Aishwarya"
+Unity Scene for Prototype: "Combined.unity"
 
 Target Device: Android Phone Deivice
 
@@ -14,10 +14,14 @@ Interaction Techniques:
   
   - Open global menu with Joystick button "Okay" on Android
 
-  - Toggle inventory options with Joystick button "B" on Android
+  - Toggle inventory options and select objects with Joystick button "B" on Android
   
   - Drop object in pot with Joystick button "A" on Android
   
-  - Fix a part of the house with gyroscope movements on Android
+  - Nod up and down with phone screen to pour the potion into the bottles
+
+  - Shake phone screen to fix a room in the house
+
+  - Tilt phone screen to the side to _
 
 Youtube Link: 
