@@ -22,7 +22,6 @@ public class InventoryManager : MonoBehaviour
     private GameObject[] inventoryObjects;
     private Sprite[] inventorySprites;
     
-
     private int currentSelectedIndex = 0;
     private bool inventoryActive = false;
     private GameObject currentlyGrabbedObject = null;
@@ -30,9 +29,9 @@ public class InventoryManager : MonoBehaviour
     private float inventoryNextNavigationTime = 0f;
     private readonly float navigationDelay = 0.3f;
 
-    // Add this new field near the other member variable declarations
+    // Particle system used for normal drop (fallback if no custom effect is found on the main camera).
     [SerializeField] private ParticleSystem dropParticleSystem;
-
+    [SerializeField] private DropParticleEffectTrigger dropEffectTrigger;
 
     private void Start()
     {
@@ -169,7 +168,6 @@ public class InventoryManager : MonoBehaviour
         {
             if (horizontalInput > 0.5f)
             {
-                
                 int startIndex = currentSelectedIndex;
                 do {
                     currentSelectedIndex = (currentSelectedIndex - 1 + maxInventoryItems) % maxInventoryItems;
@@ -267,6 +265,7 @@ public class InventoryManager : MonoBehaviour
             raycastSelector.lineRenderer.enabled = true;
         }
     }
+
     public bool AddToInventory(GameObject obj, Sprite icon = null)
     {
         int emptySlotIndex = -1;
@@ -287,7 +286,6 @@ public class InventoryManager : MonoBehaviour
       
         if (icon == null)
         {
-
             SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
             if (sr != null)
             {
@@ -316,15 +314,37 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"Added {obj.name} to inventory slot {emptySlotIndex} with sprite: {(icon != null ? icon.name : "default")}");
         return true;
     }
-    private void DropObject()
+
+    public void DropObject()
     {
         if (currentlyGrabbedObject == null)
             return;
 
+        // Special handling for objects tagged as "Potions"
+        if (currentlyGrabbedObject.CompareTag("Potions"))
+        {
+            // Use the assigned drop effect trigger.
+            if (dropEffectTrigger != null)
+            {
+                dropEffectTrigger.TriggerDropEffect();
+            }
+            else if (dropParticleSystem != null)
+            {
+                dropParticleSystem.gameObject.SetActive(true);
+                dropParticleSystem.Play();
+            }
+            
+            Destroy(currentlyGrabbedObject);
+            currentlyGrabbedObject = null;
+            if (characterMovement != null && !characterMovement.enabled)
+                characterMovement.enabled = true;
+            return;
+        }
+        
+        // Normal drop handling for other objects
         Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
         float rayDistance = raycastSelector.rayLength;
-
         if (Physics.Raycast(ray, out hit, rayDistance))
         {
             if (hit.collider.CompareTag("Pot"))
@@ -342,12 +362,10 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-
-        // Drop physically
+        
         GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
         if (grabComponent != null)
             grabComponent.isGrabbed = false;
-
         Rigidbody rb = currentlyGrabbedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -355,30 +373,21 @@ public class InventoryManager : MonoBehaviour
             rb.useGravity = true;
             rb.linearVelocity = Vector3.zero;
         }
-
         currentlyGrabbedObject.transform.parent = null;
-
-        // Drop position
-        Camera mainCam = Camera.main;
-        if (mainCam != null)
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
         {
-            Vector3 dropPosition = mainCam.transform.position + mainCam.transform.forward * 1.5f;
+            Vector3 dropPosition = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
             currentlyGrabbedObject.transform.position = dropPosition;
-
-            if (dropParticleSystem != null)
+            if(dropParticleSystem != null)
             {
-                dropParticleSystem.transform.position = dropPosition;
-                dropParticleSystem.Play(); // particleAnimation.cs will handle swap
+                dropParticleSystem.Play();
             }
         }
-
         currentlyGrabbedObject = null;
         if (characterMovement != null && !characterMovement.enabled)
             characterMovement.enabled = true;
     }
-
-
-
 
     public void DebugInventoryContents()
     {

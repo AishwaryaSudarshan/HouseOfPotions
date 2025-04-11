@@ -1,16 +1,25 @@
 using UnityEngine;
+using System.Collections; // Needed for IEnumerator and WaitForSeconds
 
 public class DropParticleEffectTrigger : MonoBehaviour
 {
     [SerializeField] private ParticleSystem dropParticleEffect;
-    [SerializeField] private float delayBeforeReplace = 0.5f;
 
     public void TriggerDropEffect()
     {
         if (dropParticleEffect != null)
         {
+            // Ensure the particle system's GameObject is active.
+            if (!dropParticleEffect.gameObject.activeSelf)
+            {
+                dropParticleEffect.gameObject.SetActive(true);
+            }
+            
             dropParticleEffect.Play();
-            Invoke(nameof(ReplaceRoom), delayBeforeReplace);
+            Debug.Log("Drop particle effect played.");
+            
+            // Start the coroutine to stop the effect after 5 seconds.
+            StartCoroutine(StopEffectAfterDelay(5f));
         }
         else
         {
@@ -18,15 +27,12 @@ public class DropParticleEffectTrigger : MonoBehaviour
         }
     }
 
-    private void ReplaceRoom()
+    private IEnumerator StopEffectAfterDelay(float delay)
     {
-        if (RoomManager.Instance != null)
-        {
-            RoomManager.Instance.ReplaceRoom(); 
-        }
-        else
-        {
-            Debug.LogWarning("RoomManager.Instance is null.");
-        }
+        yield return new WaitForSeconds(delay);
+        
+        // Stop the particle effect.
+        dropParticleEffect.Stop();
+        Debug.Log("Drop particle effect stopped after 5 seconds.");
     }
 }
