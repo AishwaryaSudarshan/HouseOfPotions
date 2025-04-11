@@ -320,9 +320,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (currentlyGrabbedObject == null)
             return;
+
         Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
         float rayDistance = raycastSelector.rayLength;
+
         if (Physics.Raycast(ray, out hit, rayDistance))
         {
             if (hit.collider.CompareTag("Pot"))
@@ -340,9 +342,12 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
+
+        // Drop physically
         GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
         if (grabComponent != null)
             grabComponent.isGrabbed = false;
+
         Rigidbody rb = currentlyGrabbedObject.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -350,27 +355,28 @@ public class InventoryManager : MonoBehaviour
             rb.useGravity = true;
             rb.linearVelocity = Vector3.zero;
         }
+
         currentlyGrabbedObject.transform.parent = null;
+
+        // Drop position
         Camera mainCam = Camera.main;
-        // if (mainCam != null)
-        // {
-        //     Vector3 dropPosition = mainCam.transform.position + mainCam.transform.forward * 1.5f;
-        //     currentlyGrabbedObject.transform.position = dropPosition;
-        // }
-        // In the DropObject() method, update the Camera block as follows:
         if (mainCam != null)
         {
             Vector3 dropPosition = mainCam.transform.position + mainCam.transform.forward * 1.5f;
             currentlyGrabbedObject.transform.position = dropPosition;
-            if(dropParticleSystem != null)
+
+            if (dropParticleSystem != null)
             {
-                dropParticleSystem.Play();
+                dropParticleSystem.transform.position = dropPosition;
+                dropParticleSystem.Play(); // particleAnimation.cs will handle swap
             }
         }
+
         currentlyGrabbedObject = null;
         if (characterMovement != null && !characterMovement.enabled)
             characterMovement.enabled = true;
     }
+
 
 
 
