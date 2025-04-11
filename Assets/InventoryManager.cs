@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
     public Canvas inventoryCanvas;
     public Transform inventoryItemsContainer;
     public GameObject inventoryItemPrefab;
-    public Sprite defaultItemSprite; 
+    public Sprite defaultItemSprite;
     public int maxInventoryItems = 3;
 
     public string inventoryAxis = "Horizontal";
@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     private GameObject[] inventorySlots;
     private GameObject[] inventoryObjects;
     private Sprite[] inventorySprites;
-    
+
     private int currentSelectedIndex = 0;
     private bool inventoryActive = false;
     private GameObject currentlyGrabbedObject = null;
@@ -35,27 +35,27 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        #if UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE_OSX
             dropButton = "js11";
             selectButton = "js10";
-        #elif UNITY_STANDALONE_WIN
+#elif UNITY_STANDALONE_WIN
             dropButton = "js8";
             selectButton = "js10";
-        #elif UNITY_ANDROID
+#elif UNITY_ANDROID
+        dropButton = "js10";
+        selectButton = "js5";
+#else
             dropButton = "js10"; 
             selectButton = "js5";
-        #else
-            dropButton = "js10"; 
-            selectButton = "js5";
-        #endif
-        
+#endif
+
         inventorySlots = new GameObject[maxInventoryItems];
         inventoryObjects = new GameObject[maxInventoryItems];
         inventorySprites = new Sprite[maxInventoryItems];
-        
+
         InitializeInventoryUI();
     }
-    
+
     private void InitializeInventoryUI()
     {
         GridLayoutGroup existingGrid = inventoryItemsContainer.GetComponent<GridLayoutGroup>();
@@ -63,7 +63,7 @@ public class InventoryManager : MonoBehaviour
         {
             existingGrid = inventoryItemsContainer.gameObject.AddComponent<GridLayoutGroup>();
         }
-        
+
         existingGrid.cellSize = new Vector2(80, 80);
         existingGrid.spacing = new Vector2(20, 15);
         existingGrid.startCorner = GridLayoutGroup.Corner.UpperLeft;
@@ -77,27 +77,27 @@ public class InventoryManager : MonoBehaviour
         {
             containerRect.sizeDelta = new Vector2(maxInventoryItems * 100, 100);
         }
-        
+
         for (int i = 0; i < maxInventoryItems; i++)
         {
             GameObject slotUI = Instantiate(inventoryItemPrefab, inventoryItemsContainer);
-            
+
             RectTransform rt = slotUI.GetComponent<RectTransform>();
             if (rt != null)
             {
                 rt.localScale = Vector3.one;
             }
-            
+
             Image image = slotUI.GetComponent<Image>();
             if (image != null)
             {
                 image.sprite = defaultItemSprite;
-                image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); 
+                image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             }
-            
+
             inventorySlots[i] = slotUI;
         }
-        
+
         if (inventoryCanvas != null)
         {
             inventoryCanvas.gameObject.SetActive(false);
@@ -147,7 +147,7 @@ public class InventoryManager : MonoBehaviour
         HighlightInventoryItem();
         inventoryNextNavigationTime = Time.time + 0.5f;
     }
-    
+
     private int FindFirstOccupiedSlot()
     {
         for (int i = 0; i < maxInventoryItems; i++)
@@ -157,7 +157,7 @@ public class InventoryManager : MonoBehaviour
                 return i;
             }
         }
-        return 0; 
+        return 0;
     }
 
     private void HandleInventoryNavigation()
@@ -169,28 +169,30 @@ public class InventoryManager : MonoBehaviour
             if (horizontalInput > 0.5f)
             {
                 int startIndex = currentSelectedIndex;
-                do {
+                do
+                {
                     currentSelectedIndex = (currentSelectedIndex - 1 + maxInventoryItems) % maxInventoryItems;
                     if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
                     {
                         break;
                     }
                 } while (true);
-                
+
                 inventoryNextNavigationTime = Time.time + navigationDelay;
                 HighlightInventoryItem();
             }
             else if (horizontalInput < -0.5f)
             {
                 int startIndex = currentSelectedIndex;
-                do {
+                do
+                {
                     currentSelectedIndex = (currentSelectedIndex + 1) % maxInventoryItems;
                     if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
                     {
                         break;
                     }
                 } while (true);
-                
+
                 inventoryNextNavigationTime = Time.time + navigationDelay;
                 HighlightInventoryItem();
             }
@@ -219,7 +221,7 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f); 
+                    image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 }
             }
         }
@@ -240,7 +242,7 @@ public class InventoryManager : MonoBehaviour
             slotImage.sprite = defaultItemSprite;
             slotImage.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         }
-    
+
         inventoryObjects[index] = null;
         inventorySprites[index] = null;
 
@@ -283,7 +285,7 @@ public class InventoryManager : MonoBehaviour
             Debug.Log("Inventory is full");
             return false;
         }
-      
+
         if (icon == null)
         {
             SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
@@ -303,7 +305,7 @@ public class InventoryManager : MonoBehaviour
 
         inventoryObjects[emptySlotIndex] = obj;
         inventorySprites[emptySlotIndex] = icon;
-    
+
         Image slotImage = inventorySlots[emptySlotIndex].GetComponent<Image>();
         if (slotImage != null)
         {
@@ -323,7 +325,6 @@ public class InventoryManager : MonoBehaviour
         // Special handling for objects tagged as "Potions"
         if (currentlyGrabbedObject.CompareTag("Potions"))
         {
-            // Use the assigned drop effect trigger.
             if (dropEffectTrigger != null)
             {
                 dropEffectTrigger.TriggerDropEffect();
@@ -333,15 +334,14 @@ public class InventoryManager : MonoBehaviour
                 dropParticleSystem.gameObject.SetActive(true);
                 dropParticleSystem.Play();
             }
-            
+
             Destroy(currentlyGrabbedObject);
             currentlyGrabbedObject = null;
             if (characterMovement != null && !characterMovement.enabled)
                 characterMovement.enabled = true;
             return;
         }
-        
-        // Normal drop handling for other objects
+
         Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
         float rayDistance = raycastSelector.rayLength;
@@ -362,7 +362,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-        
+
         GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
         if (grabComponent != null)
             grabComponent.isGrabbed = false;
@@ -379,7 +379,7 @@ public class InventoryManager : MonoBehaviour
         {
             Vector3 dropPosition = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
             currentlyGrabbedObject.transform.position = dropPosition;
-            if(dropParticleSystem != null)
+            if (dropParticleSystem != null)
             {
                 dropParticleSystem.Play();
             }

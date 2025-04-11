@@ -8,9 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scenes/HelloCardboard.unity
     guid: 145a2a45d7bc746b19cb68410368bf96
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Aishwarya.unity
-    guid: 2847f3d0105ec411b80896a0089ec115
+    guid: 029ff0bd11a0a4e50bf7da77e0d8583b
+  - enabled: 1
+    path: Assets/Scenes/MergeCode.unity
+    guid: 64589a01769dba749b1454ed8d542441
+  - enabled: 0
+    path: Assets/Scenes/PleaseWork.unity
+    guid: 196e0a7dbd722934693742fada6d68aa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e93929a816d5479094b3998453ec142, type: 2}

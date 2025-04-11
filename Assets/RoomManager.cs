@@ -2,41 +2,93 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public static RoomManager Instance;
+    // Your RoomData implementation and array of rooms
+    [System.Serializable]
+    public class RoomData
+    {
+        public string roomName;
+        public Vector3 center;
+        public float detectionRadius = 5f;
+        public GameObject roomParent;
+    }
+
+    public RoomData[] rooms;
+    public Transform player;
+
     [HideInInspector] public string currentRoomName;
+    public float checkInterval = 0.2f;
+    private float nextCheckTime;
+
+    private static RoomManager _instance;
+    public static RoomManager Instance => _instance;
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        if (_instance == null)
+            _instance = this;
         else
             Destroy(gameObject);
     }
 
-    public void SetCurrentRoom(string roomName)
+    // Automatically check room every interval (optional)
+    private void Update()
     {
-        currentRoomName = roomName;
-        Debug.Log("Current room: " + currentRoomName);
+        if (Time.time >= nextCheckTime)
+        {
+            CheckPlayerRoom();
+            nextCheckTime = Time.time + checkInterval;
+        }
     }
 
-    public void ReplaceRoom()
+    // Checks which room the player is in by comparing distances.
+    private void CheckPlayerRoom()
     {
-        if (string.IsNullOrEmpty(currentRoomName)) return;
-
-        GameObject roomParent = GameObject.Find(currentRoomName);
-        if (roomParent == null)
+        if (player == null)
         {
-            Debug.LogWarning("Room parent not found: " + currentRoomName);
+            Debug.LogWarning("Player transform not assigned to RoomManager.");
             return;
         }
 
-        Transform broken = roomParent.transform.Find("Broken" + currentRoomName);
-        Transform fixedRoom = roomParent.transform.Find("Fixed" + currentRoomName);
-
-        if (broken != null && fixedRoom != null)
+        foreach (RoomData room in rooms)
         {
-            broken.gameObject.SetActive(false);
-            fixedRoom.gameObject.SetActive(true);
+            if (Vector3.Distance(player.position, room.center) <= room.detectionRadius)
+            {
+                if (currentRoomName != room.roomName)
+                {
+                    currentRoomName = room.roomName;
+                    UpdateRoomScene(room);
+                }
+                return;
+            }
         }
+    }
+
+    // Call this to force a check now.
+    public void ForceRoomUpdate()
+    {
+        CheckPlayerRoom();
+    }
+
+    // Updates the room scene by disabling the broken version and enabling the fixed version.
+    private void UpdateRoomScene(RoomData room)
+    {
+        if (room.roomParent == null)
+        {
+            Debug.LogWarning("Room parent not assigned for room: " + room.roomName);
+            return;
+        }
+
+        Transform broken = room.roomParent.transform.Find("Broken" + room.roomName);
+        Transform fixedRoom = room.roomParent.transform.Find("Fixed" + room.roomName);
+
+        if (broken == null || fixedRoom == null)
+        {
+            Debug.LogWarning($"Room objects not found for {room.roomName}.");
+            return;
+        }
+
+        broken.gameObject.SetActive(false);
+        fixedRoom.gameObject.SetActive(true);
+        Debug.Log($"Room {room.roomName} updated: {broken.name} disabled, {fixedRoom.name} enabled.");
     }
 }
