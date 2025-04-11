@@ -30,6 +30,7 @@ using System.Collections; // Needed for IEnumerator and WaitForSeconds
 public class DropParticleEffectTrigger : MonoBehaviour
 {
     [SerializeField] private ParticleSystem dropParticleEffect;
+    [SerializeField] private float delayBeforeReplace = 0.5f;
 
     public void TriggerDropEffect()
     {
@@ -42,10 +43,14 @@ public class DropParticleEffectTrigger : MonoBehaviour
             }
             
             dropParticleEffect.Play();
+<<<<<<< HEAD
             Debug.Log("Drop particle effect played.");
             
             // Start the coroutine to stop the effect after 5 seconds.
             StartCoroutine(StopEffectAfterDelay(5f));
+=======
+            Invoke(nameof(ReplaceRoom), delayBeforeReplace);
+>>>>>>> b0fa27aea9728d17501ca0e505c0eb4e9ac2ac39
         }
         else
         {
@@ -53,6 +58,7 @@ public class DropParticleEffectTrigger : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     private IEnumerator StopEffectAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -60,5 +66,17 @@ public class DropParticleEffectTrigger : MonoBehaviour
         // Stop the particle effect.
         dropParticleEffect.Stop();
         Debug.Log("Drop particle effect stopped after 5 seconds.");
+=======
+    private void ReplaceRoom()
+    {
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.ReplaceRoom(); 
+        }
+        else
+        {
+            Debug.LogWarning("RoomManager.Instance is null.");
+        }
+>>>>>>> b0fa27aea9728d17501ca0e505c0eb4e9ac2ac39
     }
 }
