@@ -284,7 +284,7 @@ public class GyroMotionDetector : MonoBehaviour
     [Tooltip("How much time (seconds) the user has to do L->R->L.")]
     public float lrTimeWindow = 1.2f;
 
-    private int _lrStep = 0; 
+    private int _lrStep = 0;
     private float _lrStartTime = 0f;
     #endregion
 
@@ -323,11 +323,11 @@ public class GyroMotionDetector : MonoBehaviour
     #region Hint UI Elements
     [Header("Hint UI Elements")]
     [Tooltip("Panel that displays the hint. Assign your UI panel here.")]
-    public GameObject hintPanel;  
+    public GameObject hintPanel;
     [Tooltip("Image component to display the ingredient sprite.")]
-    public Image hintImage;       
+    public Image hintImage;
     [Tooltip("Text component to display the hint title or message.")]
-    public TMP_Text hintText;     
+    public TMP_Text hintText;
     #endregion
 
     void Start()
@@ -341,14 +341,14 @@ public class GyroMotionDetector : MonoBehaviour
 
     void Update()
     {
-        Vector3 accel = Input.acceleration;  
+        Vector3 accel = Input.acceleration;
         DetectTriangle(accel);
         DetectLeftRightLeft(accel);
 
         if (_gyroEnabled)
         {
             Vector3 rotationRateInDeg = Input.gyro.rotationRate * Mathf.Rad2Deg;
-            DetectHeadShake(rotationRateInDeg.y); 
+            DetectHeadShake(rotationRateInDeg.y);
             DetectHeadNod(rotationRateInDeg.x);
             DetectHeadTiltRight();
         }
@@ -481,7 +481,7 @@ public class GyroMotionDetector : MonoBehaviour
     #region HEAD NOD DETECTION
     private void DetectHeadNod(float pitchDegPerSec)
     {
-        float nodThreshold = 80.0f; 
+        float nodThreshold = 80.0f;
         if (Mathf.Abs(pitchDegPerSec) > nodThreshold)
         {
             if (_nodCount == 0)
@@ -504,7 +504,7 @@ public class GyroMotionDetector : MonoBehaviour
             if (_nodCount >= 3)
             {
                 OnHeadNodDetected();
-                _nodCount = 0; 
+                _nodCount = 0;
             }
         }
     }

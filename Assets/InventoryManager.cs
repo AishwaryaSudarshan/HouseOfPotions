@@ -790,7 +790,7 @@ public class InventoryManager : MonoBehaviour
     //         characterMovement.enabled = true;
     // }
 
-    private void DropObject()
+    public void DropObject()
     {
         if (currentlyGrabbedObject == null)
             return;
