@@ -36,12 +36,14 @@ public class SettingsMenu : MonoBehaviour
         #if UNITY_STANDALONE_OSX
             openMenuButton = "js7";
             selectButton = "js10";
+            openPotionMenu = "js13";
         #elif UNITY_STANDALONE_WIN
             openMenuButton = "js4";
             selectButton = "js10";
         #elif UNITY_ANDROID
             openMenuButton = "js0"; 
             selectButton = "js5";
+            openPotionMenu = "js11";
         #else
             openMenuButton = "js0"; 
             selectButton = "js5";

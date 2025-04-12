@@ -54,7 +54,7 @@ public class GyroMotionDetector : MonoBehaviour
     #region Head Tilt Right Settings (Hint Display)
     [Header("Head Tilt Right Settings")]
     [Tooltip("Original roll angle threshold (unused after adjustment).")]
-    public float headTiltRightAngleThreshold = 25f;
+    public float headTiltRightAngleThreshold = 15f;
     [Tooltip("Adjusted angle threshold (in degrees, negative) after remapping for head tilt right detection.")]
     public float headTiltRightAdjustedThreshold = -118f; // Updated threshold
     [Tooltip("Time (in seconds) that head tilt right must be held to trigger a hint.")]
@@ -272,9 +272,7 @@ public class GyroMotionDetector : MonoBehaviour
         Quaternion deviceRotation = new Quaternion(att.x, att.y, -att.z, -att.w);
         Vector3 euler = deviceRotation.eulerAngles;
         float roll = euler.z;  
-
-        float adjustedRoll = roll > 180f ? roll - 360f : roll;
-        Debug.Log($"Adjusted roll: {adjustedRoll}");
+        float adjustedRoll = Mathf.DeltaAngle(roll, 0f);
 
         if (adjustedRoll <= headTiltRightAdjustedThreshold)
         {
@@ -361,6 +359,7 @@ public class GyroMotionDetector : MonoBehaviour
         if (hintText != null)
         {
             hintText.text = $"Hint: Look {hintDirection}";
+            Debug.Log($"Hint: Look {hintDirection}");
         }
         if (hintPanel != null)
         {
