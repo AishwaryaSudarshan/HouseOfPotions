@@ -26,6 +26,6 @@ Interaction Techniques:
 
 Github Information:
 
-  Users: @AishwaryaSudarshan, @dheepsk, @aksharaganapathi, @sanjeet-v
+  - Users: @AishwaryaSudarshan, @dheepsk, @aksharaganapathi, @sanjeet-v
 
 Youtube Link: 
