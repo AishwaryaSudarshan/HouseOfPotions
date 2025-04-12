@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class EndGameManager : MonoBehaviour
 {
-    public GameObject characterObject;         // Drag the Character object here
-    public GameObject endPanel;                // Drag the disabled Panel here
-    private SimpleTimer simpleTimer;           // We'll access the timer from character
+    public GameObject characterObject;        
+    public GameObject endPanel;                
+    private SimpleTimer simpleTimer;           
     private bool hasEnded = false;
 
     void Start()
@@ -16,7 +16,7 @@ public class EndGameManager : MonoBehaviour
 
         if (endPanel != null)
         {
-            endPanel.SetActive(false);  // make sure it's off at start
+            endPanel.SetActive(false);  
         }
     }
 
@@ -36,7 +36,7 @@ public class EndGameManager : MonoBehaviour
             endPanel.SetActive(true);
         }
 
-        // Optional: stop time or add blur later
         Time.timeScale = 0f;
+        Application.Quit();
     }
 }

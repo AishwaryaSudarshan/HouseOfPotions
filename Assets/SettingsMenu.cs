@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,16 +9,21 @@ public class SettingsMenu : MonoBehaviour
     public Button resumeButton;
     public Button inventoryButton;
 
-    // Input mappings
     public string openMenuButton = "js4"; // ok
+    public string openPotionMenu = "js9"; //hamburger menu
     public string selectButton = "js10"; // b
     public string navigateAxis = "Vertical";
 
     public RaycastSelector raycastSelector;
     public CharacterMovement characterMovement;
-
-    // Reference to the separate inventory manager
     public InventoryManager inventoryManager;
+
+    // Reference to the TMP object
+    public GameObject potionMenuTMPObject;
+
+    // Reference to the IngredientPot script
+    public IngredientPot ingredientPot;
+
 
     private readonly List<Button> menuButtons = new();
     private int currentSelectedIndex = 0;
@@ -27,16 +33,17 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
-        // Set control scheme based on platform
         #if UNITY_STANDALONE_OSX
             openMenuButton = "js7";
             selectButton = "js10";
+            openPotionMenu = "js13";
         #elif UNITY_STANDALONE_WIN
             openMenuButton = "js4";
             selectButton = "js10";
         #elif UNITY_ANDROID
             openMenuButton = "js0"; 
             selectButton = "js5";
+            openPotionMenu = "js11";
         #else
             openMenuButton = "js0"; 
             selectButton = "js5";
@@ -75,7 +82,10 @@ public class SettingsMenu : MonoBehaviour
         {
             OpenSettingsMenu();
         }
-
+        if (Input.GetButtonDown(openPotionMenu))
+        {
+            OpenPotionMenu();
+        }
         if (menuActive)
         {
             HandleMenuNavigation();
@@ -127,8 +137,6 @@ public class SettingsMenu : MonoBehaviour
             resumeButton.onClick.RemoveAllListeners();
             resumeButton.onClick.AddListener(CloseSettingsMenu);
         }
-
-        // Delegate inventory button click to the InventoryManager.
         if (inventoryButton != null && inventoryManager != null)
         {
             inventoryButton.onClick.RemoveAllListeners();
@@ -190,6 +198,31 @@ public class SettingsMenu : MonoBehaviour
         {
             raycastSelector.enabled = true;
             raycastSelector.lineRenderer.enabled = true;
+        }
+    }
+
+    private void OpenPotionMenu()
+    {
+        if (potionMenuTMPObject != null)
+        {
+            bool isActive = potionMenuTMPObject.activeSelf;
+            potionMenuTMPObject.SetActive(!isActive);
+
+            if (!isActive)
+            {
+                TMP_Text potionMenuText = potionMenuTMPObject.GetComponentInChildren<TMP_Text>();
+                if (potionMenuText != null && ingredientPot != null)
+                {
+                    potionMenuText.text = "Required Ingredients:\n";
+                    foreach (GameObject ingredient in ingredientPot.requiredIngredients)
+                    {
+                        if (ingredient != null)
+                        {
+                            potionMenuText.text += ingredient.name + "\n";
+                        }
+                    }
+                }
+            }
         }
     }
 }
