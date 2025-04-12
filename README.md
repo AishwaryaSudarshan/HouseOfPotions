@@ -1,6 +1,6 @@
 # House Of Potions Preliminary Prototype
 
-Unity Scene for Prototype: "Combined.unity"
+Unity Scene for Prototype: "Project.unity"
 
 Target Device: Android Phone Deivice
 
@@ -23,5 +23,9 @@ Interaction Techniques:
   - Nod up and down with phone screen to fix a room in the house
 
   - Tilt phone screen to the right for 2 seconds for a hint to appear about what the closest object is and what direction to look in (front, back, left, right)
+
+Github Information:
+
+  Users: @AishwaryaSudarshan, @dheepsk, @aksharaganapathi, @sanjeet-v
 
 Youtube Link: 
