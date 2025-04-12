@@ -22,7 +22,7 @@ Interaction Techniques:
   
   - Nod up and down with phone screen to fix a room in the house
 
-  - Tilt phone screen to the left for 2 seconds for a hint to appear about what the closest object is and what direction to look in (front, back, left, right)
+  - Tilt phone screen to the left for 5 seconds for a hint to appear about what the closest object is and what direction to look in (front, back, left, right)
 
 Github Information:
 
