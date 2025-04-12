@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {
-    // Your RoomData implementation and array of rooms
     [System.Serializable]
     public class RoomData
     {
@@ -12,7 +11,7 @@ public class RoomManager : MonoBehaviour
         public float detectionRadius = 5f;
         public GameObject roomParent;
         [HideInInspector]
-        public bool isFixed = false; // Track whether room has been fixed
+        public bool isFixed = false;
     }
 
     public RoomData[] rooms;
@@ -35,14 +34,12 @@ public class RoomManager : MonoBehaviour
 
     private void Start()
     {
-        // Initialize all rooms to "broken" state at start
         foreach (RoomData room in rooms)
         {
             UpdateRoomVisibility(room, false);
         }
     }
 
-    // Automatically check room every interval
     private void Update()
     {
         if (Time.time >= nextCheckTime)
@@ -52,7 +49,6 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    // Checks which room the player is in by comparing distances.
     private void CheckPlayerRoom()
     {
         if (player == null)
@@ -68,15 +64,12 @@ public class RoomManager : MonoBehaviour
                 if (currentRoomName != room.roomName)
                 {
                     currentRoomName = room.roomName;
-                    // Just update visibility based on current state, don't change the state
                     UpdateRoomVisibility(room, room.isFixed);
                 }
                 return;
             }
         }
     }
-
-    // Call this when a potion is dropped to fix the current room
     public void ForceRoomUpdate()
     {
         foreach (RoomData room in rooms)
@@ -90,8 +83,6 @@ public class RoomManager : MonoBehaviour
             }
         }
     }
-
-    // Updates room visibility based on its fixed state without changing the state
     private void UpdateRoomVisibility(RoomData room, bool showFixed)
     {
         if (room.roomParent == null)

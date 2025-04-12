@@ -26007,7 +26007,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 357657092}
-  - component: {fileID: 357657091}
   m_Layer: 0
   m_Name: Library
   m_TagString: Untagged
@@ -26015,18 +26014,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &357657091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357657090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &357657092
 Transform:
   m_ObjectHideFlags: 0
@@ -77709,7 +77696,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1018393746}
-  - component: {fileID: 1018393745}
   m_Layer: 0
   m_Name: DiningRoom
   m_TagString: Untagged
@@ -77717,18 +77703,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1018393745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018393744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1018393746
 Transform:
   m_ObjectHideFlags: 0
@@ -84563,7 +84537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb1092f959e384e8d8d420a15b3a9169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterObject: {fileID: 0}
+  characterObject: {fileID: 1468204992}
   endPanel: {fileID: 1040144526}
 --- !u!4 &1109901980
 Transform:
@@ -85221,7 +85195,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1114665840}
-  - component: {fileID: 1114665839}
   m_Layer: 0
   m_Name: Garden
   m_TagString: Untagged
@@ -85229,18 +85202,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1114665839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1114665838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1114665840
 Transform:
   m_ObjectHideFlags: 0
@@ -127513,7 +127474,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657463834}
-  - component: {fileID: 1657463833}
   m_Layer: 0
   m_Name: AlchemyRoom
   m_TagString: Untagged
@@ -127521,18 +127481,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1657463833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657463832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1657463834
 Transform:
   m_ObjectHideFlags: 0

@@ -101,7 +101,6 @@ public class GyroMotionDetector : MonoBehaviour
         }
         else
         {
-            // Optional: Add alternative detection using acceleration if needed.
         }
     }
 
@@ -269,18 +268,14 @@ public class GyroMotionDetector : MonoBehaviour
     #region HEAD TILT RIGHT DETECTION FOR HINT
     private void DetectHeadTiltRight()
     {
-        // Obtain the device's attitude from the gyroscope.
         Quaternion att = Input.gyro.attitude;
-        // Convert the gyro attitude to Unity’s coordinate system.
         Quaternion deviceRotation = new Quaternion(att.x, att.y, -att.z, -att.w);
         Vector3 euler = deviceRotation.eulerAngles;
-        float roll = euler.z;  // Raw roll (0 to 360)
+        float roll = euler.z;  
 
-        // Remap roll values greater than 180 into negative range
         float adjustedRoll = roll > 180f ? roll - 360f : roll;
         Debug.Log($"Adjusted roll: {adjustedRoll}");
 
-        // Check if the adjusted roll is less than (more negative than) our threshold.
         if (adjustedRoll <= headTiltRightAdjustedThreshold)
         {
             if (!isHeadTiltingRight)
@@ -293,7 +288,6 @@ public class GyroMotionDetector : MonoBehaviour
                 if (Time.time - headTiltRightStartTime >= headTiltRightHoldDuration)
                 {
                     OnHeadTiltRightAndHold();
-                    // Reset to avoid repeated triggers until user releases the tilt.
                     isHeadTiltingRight = false;
                 }
             }
@@ -333,7 +327,6 @@ public class GyroMotionDetector : MonoBehaviour
             return;
         }
 
-        // Dynamically calculate the hint direction based on the position of the closest ingredient relative to the main camera.
         Camera mainCamera = Camera.main;
         if (mainCamera != null)
         {
@@ -341,7 +334,6 @@ public class GyroMotionDetector : MonoBehaviour
             float dotForward = Vector3.Dot(mainCamera.transform.forward, directionToIngredient);
             float dotRight = Vector3.Dot(mainCamera.transform.right, directionToIngredient);
 
-            // Determine if the ingredient is more in front/back or left/right.
             if (Mathf.Abs(dotForward) >= Mathf.Abs(dotRight))
             {
                 hintDirection = dotForward > 0 ? "ahead" : "behind";
@@ -353,7 +345,7 @@ public class GyroMotionDetector : MonoBehaviour
         }
         else
         {
-            hintDirection = "right"; // Fallback value.
+            hintDirection = "right"; 
         }
 
         InteractableObject interactable = closestIngredient.GetComponent<InteractableObject>();

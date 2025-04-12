@@ -30,7 +30,6 @@ public class InventoryManager : MonoBehaviour
     private float inventoryNextNavigationTime = 0f;
     private readonly float navigationDelay = 0.3f;
 
-    // Particle system used for normal drop (fallback if no custom effect is found on the main camera).
     [SerializeField] private ParticleSystem dropParticleSystem;
     [SerializeField] private DropParticleEffectTrigger dropEffectTrigger;
 
@@ -214,7 +213,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (i == currentSelectedIndex && inventoryObjects[i] != null)
                 {
-                    image.color = Color.yellow; // Highlight selected slot
+                    image.color = Color.yellow; 
                 }
                 else if (inventoryObjects[i] != null)
                 {
