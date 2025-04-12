@@ -9,7 +9,6 @@ public class SettingsMenu : MonoBehaviour
     public Button resumeButton;
     public Button inventoryButton;
 
-    // Input mappings
     public string openMenuButton = "js4"; // ok
     public string openPotionMenu = "js9"; //hamburger menu
     public string selectButton = "js10"; // b
@@ -17,8 +16,6 @@ public class SettingsMenu : MonoBehaviour
 
     public RaycastSelector raycastSelector;
     public CharacterMovement characterMovement;
-
-    // Reference to the separate inventory manager
     public InventoryManager inventoryManager;
 
     // Reference to the TMP object
@@ -36,7 +33,6 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
-        // Set control scheme based on platform
         #if UNITY_STANDALONE_OSX
             openMenuButton = "js7";
             selectButton = "js10";
@@ -139,8 +135,6 @@ public class SettingsMenu : MonoBehaviour
             resumeButton.onClick.RemoveAllListeners();
             resumeButton.onClick.AddListener(CloseSettingsMenu);
         }
-
-        // Delegate inventory button click to the InventoryManager.
         if (inventoryButton != null && inventoryManager != null)
         {
             inventoryButton.onClick.RemoveAllListeners();

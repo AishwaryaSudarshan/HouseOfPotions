@@ -12,16 +12,13 @@ public class CharacterMovement : MonoBehaviour
     [Tooltip("Should be checked if using the Bluetooth Controller to move. If using keyboard, leave this unchecked.")]
     public bool joyStickMode;
 
-    // Start is called before the first frame update
     void Start()
     {
         charCntrl = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Get horizontal and Vertical movements
         float horComp = Input.GetAxis("Horizontal");
         float vertComp = Input.GetAxis("Vertical");
 
@@ -32,8 +29,6 @@ public class CharacterMovement : MonoBehaviour
         }
 
         Vector3 moveVect = Vector3.zero;
-
-        //Get look Direction
         Vector3 cameraLook = cameraObj.transform.forward;
         cameraLook.y = 0f;
         cameraLook = cameraLook.normalized;

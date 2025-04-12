@@ -63,7 +63,7 @@ public class RaycastSelector : MonoBehaviour
                     currentOutline.enabled = true;
                 }
             }
-            else if(hit.collider.CompareTag("Pot"))
+            else if (hit.collider.CompareTag("Pot"))
             {
                 GameObject targetObject = hit.collider.gameObject;
                 if (currentHighlightedObject != targetObject)
@@ -76,19 +76,6 @@ public class RaycastSelector : MonoBehaviour
                     currentOutline.enabled = true;
                 }
             }
-            // else if (hit.collider.CompareTag("Potions"))
-            // {
-            //     GameObject targetObject = hit.collider.gameObject;
-            //     if (currentHighlightedObject != targetObject)
-            //     {
-            //         currentHighlightedObject = targetObject;
-            //         currentOutline = targetObject.GetComponent<Outline>() ?? targetObject.AddComponent<Outline>();
-            //         currentOutline.OutlineMode = Outline.Mode.OutlineVisible;
-            //         currentOutline.OutlineColor = outlineColor;
-            //         currentOutline.OutlineWidth = outlineWidth;
-            //         currentOutline.enabled = true;
-            //     }
-            // }
             else
             {
                 if (currentHighlightedObject != null && currentOutline != null)
@@ -103,6 +90,7 @@ public class RaycastSelector : MonoBehaviour
             lineRenderer.SetPosition(1, ray.origin + (ray.direction * rayLength));
         }
     }
+
     public void CallDropParticleEffect()
     {
         if (dropParticleTrigger != null)
