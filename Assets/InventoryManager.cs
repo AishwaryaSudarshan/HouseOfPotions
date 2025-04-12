@@ -317,6 +317,77 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    //public void DropObject()
+    //{
+    //    if (currentlyGrabbedObject == null)
+    //        return;
+
+    //    // Special handling for objects tagged as "Potions"
+    //    if (currentlyGrabbedObject.CompareTag("Potions"))
+    //    {
+    //        if (dropEffectTrigger != null)
+    //        {
+    //            dropEffectTrigger.TriggerDropEffect();
+    //        }
+    //        else if (dropParticleSystem != null)
+    //        {
+    //            dropParticleSystem.gameObject.SetActive(true);
+    //            dropParticleSystem.Play();
+    //        }
+
+    //        Destroy(currentlyGrabbedObject);
+    //        currentlyGrabbedObject = null;
+    //        if (characterMovement != null && !characterMovement.enabled)
+    //            characterMovement.enabled = true;
+    //        return;
+    //    }
+
+    //    Ray ray = raycastSelector.CurrentRay;
+    //    RaycastHit hit;
+    //    float rayDistance = raycastSelector.rayLength;
+    //    if (Physics.Raycast(ray, out hit, rayDistance))
+    //    {
+    //        if (hit.collider.CompareTag("Pot"))
+    //        {
+    //            IngredientPot pot = hit.collider.GetComponentInParent<IngredientPot>();
+    //            if (pot != null)
+    //            {
+    //                Debug.Log("Pot is detected!");
+    //                pot.AddIngredient(currentlyGrabbedObject);
+    //                Destroy(currentlyGrabbedObject);
+    //                currentlyGrabbedObject = null;
+    //                if (characterMovement != null && !characterMovement.enabled)
+    //                    characterMovement.enabled = true;
+    //                return;
+    //            }
+    //        }
+    //    }
+
+    //    GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
+    //    if (grabComponent != null)
+    //        grabComponent.isGrabbed = false;
+    //    Rigidbody rb = currentlyGrabbedObject.GetComponent<Rigidbody>();
+    //    if (rb != null)
+    //    {
+    //        rb.isKinematic = false;
+    //        rb.useGravity = true;
+    //        rb.linearVelocity = Vector3.zero;
+    //    }
+    //    currentlyGrabbedObject.transform.parent = null;
+    //    Camera mainCamera = Camera.main;
+    //    if (mainCamera != null)
+    //    {
+    //        Vector3 dropPosition = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
+    //        currentlyGrabbedObject.transform.position = dropPosition;
+    //        if (dropParticleSystem != null)
+    //        {
+    //            dropParticleSystem.Play();
+    //        }
+    //    }
+    //    currentlyGrabbedObject = null;
+    //    if (characterMovement != null && !characterMovement.enabled)
+    //        characterMovement.enabled = true;
+    //}
     public void DropObject()
     {
         if (currentlyGrabbedObject == null)
@@ -335,6 +406,9 @@ public class InventoryManager : MonoBehaviour
                 dropParticleSystem.Play();
             }
 
+            // Trigger room update for the current room
+            RoomManager.Instance.ForceRoomUpdate();
+
             Destroy(currentlyGrabbedObject);
             currentlyGrabbedObject = null;
             if (characterMovement != null && !characterMovement.enabled)
@@ -342,6 +416,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
+        // Existing drop logic for non-potion objects
         Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
         float rayDistance = raycastSelector.rayLength;
@@ -388,6 +463,8 @@ public class InventoryManager : MonoBehaviour
         if (characterMovement != null && !characterMovement.enabled)
             characterMovement.enabled = true;
     }
+
+
 
     public void DebugInventoryContents()
     {

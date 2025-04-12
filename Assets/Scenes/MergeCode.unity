@@ -25892,7 +25892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: Library
 --- !u!4 &357657092
 Transform:
   m_ObjectHideFlags: 0
@@ -67002,7 +67001,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3a5ae2957b248f6ac93f684678c162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rooms:
+  - roomName: Library
+    center: {x: -6, y: 0.0383, z: -0.6769}
+    detectionRadius: 5
+    roomParent: {fileID: 357657090}
+    isFixed: 0
+  - roomName: Garden
+    center: {x: 10, y: -0.4, z: -14.6}
+    detectionRadius: 5
+    roomParent: {fileID: 1114665838}
+    isFixed: 0
+  - roomName: DiningRoom
+    center: {x: 5, y: -0.3, z: 10}
+    detectionRadius: 3
+    roomParent: {fileID: 1018393744}
+    isFixed: 0
+  player: {fileID: 1468204993}
   currentRoomName: 
+  checkInterval: 0.2
 --- !u!4 &876855386
 Transform:
   m_ObjectHideFlags: 0
@@ -77797,7 +77814,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: DiningRoom
 --- !u!4 &1018393746
 Transform:
   m_ObjectHideFlags: 0
@@ -85121,7 +85137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: Garden
 --- !u!4 &1114665840
 Transform:
   m_ObjectHideFlags: 0
@@ -127373,7 +127388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac3fa70152a745049c0624ae2e52471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: AlchemyRoom
 --- !u!4 &1657463834
 Transform:
   m_ObjectHideFlags: 0

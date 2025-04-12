@@ -26,7 +26,7 @@ public class GyroMotionDetector : MonoBehaviour
     [Tooltip("How much time (seconds) the user has to do L->R->L.")]
     public float lrTimeWindow = 1.2f;
 
-    private int _lrStep = 0; 
+    private int _lrStep = 0;
     private float _lrStartTime = 0f;
     #endregion
 
@@ -53,23 +53,28 @@ public class GyroMotionDetector : MonoBehaviour
 
     #region Head Tilt Right Settings (Hint Display)
     [Header("Head Tilt Right Settings")]
-    [Tooltip("Angle threshold (in degrees) for head tilt right detection (roll angle).")]
+    [Tooltip("Original roll angle threshold (unused after adjustment).")]
     public float headTiltRightAngleThreshold = 25f;
+    [Tooltip("Adjusted angle threshold (in degrees, negative) after remapping for head tilt right detection.")]
+    public float headTiltRightAdjustedThreshold = -118f; // Updated threshold
     [Tooltip("Time (in seconds) that head tilt right must be held to trigger a hint.")]
-    public float headTiltRightHoldDuration = 3.0f;
-
+    public float headTiltRightHoldDuration = 2.0f; // Updated hold duration
+    [Tooltip("Direction to look into for the hint.")]
+    public string hintDirection = "right";
     private bool isHeadTiltingRight = false;
     private float headTiltRightStartTime = 0f;
     #endregion
 
+
+
     #region Hint UI Elements
     [Header("Hint UI Elements")]
     [Tooltip("Panel that displays the hint. Assign your UI panel here.")]
-    public GameObject hintPanel;  
+    public GameObject hintPanel;
     [Tooltip("Image component to display the ingredient sprite.")]
-    public Image hintImage;       
+    public Image hintImage;
     [Tooltip("Text component to display the hint title or message.")]
-    public TMP_Text hintText;     
+    public TMP_Text hintText;
     #endregion
 
     void Start()
@@ -83,14 +88,14 @@ public class GyroMotionDetector : MonoBehaviour
 
     void Update()
     {
-        Vector3 accel = Input.acceleration;  
+        Vector3 accel = Input.acceleration;
         DetectTriangle(accel);
         DetectLeftRightLeft(accel);
 
         if (_gyroEnabled)
         {
             Vector3 rotationRateInDeg = Input.gyro.rotationRate * Mathf.Rad2Deg;
-            DetectHeadShake(rotationRateInDeg.y); 
+            DetectHeadShake(rotationRateInDeg.y);
             DetectHeadNod(rotationRateInDeg.x);
             DetectHeadTiltRight();
         }
@@ -138,7 +143,7 @@ public class GyroMotionDetector : MonoBehaviour
     private void OnTriangleDetected()
     {
         Debug.Log("Triangle gesture detected! Mixing the potion...");
-        IngredientPot pot = FindObjectOfType<IngredientPot>();
+        IngredientPot pot = FindFirstObjectByType<IngredientPot>();
         if (pot != null)
         {
             pot.MixPotion();
@@ -174,7 +179,7 @@ public class GyroMotionDetector : MonoBehaviour
     private void OnLeftRightLeftDetected()
     {
         Debug.Log("Left-Right-Left gesture detected! Releasing the potion...");
-        IngredientPot pot = FindObjectOfType<IngredientPot>();
+        IngredientPot pot = FindFirstObjectByType<IngredientPot>();
         if (pot != null)
         {
             pot.ReleasePotion();
@@ -223,7 +228,7 @@ public class GyroMotionDetector : MonoBehaviour
     #region HEAD NOD DETECTION
     private void DetectHeadNod(float pitchDegPerSec)
     {
-        float nodThreshold = 30.0f; 
+        float nodThreshold = 30.0f;
         if (Mathf.Abs(pitchDegPerSec) > nodThreshold)
         {
             if (_nodCount == 0)
@@ -246,7 +251,7 @@ public class GyroMotionDetector : MonoBehaviour
             if (_nodCount >= 3)
             {
                 OnHeadNodDetected();
-                _nodCount = 0; 
+                _nodCount = 0;
             }
         }
     }
@@ -254,7 +259,7 @@ public class GyroMotionDetector : MonoBehaviour
     private void OnHeadNodDetected()
     {
         Debug.Log("Head nod detected! Executing DropObject method.");
-        InventoryManager invManager = FindObjectOfType<InventoryManager>();
+        InventoryManager invManager = FindFirstObjectByType<InventoryManager>();
         if (invManager != null)
         {
             invManager.DropObject();
@@ -270,10 +275,14 @@ public class GyroMotionDetector : MonoBehaviour
         // Convert the gyro attitude to Unity’s coordinate system.
         Quaternion deviceRotation = new Quaternion(att.x, att.y, -att.z, -att.w);
         Vector3 euler = deviceRotation.eulerAngles;
-        float roll = euler.z;  // Roll represents head tilt
+        float roll = euler.z;  // Raw roll (0 to 360)
 
-        // Check if the roll angle exceeds our threshold for tilting right.
-        if (roll >= headTiltRightAngleThreshold && roll <= 90f)
+        // Remap roll values greater than 180 into negative range
+        float adjustedRoll = roll > 180f ? roll - 360f : roll;
+        Debug.Log($"Adjusted roll: {adjustedRoll}");
+
+        // Check if the adjusted roll is less than (more negative than) our threshold.
+        if (adjustedRoll <= headTiltRightAdjustedThreshold)
         {
             if (!isHeadTiltingRight)
             {
@@ -296,22 +305,22 @@ public class GyroMotionDetector : MonoBehaviour
         }
     }
 
+
+
     private void OnHeadTiltRightAndHold()
     {
         Debug.Log("Head tilt right held for required duration. Attempting to show hint...");
 
-        IngredientPot pot = FindObjectOfType<IngredientPot>();
+        IngredientPot pot = FindFirstObjectByType<IngredientPot>();
         if (pot == null)
         {
             Debug.LogWarning("IngredientPot not found.");
             return;
         }
 
-        // Retrieve the closest ingredient that hasn't been collected.
         GameObject closestIngredient = pot.GetClosestRequiredIngredient();
         if (closestIngredient == null)
         {
-            // No ingredients remaining—display "No Hints Remaining".
             if (hintPanel != null && hintText != null)
             {
                 hintText.text = "No Hints Remaining";
@@ -325,7 +334,29 @@ public class GyroMotionDetector : MonoBehaviour
             return;
         }
 
-        // If a valid ingredient is found, display its image and the word "Hint".
+        // Dynamically calculate the hint direction based on the position of the closest ingredient relative to the main camera.
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            Vector3 directionToIngredient = (closestIngredient.transform.position - mainCamera.transform.position).normalized;
+            float dotForward = Vector3.Dot(mainCamera.transform.forward, directionToIngredient);
+            float dotRight = Vector3.Dot(mainCamera.transform.right, directionToIngredient);
+
+            // Determine if the ingredient is more in front/back or left/right.
+            if (Mathf.Abs(dotForward) >= Mathf.Abs(dotRight))
+            {
+                hintDirection = dotForward > 0 ? "ahead" : "behind";
+            }
+            else
+            {
+                hintDirection = dotRight > 0 ? "right" : "left";
+            }
+        }
+        else
+        {
+            hintDirection = "right"; // Fallback value.
+        }
+
         InteractableObject interactable = closestIngredient.GetComponent<InteractableObject>();
         if (interactable != null && hintImage != null)
         {
@@ -338,7 +369,7 @@ public class GyroMotionDetector : MonoBehaviour
         }
         if (hintText != null)
         {
-            hintText.text = "Hint";
+            hintText.text = $"Hint: Look {hintDirection}";
         }
         if (hintPanel != null)
         {
@@ -346,6 +377,8 @@ public class GyroMotionDetector : MonoBehaviour
             StartCoroutine(HideHintPanelAfterDelay(3f));
         }
     }
+
+
 
     private IEnumerator HideHintPanelAfterDelay(float delay)
     {

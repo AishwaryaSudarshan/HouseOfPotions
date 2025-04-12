@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class RoomManager : MonoBehaviour
         public Vector3 center;
         public float detectionRadius = 5f;
         public GameObject roomParent;
+        [HideInInspector]
+        public bool isFixed = false; // Track whether room has been fixed
     }
 
     public RoomData[] rooms;
@@ -30,7 +33,16 @@ public class RoomManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    // Automatically check room every interval (optional)
+    private void Start()
+    {
+        // Initialize all rooms to "broken" state at start
+        foreach (RoomData room in rooms)
+        {
+            UpdateRoomVisibility(room, false);
+        }
+    }
+
+    // Automatically check room every interval
     private void Update()
     {
         if (Time.time >= nextCheckTime)
@@ -56,21 +68,31 @@ public class RoomManager : MonoBehaviour
                 if (currentRoomName != room.roomName)
                 {
                     currentRoomName = room.roomName;
-                    UpdateRoomScene(room);
+                    // Just update visibility based on current state, don't change the state
+                    UpdateRoomVisibility(room, room.isFixed);
                 }
                 return;
             }
         }
     }
 
-    // Call this to force a check now.
+    // Call this when a potion is dropped to fix the current room
     public void ForceRoomUpdate()
     {
-        CheckPlayerRoom();
+        foreach (RoomData room in rooms)
+        {
+            if (room.roomName == currentRoomName)
+            {
+                room.isFixed = true;
+                UpdateRoomVisibility(room, true);
+                Debug.Log($"Room {room.roomName} has been fixed with a potion!");
+                return;
+            }
+        }
     }
 
-    // Updates the room scene by disabling the broken version and enabling the fixed version.
-    private void UpdateRoomScene(RoomData room)
+    // Updates room visibility based on its fixed state without changing the state
+    private void UpdateRoomVisibility(RoomData room, bool showFixed)
     {
         if (room.roomParent == null)
         {
@@ -87,8 +109,12 @@ public class RoomManager : MonoBehaviour
             return;
         }
 
-        broken.gameObject.SetActive(false);
-        fixedRoom.gameObject.SetActive(true);
-        Debug.Log($"Room {room.roomName} updated: {broken.name} disabled, {fixedRoom.name} enabled.");
+        broken.gameObject.SetActive(!showFixed);
+        fixedRoom.gameObject.SetActive(showFixed);
+
+        if (showFixed)
+            Debug.Log($"Room {room.roomName} updated: {broken.name} disabled, {fixedRoom.name} enabled.");
+        else
+            Debug.Log($"Room {room.roomName} updated: {broken.name} enabled, {fixedRoom.name} disabled.");
     }
 }
