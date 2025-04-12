@@ -22539,7 +22539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3a5ae2957b248f6ac93f684678c162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rooms: []
+  player: {fileID: 0}
   currentRoomName: 
+  checkInterval: 0.2
 --- !u!4 &289532736
 Transform:
   m_ObjectHideFlags: 0
@@ -78632,7 +78635,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropParticleEffect: {fileID: 1655683868}
-  delayBeforeReplace: 0.5
 --- !u!4 &1087687728 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7287137019065901088, guid: 186741bf17cbb0e4fa3ef06daa1f190f, type: 3}
@@ -102450,7 +102452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropParticleEffect: {fileID: 2142541586}
-  delayBeforeReplace: 0.5
 --- !u!114 &1363472010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124507,6 +124508,7 @@ MonoBehaviour:
   raycastSelector: {fileID: 676972815}
   characterMovement: {fileID: 676972812}
   dropParticleSystem: {fileID: 1655683868}
+  dropEffectTrigger: {fileID: 0}
 --- !u!4 &1656766069
 Transform:
   m_ObjectHideFlags: 0
@@ -151158,7 +151160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1997375645
@@ -157266,7 +157268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2083351357
 MonoBehaviour:
   m_ObjectHideFlags: 0

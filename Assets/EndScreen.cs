@@ -38,5 +38,6 @@ public class EndGameManager : MonoBehaviour
 
         // Optional: stop time or add blur later
         Time.timeScale = 0f;
+        Application.Quit();
     }
 }

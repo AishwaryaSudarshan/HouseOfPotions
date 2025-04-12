@@ -255,14 +255,13 @@ public class GyroMotionDetector : MonoBehaviour
             }
         }
     }
-
     private void OnHeadNodDetected()
     {
         Debug.Log("Head nod detected! Executing DropObject method.");
         InventoryManager invManager = FindFirstObjectByType<InventoryManager>();
         if (invManager != null)
         {
-            invManager.DropObject();
+            invManager.DropObjectWithHeadNod();
         }
     }
     #endregion

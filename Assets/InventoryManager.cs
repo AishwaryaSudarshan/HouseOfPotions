@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     public string navigateAxis = "Vertical";
     public string selectButton = "js10";
     public string dropButton = "js8";
+    private bool isHeadNodDrop = false;
 
     public RaycastSelector raycastSelector;
     public CharacterMovement characterMovement;
@@ -35,19 +36,19 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_STANDALONE_OSX
-            dropButton = "js11";
-            selectButton = "js10";
-#elif UNITY_STANDALONE_WIN
-            dropButton = "js8";
-            selectButton = "js10";
-#elif UNITY_ANDROID
-        dropButton = "js10";
-        selectButton = "js5";
-#else
-            dropButton = "js10"; 
-            selectButton = "js5";
-#endif
+        #if UNITY_STANDALONE_OSX
+                    dropButton = "js11";
+                    selectButton = "js10";
+        #elif UNITY_STANDALONE_WIN
+                    dropButton = "js8";
+                    selectButton = "js10";
+        #elif UNITY_ANDROID
+                dropButton = "js10";
+                selectButton = "js5";
+        #else
+                    dropButton = "js10"; 
+                    selectButton = "js5";
+        #endif
 
         inventorySlots = new GameObject[maxInventoryItems];
         inventoryObjects = new GameObject[maxInventoryItems];
@@ -317,104 +318,75 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    //public void DropObject()
-    //{
-    //    if (currentlyGrabbedObject == null)
-    //        return;
+    // public void DropObject()
+    // {
+    //     if (currentlyGrabbedObject == null)
+    //         return;
 
-    //    // Special handling for objects tagged as "Potions"
-    //    if (currentlyGrabbedObject.CompareTag("Potions"))
-    //    {
-    //        if (dropEffectTrigger != null)
-    //        {
-    //            dropEffectTrigger.TriggerDropEffect();
-    //        }
-    //        else if (dropParticleSystem != null)
-    //        {
-    //            dropParticleSystem.gameObject.SetActive(true);
-    //            dropParticleSystem.Play();
-    //        }
+    //     // Special handling for objects tagged as "Potions"
+    //     if (currentlyGrabbedObject.CompareTag("Potions"))
+    //     {
+    //         if (dropEffectTrigger != null)
+    //         {
+    //             dropEffectTrigger.TriggerDropEffect();
+    //         }
+    //         else if (dropParticleSystem != null)
+    //         {
+    //             dropParticleSystem.gameObject.SetActive(true);
+    //             dropParticleSystem.Play();
+    //         }
 
-    //        Destroy(currentlyGrabbedObject);
-    //        currentlyGrabbedObject = null;
-    //        if (characterMovement != null && !characterMovement.enabled)
-    //            characterMovement.enabled = true;
-    //        return;
-    //    }
+    //         // Trigger room update for the current room
+    //         RoomManager.Instance.ForceRoomUpdate();
 
-    //    Ray ray = raycastSelector.CurrentRay;
-    //    RaycastHit hit;
-    //    float rayDistance = raycastSelector.rayLength;
-    //    if (Physics.Raycast(ray, out hit, rayDistance))
-    //    {
-    //        if (hit.collider.CompareTag("Pot"))
-    //        {
-    //            IngredientPot pot = hit.collider.GetComponentInParent<IngredientPot>();
-    //            if (pot != null)
-    //            {
-    //                Debug.Log("Pot is detected!");
-    //                pot.AddIngredient(currentlyGrabbedObject);
-    //                Destroy(currentlyGrabbedObject);
-    //                currentlyGrabbedObject = null;
-    //                if (characterMovement != null && !characterMovement.enabled)
-    //                    characterMovement.enabled = true;
-    //                return;
-    //            }
-    //        }
-    //    }
-
-    //    GrabObj grabComponent = currentlyGrabbedObject.GetComponent<GrabObj>();
-    //    if (grabComponent != null)
-    //        grabComponent.isGrabbed = false;
-    //    Rigidbody rb = currentlyGrabbedObject.GetComponent<Rigidbody>();
-    //    if (rb != null)
-    //    {
-    //        rb.isKinematic = false;
-    //        rb.useGravity = true;
-    //        rb.linearVelocity = Vector3.zero;
-    //    }
-    //    currentlyGrabbedObject.transform.parent = null;
-    //    Camera mainCamera = Camera.main;
-    //    if (mainCamera != null)
-    //    {
-    //        Vector3 dropPosition = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
-    //        currentlyGrabbedObject.transform.position = dropPosition;
-    //        if (dropParticleSystem != null)
-    //        {
-    //            dropParticleSystem.Play();
-    //        }
-    //    }
-    //    currentlyGrabbedObject = null;
-    //    if (characterMovement != null && !characterMovement.enabled)
-    //        characterMovement.enabled = true;
-    //}
+    //         Destroy(currentlyGrabbedObject);
+    //         currentlyGrabbedObject = null;
+    //         if (characterMovement != null && !characterMovement.enabled)
+    //             characterMovement.enabled = true;
+    //         return;
+    //     }
     public void DropObject()
+{
+    if (currentlyGrabbedObject == null)
+        return;
+
+    // For Potions objects - only allow head nod drops
+    if (currentlyGrabbedObject.CompareTag("Potions"))
     {
-        if (currentlyGrabbedObject == null)
-            return;
-
-        // Special handling for objects tagged as "Potions"
-        if (currentlyGrabbedObject.CompareTag("Potions"))
+        if (!isHeadNodDrop)
         {
-            if (dropEffectTrigger != null)
-            {
-                dropEffectTrigger.TriggerDropEffect();
-            }
-            else if (dropParticleSystem != null)
-            {
-                dropParticleSystem.gameObject.SetActive(true);
-                dropParticleSystem.Play();
-            }
-
-            // Trigger room update for the current room
-            RoomManager.Instance.ForceRoomUpdate();
-
-            Destroy(currentlyGrabbedObject);
-            currentlyGrabbedObject = null;
-            if (characterMovement != null && !characterMovement.enabled)
-                characterMovement.enabled = true;
+            Debug.Log("Potions can only be dropped with a head nod!");
             return;
         }
+        
+        if (dropEffectTrigger != null)
+        {
+            dropEffectTrigger.TriggerDropEffect();
+        }
+        else if (dropParticleSystem != null)
+        {
+            dropParticleSystem.gameObject.SetActive(true);
+            dropParticleSystem.Play();
+        }
+
+        // Trigger room update for the current room
+        if (RoomManager.Instance != null)
+        {
+            RoomManager.Instance.ForceRoomUpdate();
+        }
+
+        Destroy(currentlyGrabbedObject);
+        currentlyGrabbedObject = null;
+        if (characterMovement != null && !characterMovement.enabled)
+            characterMovement.enabled = true;
+        return;
+    }
+    // For regular objects - only allow button drops
+    else if (isHeadNodDrop)
+    {
+        Debug.Log("Regular objects can only be dropped with the drop button!");
+        return;
+    }
 
         // Existing drop logic for non-potion objects
         Ray ray = raycastSelector.CurrentRay;
@@ -479,5 +451,11 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log($"Slot {i}: Empty");
             }
         }
+    }
+    public void DropObjectWithHeadNod()
+    {
+        isHeadNodDrop = true;
+        DropObject();
+        isHeadNodDrop = false;
     }
 }
