@@ -143441,14 +143441,14 @@ MonoBehaviour:
     the leftmost corner of the screen to follow.  \n \u2022 All interactable objects
     are outlined in <color=red>red</color>.  \n \u2022 When you hover over an object,
     it turns <color=yellow>yellow</color> to indicate that it\u2019s selected.  \n\u2022
-    If you get stuck, <color=blue>tilt your head right for 2 seconds</color> for
-    a hint to appear on the closest object that you can collect.  \n \u2022 Click
-    <color=purple>\u201CX\u201D</color> to store ingredients from the different rooms. 
-    \n \u2022 Once all necessary ingredients are collected, go to the Alchemy Room. 
-    \n \u2022 Hover over the pot, open your inventory by clicking <color=purple>\u201COK\u201D</color>,
-    and toggle through items with your joystick.  \n \u2022 Once you\u2019ve made
-    your selection, click <color=purple>\u201CB\u201D</color> to grab it.  \n \u2022
-    Make sure your raycast is pointing inside the pot and click <color=purple>\u201CA\u201D</color>
+    If you get stuck, <color=blue>tilt your head left for 5 seconds</color> for a
+    hint to appear on the closest object that you can collect.  \n \u2022 Click <color=purple>\u201CX\u201D</color>
+    to store ingredients from the different rooms.  \n \u2022 Once all necessary
+    ingredients are collected, go to the Alchemy Room.  \n \u2022 Hover over the
+    pot, open your inventory by clicking <color=purple>\u201COK\u201D</color>, and
+    toggle through items with your joystick.  \n \u2022 Once you\u2019ve made your
+    selection, click <color=purple>\u201CB\u201D</color> to grab it.  \n \u2022 Make
+    sure your raycast is pointing inside the pot and click <color=purple>\u201CA\u201D</color>
     to drop the item. (Look for the pot bubble!)  \n \u2022 Keep adding ingredients
     until the potion is complete. You\u2019ll know it worked when the room looks
     magical.  \n\u2022 Potion bottles to throw at the rooms will appear on the table
@@ -145333,7 +145333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1796588416
 Transform:
   m_ObjectHideFlags: 0
@@ -145342,7 +145342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1796588415}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 11.85, y: 1.45, z: -24.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -170246,6 +170246,6 @@ SceneRoots:
   - {fileID: 1159589632}
   - {fileID: 876855386}
   - {fileID: 1109901980}
-  - {fileID: 1796588416}
   - {fileID: 950727366}
   - {fileID: 1636761515}
+  - {fileID: 1796588416}
