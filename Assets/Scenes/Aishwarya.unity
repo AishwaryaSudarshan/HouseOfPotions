@@ -137276,7 +137276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff08806e4f95e9641be8992342433d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayLength: 10
+  rayLength: 2
   outlineColor: {r: 1, g: 0.9999878, b: 0, a: 1}
   outlineWidth: 10
   lineRenderer: {fileID: 1468204996}

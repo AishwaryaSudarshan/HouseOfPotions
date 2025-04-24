@@ -1,8 +1,8 @@
-
+// RaycastSelector.cs
 using UnityEngine;
 public class RaycastSelector : MonoBehaviour
 {
-    public float rayLength = 10f;
+    public float rayLength = 2f; // Shorten the ray length
     public Color outlineColor = Color.red;
     public float outlineWidth = 5f;
     public LineRenderer lineRenderer;
@@ -103,5 +103,3 @@ public class RaycastSelector : MonoBehaviour
         }
     }
 }
-
-
