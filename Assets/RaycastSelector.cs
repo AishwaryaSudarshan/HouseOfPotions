@@ -2,7 +2,7 @@
 using UnityEngine;
 public class RaycastSelector : MonoBehaviour
 {
-    public float rayLength = 100f;
+    public float rayLength = 10f;
     public Color outlineColor = Color.red;
     public float outlineWidth = 5f;
     public LineRenderer lineRenderer;

@@ -1,3 +1,4 @@
+// InventoryManager.cs
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -344,6 +345,23 @@ public class InventoryManager : MonoBehaviour
     //             characterMovement.enabled = true;
     //         return;
     //     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (currentlyGrabbedObject != null && other.CompareTag("Pot"))
+        {
+            Debug.Log("Collided with pot!");
+            IngredientPot pot = other.GetComponentInParent<IngredientPot>();
+            if (pot != null)
+            {
+                Debug.Log("Pot is detected!");
+                pot.AddIngredient(currentlyGrabbedObject);
+                Destroy(currentlyGrabbedObject);
+                currentlyGrabbedObject = null;
+                if (characterMovement != null && !characterMovement.enabled)
+                    characterMovement.enabled = true;
+            }
+        }
+    }
     public void DropObject()
 {
     if (currentlyGrabbedObject == null)
