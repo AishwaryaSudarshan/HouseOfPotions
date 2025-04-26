@@ -78,9 +78,13 @@ public class SettingsMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown(openMenuButton) && !menuActive)
+        //if (Input.GetButtonDown(openMenuButton) && !menuActive)
+        //{
+        //    OpenSettingsMenu();
+        //}
+        if (Input.GetButtonDown("js9"))
         {
-            OpenSettingsMenu();
+            OpenInventoryMenu();
         }
         if (Input.GetButtonDown(openPotionMenu))
         {
@@ -223,6 +227,13 @@ public class SettingsMenu : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+    private void OpenInventoryMenu()
+    {
+        if (inventoryManager != null)
+        {
+            inventoryManager.OpenInventory();
         }
     }
 }
