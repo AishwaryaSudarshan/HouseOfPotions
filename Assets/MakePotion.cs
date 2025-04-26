@@ -114,10 +114,16 @@ public class IngredientPot : MonoBehaviour
     {
         foreach (GameObject required in requiredIngredients)
         {
-            if (!addedIngredients.Contains(required))
+            bool found = false;
+            foreach (GameObject added in addedIngredients)
             {
-                return false;
+                if (added.name.Contains(required.name))
+                {
+                    found = true;
+                    break;
+                }
             }
+            if (!found) return false;
         }
         return true;
     }
