@@ -160,6 +160,12 @@ public class InventoryManager : MonoBehaviour
                 HighlightDropAllButton(); // Highlight the Drop All button
             }
         }
+
+        // Disable character movement
+        if (characterMovement != null)
+        {
+            characterMovement.enabled = false;
+        }
         //currentSelectedIndex = FindFirstOccupiedSlot();
         //HighlightInventoryItem();
         inventoryNextNavigationTime = Time.time + 0.5f;
@@ -180,15 +186,21 @@ public class InventoryManager : MonoBehaviour
     private void HandleInventoryNavigation()
     {
         float verticalInput = Input.GetAxisRaw(navigateAxis);
+        float horizontalInput = Input.GetAxisRaw(inventoryAxis);
 
-        if (IsDropAllButtonHighlighted())
+        if (verticalInput > 0.5f) // Navigate Up
         {
-            if (Input.GetButtonDown(selectButton))
+            if (!IsDropAllButtonHighlighted())
             {
-                DropAllObjectsIntoPot(); // Perform the "Drop All" action
+                UnhighlightInventoryItem();
+                HighlightDropAllButton();
+                inventoryNextNavigationTime = Time.time + navigationDelay;
                 return;
             }
-            if (verticalInput < -0.5f)
+        }
+        else if (verticalInput < -0.5f) // Navigate Down
+        {
+            if (IsDropAllButtonHighlighted())
             {
                 UnhighlightDropAllButton();
                 currentSelectedIndex = FindFirstOccupiedSlot();
@@ -197,46 +209,59 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
-
-        float horizontalInput = Input.GetAxisRaw(inventoryAxis);
-
-        if (Time.time >= inventoryNextNavigationTime)
+        else if (horizontalInput > 0.5f || horizontalInput < -0.5f) // Navigate Left or Right
         {
-            if (horizontalInput > 0.5f)
+            if (!IsDropAllButtonHighlighted())
             {
-                int startIndex = currentSelectedIndex;
-                do
+                if (Time.time >= inventoryNextNavigationTime)
                 {
-                    currentSelectedIndex = (currentSelectedIndex - 1 + maxInventoryItems) % maxInventoryItems;
-                    if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
+                    if (horizontalInput > 0.5f)
                     {
-                        break;
-                    }
-                } while (true);
+                        int startIndex = currentSelectedIndex;
+                        do
+                        {
+                            currentSelectedIndex = (currentSelectedIndex - 1 + maxInventoryItems) % maxInventoryItems;
+                            if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
+                            {
+                                break;
+                            }
+                        } while (true);
 
-                inventoryNextNavigationTime = Time.time + navigationDelay;
-                HighlightInventoryItem();
-            }
-            else if (horizontalInput < -0.5f)
-            {
-                int startIndex = currentSelectedIndex;
-                do
-                {
-                    currentSelectedIndex = (currentSelectedIndex + 1) % maxInventoryItems;
-                    if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
+                        inventoryNextNavigationTime = Time.time + navigationDelay;
+                        HighlightInventoryItem();
+                    }
+                    else if (horizontalInput < -0.5f)
                     {
-                        break;
+                        int startIndex = currentSelectedIndex;
+                        do
+                        {
+                            currentSelectedIndex = (currentSelectedIndex + 1) % maxInventoryItems;
+                            if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
+                            {
+                                break;
+                            }
+                        } while (true);
+
+                        inventoryNextNavigationTime = Time.time + navigationDelay;
+                        HighlightInventoryItem();
                     }
-                } while (true);
-
-                inventoryNextNavigationTime = Time.time + navigationDelay;
-                HighlightInventoryItem();
+                }
+                return;
             }
+        }
 
-            if (Input.GetButtonDown(selectButton) && inventoryObjects[currentSelectedIndex] != null)
+        if (IsDropAllButtonHighlighted())
+        {
+            if (Input.GetButtonDown(selectButton))
             {
-                GrabObjectFromInventory(currentSelectedIndex);
+                DropAllObjectsIntoPot(); // Perform the "Drop All" action
+                return;
             }
+        }
+
+        if (Input.GetButtonDown(selectButton) && IsInventoryItemSelected())
+        {
+            GrabObjectFromInventory(currentSelectedIndex);
         }
     }
 
@@ -261,6 +286,38 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void UnhighlightInventoryItem()
+    {
+        for (int i = 0; i < maxInventoryItems; i++)
+        {
+            Image image = inventorySlots[i].GetComponent<Image>();
+            if (image != null)
+            {
+                if (inventoryObjects[i] != null)
+                {
+                    image.color = Color.white;
+                }
+                else
+                {
+                    image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                }
+            }
+        }
+    }
+
+    private bool IsInventoryItemSelected()
+    {
+        for (int i = 0; i < maxInventoryItems; i++)
+        {
+            Image image = inventorySlots[i].GetComponent<Image>();
+            if (image != null && image.color == Color.yellow)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void GrabObjectFromInventory(int index)
@@ -511,6 +568,12 @@ public class InventoryManager : MonoBehaviour
             {
                 Time.timeScale = 1;
             }
+        }
+
+        // Enable character movement
+        if (characterMovement != null)
+        {
+            characterMovement.enabled = true;
         }
     }
 
