@@ -1,7 +1,7 @@
-// InventoryManager.cs
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems; // Add this line
+using System.Collections;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -35,6 +35,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private DropParticleEffectTrigger dropEffectTrigger;
 
     private bool gamePausedBeforeInventory = false; // Added to track pause state
+    public Button dropAllButton; // Make dropAllButton a member variable
 
     private void Start()
     {
@@ -113,11 +114,11 @@ public class InventoryManager : MonoBehaviour
         {
             HandleInventoryNavigation();
         }
-
         if (currentlyGrabbedObject != null && Input.GetButtonDown(dropButton))
         {
             DropObject();
         }
+      
     }
 
     public void OpenInventory()
@@ -150,10 +151,17 @@ public class InventoryManager : MonoBehaviour
         if (inventoryCanvas != null)
         {
             inventoryCanvas.gameObject.SetActive(true);
-        }
 
-        currentSelectedIndex = FindFirstOccupiedSlot();
-        HighlightInventoryItem();
+            // Enable the Drop All button
+            dropAllButton = inventoryCanvas.transform.Find("DropAllButton")?.GetComponent<Button>();
+            if (dropAllButton != null)
+            {
+                dropAllButton.gameObject.SetActive(true);
+                HighlightDropAllButton(); // Highlight the Drop All button
+            }
+        }
+        //currentSelectedIndex = FindFirstOccupiedSlot();
+        //HighlightInventoryItem();
         inventoryNextNavigationTime = Time.time + 0.5f;
     }
 
@@ -171,6 +179,25 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleInventoryNavigation()
     {
+        float verticalInput = Input.GetAxisRaw(navigateAxis);
+
+        if (IsDropAllButtonHighlighted())
+        {
+            if (Input.GetButtonDown(selectButton))
+            {
+                DropAllObjectsIntoPot(); // Perform the "Drop All" action
+                return;
+            }
+            if (verticalInput < -0.5f)
+            {
+                UnhighlightDropAllButton();
+                currentSelectedIndex = FindFirstOccupiedSlot();
+                HighlightInventoryItem();
+                inventoryNextNavigationTime = Time.time + navigationDelay;
+                return;
+            }
+        }
+
         float horizontalInput = Input.GetAxisRaw(inventoryAxis);
 
         if (Time.time >= inventoryNextNavigationTime)
@@ -462,12 +489,18 @@ public class InventoryManager : MonoBehaviour
         currentSelectedIndex = 0;
     }
 
-    public void CloseInventory() // Added CloseInventory method
+    public void CloseInventory()
     {
         if (inventoryCanvas != null)
         {
             inventoryCanvas.gameObject.SetActive(false);
             inventoryActive = false;
+
+            // Disable the Drop All button
+            if (dropAllButton != null)
+            {
+                dropAllButton.gameObject.SetActive(false);
+            }
 
             // Restore the pause state
             if (gamePausedBeforeInventory)
@@ -479,5 +512,110 @@ public class InventoryManager : MonoBehaviour
                 Time.timeScale = 1;
             }
         }
+    }
+
+    public void DropAllObjectsIntoPot()
+    {
+        // Find the closest pot
+        GameObject closestPot = FindClosestPot();
+
+        if (closestPot == null)
+        {
+            Debug.LogWarning("No pot found to drop ingredients into.");
+            return;
+        }
+
+        IngredientPot pot = closestPot.GetComponentInParent<IngredientPot>();
+        if (pot == null)
+        {
+            Debug.LogWarning("Closest pot does not have an IngredientPot component.");
+            return;
+        }
+
+        // Iterate through inventory slots and drop each object into the pot
+        for (int i = 0; i < maxInventoryItems; i++)
+        {
+            if (inventoryObjects[i] != null)
+            {
+                GameObject obj = inventoryObjects[i];
+                pot.AddIngredient(obj);
+
+                // Clear the inventory slot
+                Image slotImage = inventorySlots[i].GetComponent<Image>();
+                if (slotImage != null)
+                {
+                    slotImage.sprite = defaultItemSprite;
+                    slotImage.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                }
+
+                inventoryObjects[i] = null;
+                inventorySprites[i] = null;
+            }
+        }
+
+        // Optionally, close the inventory after dropping all items
+        CloseInventory();
+    }
+
+    private GameObject FindClosestPot()
+    {
+        GameObject[] pots = GameObject.FindGameObjectsWithTag("Pot");
+        if (pots.Length == 0)
+        {
+            return null;
+        }
+
+        GameObject closestPot = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 currentPosition = transform.position; // Use the InventoryManager's position
+
+        foreach (GameObject pot in pots)
+        {
+            float distance = Vector3.Distance(pot.transform.position, currentPosition);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPot = pot;
+            }
+        }
+
+        return closestPot;
+    }
+
+    private void HighlightDropAllButton()
+    {
+        if (dropAllButton != null)
+        {
+            Image buttonImage = dropAllButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                buttonImage.color = Color.yellow; // Highlight color
+            }
+        }
+    }
+
+    private void UnhighlightDropAllButton()
+    {
+        if (dropAllButton != null)
+        {
+            Image buttonImage = dropAllButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                buttonImage.color = Color.white; // Default color
+            }
+        }
+    }
+
+    private bool IsDropAllButtonHighlighted()
+    {
+        if (dropAllButton != null)
+        {
+            Image buttonImage = dropAllButton.GetComponent<Image>();
+            if (buttonImage != null)
+            {
+                return buttonImage.color == Color.yellow;
+            }
+        }
+        return false;
     }
 }
