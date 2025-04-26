@@ -85,6 +85,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < maxInventoryItems; i++)
         {
             GameObject slotUI = Instantiate(inventoryItemPrefab, inventoryItemsContainer);
+            slotUI.name = "InventorySlot_" + i; // Name the slot for easier debugging
 
             RectTransform rt = slotUI.GetComponent<RectTransform>();
             if (rt != null)
@@ -97,6 +98,14 @@ public class InventoryManager : MonoBehaviour
             {
                 image.sprite = defaultItemSprite;
                 image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            }
+
+            // Ensure Outline component exists on the slot
+            Outline outline = slotUI.GetComponent<Outline>();
+            if (outline == null)
+            {
+                outline = slotUI.AddComponent<Outline>();
+                outline.enabled = false; // Initially disable the outline
             }
 
             inventorySlots[i] = slotUI;
@@ -220,7 +229,7 @@ public class InventoryManager : MonoBehaviour
                         int startIndex = currentSelectedIndex;
                         do
                         {
-                            currentSelectedIndex = (currentSelectedIndex - 1 + maxInventoryItems) % maxInventoryItems;
+                            currentSelectedIndex = (currentSelectedIndex + 1) % maxInventoryItems;
                             if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
                             {
                                 break;
@@ -235,7 +244,7 @@ public class InventoryManager : MonoBehaviour
                         int startIndex = currentSelectedIndex;
                         do
                         {
-                            currentSelectedIndex = (currentSelectedIndex + 1) % maxInventoryItems;
+                            currentSelectedIndex = (currentSelectedIndex - 1 + maxInventoryItems) % maxInventoryItems;
                             if (inventoryObjects[currentSelectedIndex] != null || currentSelectedIndex == startIndex)
                             {
                                 break;
@@ -264,36 +273,56 @@ public class InventoryManager : MonoBehaviour
             GrabObjectFromInventory(currentSelectedIndex);
         }
     }
-
+    
     private void HighlightInventoryItem()
-    {
-        for (int i = 0; i < maxInventoryItems; i++)
-        {
-            Image image = inventorySlots[i].GetComponent<Image>();
-            if (image != null)
-            {
-                if (i == currentSelectedIndex && inventoryObjects[i] != null)
-                {
-                    image.color = Color.yellow; 
-                }
-                else if (inventoryObjects[i] != null)
-                {
-                    image.color = Color.white;
-                }
-                else
-                {
-                    image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
-                }
-            }
-        }
-    }
+     {
+         for (int i = 0; i < maxInventoryItems; i++)
+         {
+             GameObject slot = inventorySlots[i];
+             if (slot == null) continue;
+ 
+             Image image = slot.GetComponent<Image>();
+             Outline outline = slot.GetComponent<Outline>();
+ 
+             if (image != null && outline != null)
+             {
+                 if (i == currentSelectedIndex && inventoryObjects[i] != null)
+                 {
+                     image.color = Color.yellow;
+                     outline.enabled = true;
+                     outline.OutlineColor = Color.red;
+                     outline.OutlineWidth = 10f;
+                 }
+                 else if (inventoryObjects[i] != null)
+                 {
+                     image.color = Color.white;
+                     outline.enabled = false;
+                 }
+                 else
+                 {
+                     image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                     outline.enabled = false;
+                 }
+             }
+             else
+             {
+                 Debug.LogWarning("Image or Outline component missing on inventory slot: " + slot.name);
+             }
+         }
+     }
+ 
 
     private void UnhighlightInventoryItem()
     {
         for (int i = 0; i < maxInventoryItems; i++)
         {
-            Image image = inventorySlots[i].GetComponent<Image>();
-            if (image != null)
+            GameObject slot = inventorySlots[i];
+            if (slot == null) continue;
+
+            Image image = slot.GetComponent<Image>();
+            Outline outline = slot.GetComponent<Outline>();
+
+            if (image != null && outline != null)
             {
                 if (inventoryObjects[i] != null)
                 {
@@ -303,6 +332,11 @@ public class InventoryManager : MonoBehaviour
                 {
                     image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 }
+                outline.enabled = false;
+            }
+            else
+            {
+                Debug.LogWarning("Image or Outline component missing on inventory slot: " + slot.name);
             }
         }
     }
@@ -579,29 +613,69 @@ public class InventoryManager : MonoBehaviour
 
     public void DropAllObjectsIntoPot()
     {
-        // Find the closest pot
-        GameObject closestPot = FindClosestPot();
+        // Find the closest visible pot
+        GameObject visiblePot = FindVisiblePot();
 
-        if (closestPot == null)
+        if (visiblePot == null)
         {
-            Debug.LogWarning("No pot found to drop ingredients into.");
+            Debug.LogWarning("No visible pot found to drop ingredients into. Make sure a pot is in view.");
             return;
         }
 
-        IngredientPot pot = closestPot.GetComponentInParent<IngredientPot>();
+        IngredientPot pot = visiblePot.GetComponentInParent<IngredientPot>();
         if (pot == null)
         {
-            Debug.LogWarning("Closest pot does not have an IngredientPot component.");
+            Debug.LogWarning("Visible pot does not have an IngredientPot component.");
             return;
         }
 
-        // Iterate through inventory slots and drop each object into the pot
+        StartCoroutine(AnimateAndDropAll(pot));
+    }
+
+    private IEnumerator AnimateAndDropAll(IngredientPot pot)
+    {
         for (int i = 0; i < maxInventoryItems; i++)
         {
             if (inventoryObjects[i] != null)
             {
                 GameObject obj = inventoryObjects[i];
-                pot.AddIngredient(obj);
+                inventoryObjects[i] = null; // Clear the inventory slot immediately
+                inventorySprites[i] = null;
+
+                // Get the position of the inventory slot
+                Vector3 startPosition = inventorySlots[i].transform.position;
+                Vector3 potPosition = pot.transform.position;
+                Vector3 endPosition = potPosition + Vector3.up * 0.25f; // Pot's position + slight offset above
+
+                // Instantiate a temporary object for animation
+                GameObject tempObject = Instantiate(obj);
+                tempObject.SetActive(true); // Make sure it's active
+                tempObject.transform.position = startPosition;
+
+                // Disable the original object
+                obj.SetActive(false);
+
+                // Animate the temporary object
+                float animationDuration = 0.75f; // Adjust as needed
+                float time = 0;
+                while (time < animationDuration)
+                {
+                    time += Time.deltaTime;
+                    float fraction = time / animationDuration;
+
+                    // Parabolic motion calculation
+                    float height = Mathf.Sin(fraction * Mathf.PI) * 1.0f; // Adjust height multiplier as needed
+                    Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, fraction);
+                    currentPosition.y += height;
+
+                    tempObject.transform.position = currentPosition;
+
+                    yield return null;
+                }
+
+                // After animation, add the ingredient to the pot
+                pot.AddIngredient(tempObject);
+                pot.addedIngredients.Add(tempObject); // Add to the list of added ingredients
 
                 // Clear the inventory slot
                 Image slotImage = inventorySlots[i].GetComponent<Image>();
@@ -610,9 +684,6 @@ public class InventoryManager : MonoBehaviour
                     slotImage.sprite = defaultItemSprite;
                     slotImage.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
                 }
-
-                inventoryObjects[i] = null;
-                inventorySprites[i] = null;
             }
         }
 
@@ -620,29 +691,59 @@ public class InventoryManager : MonoBehaviour
         CloseInventory();
     }
 
-    private GameObject FindClosestPot()
+    private GameObject FindVisiblePot()
     {
+        // First check if raycast is pointing at a pot
+        if (raycastSelector != null)
+        {
+            Ray ray = raycastSelector.CurrentRay;
+            RaycastHit hit;
+            
+            if (Physics.Raycast(ray, out hit, raycastSelector.rayLength))
+            {
+                if (hit.collider.CompareTag("Pot"))
+                {
+                    return hit.collider.gameObject;
+                }
+            }
+        }
+        
+        // If raycast didn't hit a pot, check if any pot is in camera view
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogWarning("Main camera not found");
+            return null;
+        }
+        
         GameObject[] pots = GameObject.FindGameObjectsWithTag("Pot");
         if (pots.Length == 0)
         {
             return null;
         }
-
-        GameObject closestPot = null;
+        
+        // Check which pots are visible in the camera's view
+        GameObject closestVisiblePot = null;
         float closestDistance = Mathf.Infinity;
-        Vector3 currentPosition = transform.position; // Use the InventoryManager's position
-
+        
         foreach (GameObject pot in pots)
         {
-            float distance = Vector3.Distance(pot.transform.position, currentPosition);
-            if (distance < closestDistance)
+            // Check if pot is in camera view
+            Vector3 screenPoint = mainCamera.WorldToViewportPoint(pot.transform.position);
+            bool isVisible = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+            
+            if (isVisible)
             {
-                closestDistance = distance;
-                closestPot = pot;
+                float distance = Vector3.Distance(mainCamera.transform.position, pot.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestVisiblePot = pot;
+                }
             }
         }
-
-        return closestPot;
+        
+        return closestVisiblePot;
     }
 
     private void HighlightDropAllButton()
