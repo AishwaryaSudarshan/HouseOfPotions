@@ -34,6 +34,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private ParticleSystem dropParticleSystem;
     [SerializeField] private DropParticleEffectTrigger dropEffectTrigger;
 
+    private bool gamePausedBeforeInventory = false; // Added to track pause state
+
     private void Start()
     {
         #if UNITY_STANDALONE_OSX
@@ -138,6 +140,12 @@ public class InventoryManager : MonoBehaviour
 
         Debug.Log("Opening Inventory");
         inventoryActive = true;
+
+        // Store the pause state before opening inventory
+        gamePausedBeforeInventory = Time.timeScale == 0;
+
+        // Unpause the game temporarily to allow inventory interaction
+        Time.timeScale = 1;
 
         if (inventoryCanvas != null)
         {
@@ -318,33 +326,6 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    // public void DropObject()
-    // {
-    //     if (currentlyGrabbedObject == null)
-    //         return;
-
-    //     // Special handling for objects tagged as "Potions"
-    //     if (currentlyGrabbedObject.CompareTag("Potions"))
-    //     {
-    //         if (dropEffectTrigger != null)
-    //         {
-    //             dropEffectTrigger.TriggerDropEffect();
-    //         }
-    //         else if (dropParticleSystem != null)
-    //         {
-    //             dropParticleSystem.gameObject.SetActive(true);
-    //             dropParticleSystem.Play();
-    //         }
-
-    //         // Trigger room update for the current room
-    //         RoomManager.Instance.ForceRoomUpdate();
-
-    //         Destroy(currentlyGrabbedObject);
-    //         currentlyGrabbedObject = null;
-    //         if (characterMovement != null && !characterMovement.enabled)
-    //             characterMovement.enabled = true;
-    //         return;
-    //     }
     private void OnTriggerEnter(Collider other)
     {
         if (currentlyGrabbedObject != null && other.CompareTag("Pot"))
@@ -474,5 +455,29 @@ public class InventoryManager : MonoBehaviour
         isHeadNodDrop = true;
         DropObject();
         isHeadNodDrop = false;
+    }
+
+    public void ResetSelection()
+    {
+        currentSelectedIndex = 0;
+    }
+
+    public void CloseInventory() // Added CloseInventory method
+    {
+        if (inventoryCanvas != null)
+        {
+            inventoryCanvas.gameObject.SetActive(false);
+            inventoryActive = false;
+
+            // Restore the pause state
+            if (gamePausedBeforeInventory)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+        }
     }
 }
