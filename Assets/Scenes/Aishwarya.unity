@@ -94699,7 +94699,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: e1a2d0e0f1744f243ac1838514a15736, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: HideAndSeekHunter
@@ -94749,7 +94749,7 @@ MonoBehaviour:
   - {fileID: 46736648}
   - {fileID: 70090814}
   - {fileID: 1625140040}
-  playerSimulator: {fileID: 0}
+  playerSimulator: {fileID: 1468205003}
 --- !u!136 &1010559793
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -138459,20 +138459,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468204992}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b77b9ba1ddc3be94495b38f0b89368e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementWaypoints: []
+  movementWaypoints:
+  - {fileID: 1184897798}
+  - {fileID: 1933397195}
+  - {fileID: 513619570}
+  - {fileID: 1499602655}
+  - {fileID: 73804234}
+  - {fileID: 871089357}
+  - {fileID: 1105251081}
+  - {fileID: 804148966}
+  - {fileID: 200776106}
+  - {fileID: 403525255}
+  - {fileID: 1403500777}
+  - {fileID: 1004796866}
+  - {fileID: 516007188}
+  - {fileID: 46736648}
+  - {fileID: 70090814}
   playerSpeed: 3
   waypointReachedThreshold: 1.5
   chanceToHidePerSecond: 0.1
   minHideDuration: 3
   maxHideDuration: 8
-  playerHidingScript: {fileID: 0}
-  characterController: {fileID: 0}
-  npcAgent: {fileID: 0}
+  playerHidingScript: {fileID: 1468205002}
+  characterController: {fileID: 1468205001}
+  npcAgent: {fileID: 1010559792}
 --- !u!1001 &1469819784
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -165,7 +165,7 @@ public class HideAndSeekNPC : Agent
             if (knowsPlayerLocation) // Move towards last known spot
             {
                 // Small negative reward for *losing* sight while knowing location? Optional.
-                // AddReward(-0.001f);
+                AddReward(-0.001f);
                 navMeshAgent.SetDestination(lastKnownPlayerPosition);
                 // Check if near last known pos and give up if still can't see
                 if (Vector3.Distance(transform.position, lastKnownPlayerPosition) < 2.0f && !CanSeePlayer())
