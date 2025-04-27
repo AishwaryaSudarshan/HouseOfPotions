@@ -26,14 +26,6 @@ public class HideAndSeekNPC : Agent
 
     private List<int> visitedPatrolPoints = new List<int>();
 
-    public TrainingPlayerSimulator playerSimulator; // Assign in Inspector
-
-    public void RegisterPlayerSimulator(TrainingPlayerSimulator simulator)
-    {
-        playerSimulator = simulator;
-        Debug.Log("NPC registered player simulator.");
-    }
-
     public override void Initialize()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -49,20 +41,6 @@ public class HideAndSeekNPC : Agent
 
     public override void OnEpisodeBegin()
     {
-        // --- ADD THIS AT THE VERY BEGINNING ---
-        // Reset the player's position and state via the simulator script
-        if (playerSimulator != null)
-        {
-            playerSimulator.ResetPlayer();
-        }
-        else
-        {
-            // Warn if training likely won't be dynamic
-            Debug.LogWarning("Player Simulator not assigned to NPC. Player position will not reset between episodes.");
-        }
-        // --- END OF ADDED CODE ---
-
-
         // Existing NPC reset logic:
         // transform.localPosition = new Vector3(0, 0, 0); // Reset NPC position if needed
         knowsPlayerLocation = false;
@@ -281,7 +259,7 @@ public class HideAndSeekNPC : Agent
         {
             if (navMeshAgent.SetDestination(hit.position))
             {
-                Debug.Log($"NPC patrolling towards point index {currentPatrolIndex} at {hit.position} (Visit {visitedPatrolPoints.Count} of {patrolPoints.Length})");
+                //Debug.Log($"NPC patrolling towards point index {currentPatrolIndex} at {hit.position} (Visit {visitedPatrolPoints.Count} of {patrolPoints.Length})");
             }
             else
             {

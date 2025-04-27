@@ -1,5 +1,6 @@
 using UnityEngine;
-using System.Collections; // Needed for IEnumerator if using timed hiding
+using System.Collections;
+using UnityEngine.AI; // Needed for IEnumerator if using timed hiding
 
 public class TrainingPlayerSimulator : MonoBehaviour
 {
@@ -41,16 +42,6 @@ public class TrainingPlayerSimulator : MonoBehaviour
             Debug.LogError("TrainingPlayerSimulator: PlayerHiding script reference not set!");
         }
 
-        // Register this simulator with the NPC agent so it can call ResetPlayer
-        if (npcAgent != null)
-        {
-            npcAgent.RegisterPlayerSimulator(this);
-        }
-        else
-        {
-            Debug.LogError("TrainingPlayerSimulator: NPC Agent reference not set! Player won't reset automatically.");
-        }
-
         // Initial state setup moved to ResetPlayer()
         // PickNewWaypoint(); // Now called by ResetPlayer
     }
@@ -74,21 +65,57 @@ public class TrainingPlayerSimulator : MonoBehaviour
         if (movementWaypoints != null && movementWaypoints.Length > 0)
         {
             int randomIndex = Random.Range(0, movementWaypoints.Length);
-            // IMPORTANT: Teleport player using CharacterController's method if active
-            if (characterController != null && characterController.enabled)
+            // Get position from waypoint
+            Vector3 spawnPosition = movementWaypoints[randomIndex].position;
+
+            // ADDED: Raycast to ensure the position is on ground/valid
+            RaycastHit hit;
+            if (Physics.Raycast(spawnPosition + Vector3.up * 2f, Vector3.down, out hit, 10f))
             {
-                characterController.enabled = false; // Disable CC temporarily for teleport
-                transform.position = movementWaypoints[randomIndex].position;
-                transform.rotation = movementWaypoints[randomIndex].rotation; // Optional: Reset rotation
-                characterController.enabled = true; // Re-enable
+                // Use the raycast hit point to ensure we're on solid ground
+                spawnPosition = hit.point + Vector3.up * 0.1f; // Slight offset to prevent clipping
+
+                // IMPORTANT: Teleport player using CharacterController's method if active
+                if (characterController != null && characterController.enabled)
+                {
+                    characterController.enabled = false; // Disable CC temporarily for teleport
+                    transform.position = spawnPosition;
+                    transform.rotation = movementWaypoints[randomIndex].rotation; // Optional: Reset rotation
+                    characterController.enabled = true; // Re-enable
+                }
+                else
+                {
+                    transform.position = spawnPosition; // Fallback if no CC
+                    transform.rotation = movementWaypoints[randomIndex].rotation;
+                }
+
+                Debug.Log($"Player reset to waypoint {randomIndex} at {transform.position}");
             }
             else
             {
-                transform.position = movementWaypoints[randomIndex].position; // Fallback if no CC
-                transform.rotation = movementWaypoints[randomIndex].rotation;
-            }
+                Debug.LogWarning($"Waypoint {randomIndex} might be floating or below ground! Using navmesh sampling instead.");
 
-            Debug.Log($"Player reset to waypoint {randomIndex} at {transform.position}");
+                // Fallback: Try to sample a position on the NavMesh near the waypoint
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(spawnPosition, out navHit, 5f, NavMesh.AllAreas))
+                {
+                    if (characterController != null && characterController.enabled)
+                    {
+                        characterController.enabled = false;
+                        transform.position = navHit.position;
+                        characterController.enabled = true;
+                    }
+                    else
+                    {
+                        transform.position = navHit.position;
+                    }
+                    Debug.Log($"Used NavMesh fallback for player reset at {transform.position}");
+                }
+                else
+                {
+                    Debug.LogError($"Waypoint {randomIndex} has no valid ground beneath it and no nearby NavMesh!");
+                }
+            }
 
             // Pick a new destination different from start
             PickNewWaypoint();
@@ -99,6 +126,7 @@ public class TrainingPlayerSimulator : MonoBehaviour
             isMoving = false; // Cannot move if no waypoints
         }
     }
+
 
 
     void Update()

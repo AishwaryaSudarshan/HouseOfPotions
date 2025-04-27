@@ -94701,7 +94701,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: e1a2d0e0f1744f243ac1838514a15736, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: HideAndSeekHunter
   TeamId: 0
   m_UseChildSensors: 1
@@ -94749,7 +94749,6 @@ MonoBehaviour:
   - {fileID: 46736648}
   - {fileID: 70090814}
   - {fileID: 1625140040}
-  playerSimulator: {fileID: 1468205003}
 --- !u!136 &1010559793
 CapsuleCollider:
   m_ObjectHideFlags: 0
