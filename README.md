@@ -9,8 +9,10 @@ Interaction Techniques:
   - Hover, click, and move throughout the game with the Raycast Pointer and Joystick
   
   - Start game with Raycast and Joystick button "B" on Android
+
+  - Click the Joystick power button to pause the game at anytime
   
-  - Grab objects with Joystick button "X" on Android
+  - Grab objects with Joystick button "B" on Android
   
   - Open global menu with Joystick button "Okay" on Android
 
