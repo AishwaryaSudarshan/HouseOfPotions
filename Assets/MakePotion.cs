@@ -71,13 +71,11 @@ public class IngredientPot : MonoBehaviour
 
         foreach (GameObject ingredient in requiredIngredients)
         {
-            // Skip if the ingredient is null, already collected, or inactive in the scene.
             if (ingredient == null || addedIngredients.Contains(ingredient) || !ingredient.activeInHierarchy)
             {
                 continue;
             }
 
-            // Calculate distance from the camera to this ingredient.
             float distance = Vector3.Distance(mainCamera.transform.position, ingredient.transform.position);
             if (distance < minDistance)
             {
@@ -116,10 +114,16 @@ public class IngredientPot : MonoBehaviour
     {
         foreach (GameObject required in requiredIngredients)
         {
-            if (!addedIngredients.Contains(required))
+            bool found = false;
+            foreach (GameObject added in addedIngredients)
             {
-                return false;
+                if (added.name.Contains(required.name))
+                {
+                    found = true;
+                    break;
+                }
             }
+            if (!found) return false;
         }
         return true;
     }
@@ -187,7 +191,5 @@ public class IngredientPot : MonoBehaviour
         {
             particleDust2.Stop();
         }
-        
-        // Note: pourPotions is not activated here, because we expect the release gesture to do that.
     }
 }

@@ -1,46 +1,53 @@
 using UnityEngine;
-using UnityEngine.UI;  // Import to access UI elements
+using UnityEngine.UI;
 
 public class StartScreenManager : MonoBehaviour
 {
-    public GameObject startScreen;  // Reference to the Start Screen UI
-    public Button startButton;      // Reference to the Start Button
-
-    // Start is called before the first frame update
+    public GameObject startScreen;  
+    public string selectButton;     
+    private RaycastSelector raycastSelector; 
+    
     private void Start()
     {
-        // Show the start screen initially
+        #if UNITY_STANDALONE_OSX
+            selectButton = "js10";
+        #elif UNITY_STANDALONE_WIN
+            selectButton = "js10";
+        #elif UNITY_ANDROID
+            selectButton = "js5";
+        #else
+            selectButton = "js5";
+        #endif
+        
+        raycastSelector = FindFirstObjectByType<RaycastSelector>();
+        
         startScreen.SetActive(true);
-
-        // Add listener for the start button click
-        startButton.onClick.AddListener(OnStartButtonClicked);
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        // Check for raycast click directly using mouse button
-        if (Input.GetMouseButtonDown(0)) // Left mouse button click
+        if (raycastSelector != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Cast ray from mouse position
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            raycastSelector.enabled = false;
+            if (raycastSelector.lineRenderer != null)
             {
-                // Check if raycast hit the Start Button
-                if (hit.transform.gameObject == startButton.gameObject)
-                {
-                    OnStartButtonClicked();  // Trigger the button click event
-                }
+                raycastSelector.lineRenderer.enabled = false;
             }
         }
     }
-
-    // Handle Start Button Click
+    private void Update()
+    {
+        if (Input.GetButtonDown(selectButton))
+        {
+            OnStartButtonClicked();
+        }
+    }
     private void OnStartButtonClicked()
     {
-        // Disable the start screen panel
         startScreen.SetActive(false);
-
-        // Now, you can enable other game elements or allow interaction to begin here
+        if (raycastSelector != null)
+        {
+            raycastSelector.enabled = true;
+            if (raycastSelector.lineRenderer != null)
+            {
+                raycastSelector.lineRenderer.enabled = true;
+            }
+        }
     }
 }
