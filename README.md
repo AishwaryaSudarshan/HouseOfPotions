@@ -10,9 +10,13 @@ Interaction Techniques:
   
   - Start game with Raycast and Joystick button "B" on Android
 
+  - If you get caught by the NPC, the game will end and you'll have to restart the game
+
   - Click the Joystick power button to pause the game at anytime
   
   - Grab objects with Joystick button "B" on Android
+
+  - When you want to hide from the NPC before or after getting caught, press Joystick button "X" on Android 
   
   - Open global menu with Joystick button "Okay" on Android
 
