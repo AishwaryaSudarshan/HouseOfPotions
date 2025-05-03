@@ -30,6 +30,10 @@ Interaction Techniques:
 
   - Tilt phone screen to the left for 5 seconds for a hint to appear about what the closest object is and what direction to look in (ahead, behind, left, right)
 
+Advanced Requirements:
+
+  - We selected the Intelligent NPCs & Mobile Sensors advanced requirements because we thought they would make our project more engaging, increase the difficulty, and fit well with our magical theme. We chose the Intelligent NPC as the knight to go well with our fantasy theme and have it "guard" the House of Potions. The motion-based interactions we included give the character a sense of magical capabilities.
+
 Github Information:
 
   - Users: @AishwaryaSudarshan, @dheepsk, @aksharaganapathi, @sanjeet-v
