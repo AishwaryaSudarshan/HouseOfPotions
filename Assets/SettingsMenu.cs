@@ -32,7 +32,6 @@ public class SettingsMenu : MonoBehaviour
     private float nextNavigationTime = 0f;
     private readonly float navigationDelay = 0.3f;
 
-    private bool resumeMenuOpen = false;
     private bool inventoryMenuOpen = false;
     private bool potionMenuOpen = false;
 
@@ -255,14 +254,6 @@ public class SettingsMenu : MonoBehaviour
             }
         }
     }
-    private void OpenInventoryMenu()
-    {
-        CloseAllMenus(); // Close other menus before opening this one
-        if (inventoryManager != null)
-        {
-            inventoryManager.OpenInventory();
-        }
-    }
 
     // SettingsMenu.cs
     private void ToggleSettingsMenu()
@@ -276,7 +267,6 @@ public class SettingsMenu : MonoBehaviour
         // If settings menu was closed before, open it now
         if (!wasOpen)
         {
-            resumeMenuOpen = true;
             if (resumeButton != null)
             {
                 resumeButton.gameObject.SetActive(true); // Ensure resume button is active
@@ -336,7 +326,6 @@ public class SettingsMenu : MonoBehaviour
         {
             settingsMenuCanvas.gameObject.SetActive(false);
             menuActive = false;
-            resumeMenuOpen = false;
             //if (resumeButton != null)
             //{
             //    resumeButton.gameObject.SetActive(false);

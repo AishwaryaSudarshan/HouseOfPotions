@@ -48,7 +48,7 @@ public class RaycastTeleport : MonoBehaviour
         if (Physics.Raycast(teleportRay, out RaycastHit hitInfo, raycaster.rayLength) && hitInfo.collider.CompareTag("floorTag"))
         {
             CharacterController characterController = playerTransform.GetComponent<CharacterController>();
-            Vector3 teleportPosition = new(hitInfo.point.x, 1.08f, hitInfo.point.z);
+            Vector3 teleportPosition = new(hitInfo.point.x, 1f, hitInfo.point.z);
 
             if (characterController != null)
             {
