@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scenes/HelloCardboard.unity
     guid: 145a2a45d7bc746b19cb68410368bf96
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Aishwarya.unity
-    guid: 029ff0bd11a0a4e50bf7da77e0d8583b
+    guid: 7253277ca109c426daea8d6a3632f1fc
   - enabled: 0
     path: Assets/Scenes/MergeCode.unity
     guid: 64589a01769dba749b1454ed8d542441
@@ -20,9 +20,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/MiLabCardboardExtension/Scenes/Map Bluetooth Key.unity
     guid: 1eb807ac90408844da5fd17e087fea1e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Project.unity
-    guid: b411e1fd2d49843fbad0b2430b003702
+    guid: 1439508724063449c82d9202c49ec8d4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 9e93929a816d5479094b3998453ec142, type: 2}
