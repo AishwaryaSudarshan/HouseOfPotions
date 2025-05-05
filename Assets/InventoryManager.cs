@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // Add this line
 using System.Collections;
+using TMPro; 
 
 public class InventoryManager : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class InventoryManager : MonoBehaviour
 
     private bool gamePausedBeforeInventory = false; // Added to track pause state
     public Button dropAllButton; // Make dropAllButton a member variable
+
+    [Header("UI Messages")]
+    public TextMeshProUGUI fullInventoryMessageText;
+    public float messageDuration = 5f;
+    private Coroutine hideMessageCoroutine;
 
     private void Start()
     {
@@ -410,6 +416,7 @@ public class InventoryManager : MonoBehaviour
         if (emptySlotIndex == -1)
         {
             Debug.Log("Inventory is full");
+            ShowMessage("Go to the alchemy room and drop ingredients into the pot!");
             return false;
         }
 
@@ -782,4 +789,26 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
+    private void ShowMessage(string message)
+    {
+        if (fullInventoryMessageText != null)
+        {
+            fullInventoryMessageText.text = message;
+            fullInventoryMessageText.gameObject.SetActive(true);
+            
+            // Cancel any existing hide coroutine
+            if (hideMessageCoroutine != null)
+                StopCoroutine(hideMessageCoroutine);
+                
+            hideMessageCoroutine = StartCoroutine(HideMessageAfterDelay());
+        }
+    }
+    private IEnumerator HideMessageAfterDelay()
+    {
+        yield return new WaitForSeconds(messageDuration);
+        if (fullInventoryMessageText != null)
+            fullInventoryMessageText.gameObject.SetActive(false);
+        hideMessageCoroutine = null;
+    }
+
 }
