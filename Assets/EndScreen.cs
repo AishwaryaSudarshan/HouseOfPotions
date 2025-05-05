@@ -21,7 +21,7 @@ public class EndGameManager : MonoBehaviour
         {
             ShowEndScreen();
 
-            if (Input.GetButtonDown("js0"))
+            if (Input.GetButtonDown("js3"))
             {
                 RestartGame();
             }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // Add this line
 using System.Collections;
+using TMPro; 
 
 public class InventoryManager : MonoBehaviour
 {
@@ -37,6 +38,13 @@ public class InventoryManager : MonoBehaviour
     private bool gamePausedBeforeInventory = false; // Added to track pause state
     public Button dropAllButton; // Make dropAllButton a member variable
 
+    [Header("UI Messages")]
+    public GameObject fullInventoryMessageObject; 
+    public TextMeshProUGUI fullInventoryMessageText;
+    public float messageDuration = 5f;
+    private Coroutine hideMessageCoroutine;
+    private bool wasInventoryFullLastFrame = false;
+
     private void Start()
     {
         #if UNITY_STANDALONE_OSX
@@ -56,6 +64,10 @@ public class InventoryManager : MonoBehaviour
         inventorySlots = new GameObject[maxInventoryItems];
         inventoryObjects = new GameObject[maxInventoryItems];
         inventorySprites = new Sprite[maxInventoryItems];
+        if (fullInventoryMessageObject != null)
+        {
+            fullInventoryMessageObject.SetActive(false);
+        }
 
         InitializeInventoryUI();
     }
@@ -119,6 +131,13 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
+        bool isInventoryFull = IsInventoryFull();
+        if (isInventoryFull && !wasInventoryFullLastFrame)
+        {
+            ShowMessage("Go to the alchemy room and drop ingredients into the pot!");
+            fullInventoryMessageObject.SetActive(true);
+        }
+        wasInventoryFullLastFrame = isInventoryFull;
         if (inventoryActive)
         {
             HandleInventoryNavigation();
@@ -410,6 +429,7 @@ public class InventoryManager : MonoBehaviour
         if (emptySlotIndex == -1)
         {
             Debug.Log("Inventory is full");
+            ShowMessage("Go to the alchemy room and drop ingredients into the pot!");
             return false;
         }
 
@@ -687,6 +707,18 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        yield return new WaitForSeconds(0.5f);
+    
+        // Check if recipe is complete after dropping all items
+        if (pot.IsRecipeComplete())
+        {
+            // Recipe is complete, hide the dropAll button
+            if (dropAllButton != null)
+            {
+                dropAllButton.gameObject.SetActive(false);
+            }
+        }
+
         // Optionally, close the inventory after dropping all items
         CloseInventory();
     }
@@ -782,4 +814,58 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
+    private void ShowMessage(string message)
+    {
+        if (fullInventoryMessageObject == null)
+        {
+            Debug.LogError("fullInventoryMessageObject is not assigned!");
+            return;
+        }
+        if (fullInventoryMessageText != null)
+        {
+            fullInventoryMessageText.text = message;
+        }
+        else
+        {
+            Debug.LogWarning("fullInventoryMessageText is not assigned, but continuing to show message object");
+        }
+
+
+        // fullInventoryMessageText.text = message;
+        // Explicitly activate the game object
+        fullInventoryMessageObject.SetActive(true);
+        Debug.Log("Message object activated: " + fullInventoryMessageObject.activeSelf);
+        
+        // Cancel previous hide coroutine if it exists
+        if (hideMessageCoroutine != null)
+        {
+            StopCoroutine(hideMessageCoroutine);
+        }
+        
+        // Start new hide coroutine
+        hideMessageCoroutine = StartCoroutine(HideMessageAfterDelay());
+    }
+    
+    private IEnumerator HideMessageAfterDelay()
+    {
+        yield return new WaitForSeconds(messageDuration);
+        if (fullInventoryMessageObject != null)
+        {
+            fullInventoryMessageObject.SetActive(false);
+            Debug.Log("Message hidden after delay");
+        }
+        hideMessageCoroutine = null;
+    }
+    private bool IsInventoryFull()
+    {
+        for (int i = 0; i < maxInventoryItems; i++)
+        {
+            if (inventoryObjects[i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

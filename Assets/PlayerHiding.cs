@@ -12,7 +12,7 @@ public class PlayerHiding : MonoBehaviour
     [Header("Hide UI Effect")]
     public Canvas hideUICanvas;
     public Color hideOverlayColor = new Color(0, 0, 0, 0.5f);
-    public float planeDistance = 10f;
+    public float planeDistance = 0.1f;
 
     [Header("Debug")]
     public bool isTrainingMode = false;

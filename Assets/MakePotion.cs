@@ -17,6 +17,9 @@ public class IngredientPot : MonoBehaviour
     public HashSet<GameObject> addedIngredients = new HashSet<GameObject>();
     private bool recipeComplete = false;
     private bool isMixed = false;
+    
+    [Header("UI Elements")]
+    public GameObject instructionTextObject; // GameObject containing the TMP_Text component
 
     private void Start()
     {
@@ -42,6 +45,11 @@ public class IngredientPot : MonoBehaviour
             {
                 particleDust2.Stop();
             }
+        }
+        
+        if (instructionTextObject != null)
+        {
+            instructionTextObject.SetActive(false);
         }
     }
     private void Update()
@@ -108,9 +116,10 @@ public class IngredientPot : MonoBehaviour
         {
             Debug.Log("All ingredients added. Ready to mix the potion with a triangle gesture!");
             recipeComplete = true;
+            ShowInstructionText("Shake your head LEFT and RIGHT really fast to mix the potion and head to the wooden table!");
         }
     }
-    private bool IsRecipeComplete()
+    public bool IsRecipeComplete()
     {
         foreach (GameObject required in requiredIngredients)
         {
@@ -190,6 +199,29 @@ public class IngredientPot : MonoBehaviour
         if (particleDust2 != null && particleDust2.isPlaying)
         {
             particleDust2.Stop();
+        }
+    }
+    
+    private void ShowInstructionText(string message)
+    {
+        if (instructionTextObject != null)
+        {
+            TMP_Text textComponent = instructionTextObject.GetComponentInChildren<TMP_Text>();
+            if (textComponent != null)
+            {
+                textComponent.text = message;
+            }
+            instructionTextObject.SetActive(true);
+            StartCoroutine(HideInstructionTextAfterDelay(5f));
+        }
+    }
+    
+    private IEnumerator HideInstructionTextAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (instructionTextObject != null)
+        {
+            instructionTextObject.SetActive(false);
         }
     }
 }
