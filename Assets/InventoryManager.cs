@@ -707,6 +707,18 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        yield return new WaitForSeconds(0.5f);
+    
+        // Check if recipe is complete after dropping all items
+        if (pot.IsRecipeComplete())
+        {
+            // Recipe is complete, hide the dropAll button
+            if (dropAllButton != null)
+            {
+                dropAllButton.gameObject.SetActive(false);
+            }
+        }
+
         // Optionally, close the inventory after dropping all items
         CloseInventory();
     }

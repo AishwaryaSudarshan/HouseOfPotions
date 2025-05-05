@@ -119,7 +119,7 @@ public class IngredientPot : MonoBehaviour
             ShowInstructionText("Shake your head LEFT and RIGHT really fast to mix the potion and head to the wooden table!");
         }
     }
-    private bool IsRecipeComplete()
+    public bool IsRecipeComplete()
     {
         foreach (GameObject required in requiredIngredients)
         {
