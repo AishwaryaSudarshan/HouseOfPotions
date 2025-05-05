@@ -104462,7 +104462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1109901980
 Transform:
   m_ObjectHideFlags: 0
@@ -129965,7 +129965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1364341278
 RectTransform:
   m_ObjectHideFlags: 0
@@ -138462,6 +138462,7 @@ MonoBehaviour:
   dropParticleSystem: {fileID: 1230188802}
   dropEffectTrigger: {fileID: 1348678109}
   dropAllButton: {fileID: 1806420001}
+  fullInventoryMessageObject: {fileID: 899287329}
   fullInventoryMessageText: {fileID: 1364341279}
   messageDuration: 5
 --- !u!4 &1457586346

@@ -39,9 +39,11 @@ public class InventoryManager : MonoBehaviour
     public Button dropAllButton; // Make dropAllButton a member variable
 
     [Header("UI Messages")]
+    public GameObject fullInventoryMessageObject; 
     public TextMeshProUGUI fullInventoryMessageText;
     public float messageDuration = 5f;
     private Coroutine hideMessageCoroutine;
+    private bool wasInventoryFullLastFrame = false;
 
     private void Start()
     {
@@ -62,6 +64,10 @@ public class InventoryManager : MonoBehaviour
         inventorySlots = new GameObject[maxInventoryItems];
         inventoryObjects = new GameObject[maxInventoryItems];
         inventorySprites = new Sprite[maxInventoryItems];
+        if (fullInventoryMessageObject != null)
+        {
+            fullInventoryMessageObject.SetActive(false);
+        }
 
         InitializeInventoryUI();
     }
@@ -125,6 +131,13 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
+        bool isInventoryFull = IsInventoryFull();
+        if (isInventoryFull && !wasInventoryFullLastFrame)
+        {
+            ShowMessage("Go to the alchemy room and drop ingredients into the pot!");
+            fullInventoryMessageObject.SetActive(true);
+        }
+        wasInventoryFullLastFrame = isInventoryFull;
         if (inventoryActive)
         {
             HandleInventoryNavigation();
@@ -791,24 +804,56 @@ public class InventoryManager : MonoBehaviour
     }
     private void ShowMessage(string message)
     {
+        if (fullInventoryMessageObject == null)
+        {
+            Debug.LogError("fullInventoryMessageObject is not assigned!");
+            return;
+        }
         if (fullInventoryMessageText != null)
         {
             fullInventoryMessageText.text = message;
-            fullInventoryMessageText.gameObject.SetActive(true);
-            
-            // Cancel any existing hide coroutine
-            if (hideMessageCoroutine != null)
-                StopCoroutine(hideMessageCoroutine);
-                
-            hideMessageCoroutine = StartCoroutine(HideMessageAfterDelay());
         }
+        else
+        {
+            Debug.LogWarning("fullInventoryMessageText is not assigned, but continuing to show message object");
+        }
+
+
+        // fullInventoryMessageText.text = message;
+        // Explicitly activate the game object
+        fullInventoryMessageObject.SetActive(true);
+        Debug.Log("Message object activated: " + fullInventoryMessageObject.activeSelf);
+        
+        // Cancel previous hide coroutine if it exists
+        if (hideMessageCoroutine != null)
+        {
+            StopCoroutine(hideMessageCoroutine);
+        }
+        
+        // Start new hide coroutine
+        hideMessageCoroutine = StartCoroutine(HideMessageAfterDelay());
     }
+    
     private IEnumerator HideMessageAfterDelay()
     {
         yield return new WaitForSeconds(messageDuration);
-        if (fullInventoryMessageText != null)
-            fullInventoryMessageText.gameObject.SetActive(false);
+        if (fullInventoryMessageObject != null)
+        {
+            fullInventoryMessageObject.SetActive(false);
+            Debug.Log("Message hidden after delay");
+        }
         hideMessageCoroutine = null;
+    }
+    private bool IsInventoryFull()
+    {
+        for (int i = 0; i < maxInventoryItems; i++)
+        {
+            if (inventoryObjects[i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
