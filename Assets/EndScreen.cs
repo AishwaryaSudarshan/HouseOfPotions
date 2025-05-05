@@ -1,42 +1,69 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndGameManager : MonoBehaviour
 {
-    public GameObject characterObject;        
-    public GameObject endPanel;                
-    private SimpleTimer simpleTimer;           
-    private bool hasEnded = false;
+    public GameObject characterObject;
+    public GameObject endCanvas;
+    public bool hasEnded = false;
 
     void Start()
     {
-        if (characterObject != null)
+        if (endCanvas != null)
         {
-            simpleTimer = characterObject.GetComponent<SimpleTimer>();
-        }
-
-        if (endPanel != null)
-        {
-            endPanel.SetActive(false);  
+            endCanvas.SetActive(false);
         }
     }
 
     void Update()
     {
-        if (!hasEnded && simpleTimer != null && simpleTimer.targetTime <= 0f)
+        if (hasEnded)
         {
-            hasEnded = true;
             ShowEndScreen();
+
+            if (Input.GetButtonDown("js0"))
+            {
+                RestartGame();
+            }
         }
     }
 
-    void ShowEndScreen()
+    public void ShowEndScreen()
     {
-        if (endPanel != null)
+        if (endCanvas != null)
         {
-            endPanel.SetActive(true);
+            endCanvas.SetActive(true);
+        }
+
+        var playerHiding = FindFirstObjectByType<PlayerHiding>();
+        if (playerHiding != null)
+        {
+            if (playerHiding.playerMovementScript != null)
+                playerHiding.playerMovementScript.enabled = false;
+            if (playerHiding.characterController != null)
+                playerHiding.characterController.enabled = false;
+        }
+
+        var npcAgent = FindFirstObjectByType<HideAndSeekNPC>();
+        if (npcAgent != null)
+        {
+            npcAgent.enabled = false;
+        }
+
+        // Disable raycast teleport
+        var raycastTeleport = FindFirstObjectByType<RaycastTeleport>();
+        if (raycastTeleport != null)
+        {
+            raycastTeleport.enabled = false;
         }
 
         Time.timeScale = 0f;
-        Application.Quit();
+    }
+
+    public void RestartGame()
+    {
+        Debug.Log("Restarting Game...");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
