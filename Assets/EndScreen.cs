@@ -5,7 +5,12 @@ public class EndGameManager : MonoBehaviour
 {
     public GameObject characterObject;
     public GameObject endCanvas;
-    public bool hasEnded = false;
+    public bool hasEnded = true;
+    public GameObject winCanvas;
+
+    public GameObject fixedGarden;
+    public GameObject fixedDiningRoom;
+    public GameObject fixedLibrary;
 
     void Start()
     {
@@ -13,19 +18,65 @@ public class EndGameManager : MonoBehaviour
         {
             endCanvas.SetActive(false);
         }
+        if (winCanvas != null)
+        {
+            winCanvas.SetActive(false);
+        }
     }
 
     void Update()
     {
+        if (!hasEnded && AreAllRoomsFixed())
+        {
+            hasEnded = true;
+            ShowWinScreen();
+        }
         if (hasEnded)
         {
-            ShowEndScreen();
-
-            if (Input.GetButtonDown("js3"))
+            if (Input.GetButtonDown("Jump"))
             {
                 RestartGame();
             }
         }
+    }
+
+    private bool AreAllRoomsFixed()
+    {
+        return fixedGarden.activeSelf && fixedDiningRoom.activeSelf && fixedLibrary.activeSelf;
+    }
+
+    public void ShowWinScreen()
+    {
+        if (winCanvas != null)
+        {
+            winCanvas.SetActive(true);
+        }
+
+        // Disable player movement
+        var playerHiding = FindFirstObjectByType<PlayerHiding>();
+        if (playerHiding != null)
+        {
+            if (playerHiding.playerMovementScript != null)
+                playerHiding.playerMovementScript.enabled = false;
+            if (playerHiding.characterController != null)
+                playerHiding.characterController.enabled = false;
+        }
+
+        // Disable NPC
+        var npcAgent = FindFirstObjectByType<HideAndSeekNPC>();
+        if (npcAgent != null)
+        {
+            npcAgent.enabled = false;
+        }
+
+        // Disable raycast teleport
+        var raycastTeleport = FindFirstObjectByType<RaycastTeleport>();
+        if (raycastTeleport != null)
+        {
+            raycastTeleport.enabled = false;
+        }
+
+        Time.timeScale = 0f;
     }
 
     public void ShowEndScreen()

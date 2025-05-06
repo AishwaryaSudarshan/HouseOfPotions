@@ -1,4 +1,4 @@
-Library: C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+Library: /Users/aishwaryasudarshan/HouseOfPotions/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
 --platform=Android
 --backend=burst-llvm-16
 --target=ARMV8A_AARCH64
@@ -7,11 +7,11 @@ Library: C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\Burst
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Library\Burst
---output=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--generate-link-xml=Temp/burst.link.xml
+--temp-folder=/Users/aishwaryasudarshan/HouseOfPotions/Temp/Burst
+--key-folder=/Applications/Unity/Hub/Editor/6000.0.34f1/PlaybackEngines/AndroidPlayer
+--decode-folder=/Users/aishwaryasudarshan/HouseOfPotions/Library/Burst
+--output=/Users/aishwaryasudarshan/HouseOfPotions/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.CPUBackend+ConvJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::CanUseDepthwiseConvKernel(Unity.Sentis.CPUBackend+ConvJob*, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null)--baf95063e686b1887770477a0000aa21
@@ -24,11 +24,11 @@ Library: C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp
 --float-precision=Standard
 --target-framework=NetFramework
 --float-mode=Fast
---generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\Burst
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Library\Burst
---output=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--generate-link-xml=Temp/burst.link.xml
+--temp-folder=/Users/aishwaryasudarshan/HouseOfPotions/Temp/Burst
+--key-folder=/Applications/Unity/Hub/Editor/6000.0.34f1/PlaybackEngines/AndroidPlayer
+--decode-folder=/Users/aishwaryasudarshan/HouseOfPotions/Library/Burst
+--output=/Users/aishwaryasudarshan/HouseOfPotions/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.Sentis.CPUBackend+CumSumIntJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+CumSumIntJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--d89ab8f510236d0759053e9aaea43fa1
@@ -90,11 +90,11 @@ Library: C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp
 --float-precision=Low
 --target-framework=NetFramework
 --float-mode=Fast
---generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\Burst
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Library\Burst
---output=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--generate-link-xml=Temp/burst.link.xml
+--temp-folder=/Users/aishwaryasudarshan/HouseOfPotions/Temp/Burst
+--key-folder=/Applications/Unity/Hub/Editor/6000.0.34f1/PlaybackEngines/AndroidPlayer
+--decode-folder=/Users/aishwaryasudarshan/HouseOfPotions/Library/Burst
+--output=/Users/aishwaryasudarshan/HouseOfPotions/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[Unity.Sentis.CPUBackend+GlobalAverageVariancePoolJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+GlobalAverageVariancePoolJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--85c71c550c6736aa82127778d6c8c5d8
@@ -106,11 +106,11 @@ Library: C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\Burst
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Library\Burst
---output=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--generate-link-xml=Temp/burst.link.xml
+--temp-folder=/Users/aishwaryasudarshan/HouseOfPotions/Temp/Burst
+--key-folder=/Applications/Unity/Hub/Editor/6000.0.34f1/PlaybackEngines/AndroidPlayer
+--decode-folder=/Users/aishwaryasudarshan/HouseOfPotions/Library/Burst
+--output=/Users/aishwaryasudarshan/HouseOfPotions/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.Sentis.CPUBackend+ScalarMadFloatJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+ScalarMadFloatJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--7cf54992d39636059998df6a6c19984c
@@ -181,11 +181,11 @@ Library: C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp
 --dump=Function
 --float-precision=Standard
 --target-framework=NetFramework
---generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\Burst
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Library\Burst
---output=C:\Users\Akshara Ganapathi.AksharasLaptop\Documents\HouseOfPotions\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--generate-link-xml=Temp/burst.link.xml
+--temp-folder=/Users/aishwaryasudarshan/HouseOfPotions/Temp/Burst
+--key-folder=/Applications/Unity/Hub/Editor/6000.0.34f1/PlaybackEngines/AndroidPlayer
+--decode-folder=/Users/aishwaryasudarshan/HouseOfPotions/Library/Burst
+--output=/Users/aishwaryasudarshan/HouseOfPotions/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Sentis.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.Sentis.CPUBackend+ModIntJob, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null]], Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.Sentis.CPUBackend+ModIntJob&, Unity.Sentis, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--41909a6b12ff3302be93bf0cb8cef0b4
