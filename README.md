@@ -10,7 +10,7 @@ Interaction Techniques:
   
   - Start game with Raycast and Joystick button "B" on Android
 
-  - If you get caught by the NPC, the game will end and you'll have to restart the game
+  - If you get caught by the NPC, the game will end and you'll have to restart the game by clicking Joystick button "Y" on Android 
 
   - Click the Joystick power button to pause the game at anytime
   
