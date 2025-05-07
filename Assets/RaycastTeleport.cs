@@ -15,7 +15,7 @@ public class RaycastTeleport : MonoBehaviour
         #elif UNITY_ANDROID
             teleportButton = "js3";
         #else
-            teleportButton = "js0"; // Default to js0 for other platforms
+            teleportButton = "js0"; 
         #endif
 
         if (raycaster == null)

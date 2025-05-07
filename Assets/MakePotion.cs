@@ -19,7 +19,7 @@ public class IngredientPot : MonoBehaviour
     private bool isMixed = false;
     
     [Header("UI Elements")]
-    public GameObject instructionTextObject; // GameObject containing the TMP_Text component
+    public GameObject instructionTextObject; 
 
     private void Start()
     {

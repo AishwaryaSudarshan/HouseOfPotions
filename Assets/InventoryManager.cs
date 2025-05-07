@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; // Add this line
+using UnityEngine.EventSystems; 
 using System.Collections;
 using TMPro; 
 
@@ -35,8 +35,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private ParticleSystem dropParticleSystem;
     [SerializeField] private DropParticleEffectTrigger dropEffectTrigger;
 
-    private bool gamePausedBeforeInventory = false; // Added to track pause state
-    public Button dropAllButton; // Make dropAllButton a member variable
+    private bool gamePausedBeforeInventory = false; 
+    public Button dropAllButton; 
 
     [Header("UI Messages")]
     public GameObject fullInventoryMessageObject; 
@@ -97,7 +97,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < maxInventoryItems; i++)
         {
             GameObject slotUI = Instantiate(inventoryItemPrefab, inventoryItemsContainer);
-            slotUI.name = "InventorySlot_" + i; // Name the slot for easier debugging
+            slotUI.name = "InventorySlot_" + i; 
 
             RectTransform rt = slotUI.GetComponent<RectTransform>();
             if (rt != null)
@@ -112,12 +112,12 @@ public class InventoryManager : MonoBehaviour
                 image.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
             }
 
-            // Ensure Outline component exists on the slot
+            
             Outline outline = slotUI.GetComponent<Outline>();
             if (outline == null)
             {
                 outline = slotUI.AddComponent<Outline>();
-                outline.enabled = false; // Initially disable the outline
+                outline.enabled = false; 
             }
 
             inventorySlots[i] = slotUI;
@@ -170,32 +170,31 @@ public class InventoryManager : MonoBehaviour
         Debug.Log("Opening Inventory");
         inventoryActive = true;
 
-        // Store the pause state before opening inventory
+       
         gamePausedBeforeInventory = Time.timeScale == 0;
 
-        // Unpause the game temporarily to allow inventory interaction
+        
         Time.timeScale = 1;
 
         if (inventoryCanvas != null)
         {
             inventoryCanvas.gameObject.SetActive(true);
 
-            // Enable the Drop All button
+        
             dropAllButton = inventoryCanvas.transform.Find("DropAllButton")?.GetComponent<Button>();
             if (dropAllButton != null)
             {
                 dropAllButton.gameObject.SetActive(true);
-                HighlightDropAllButton(); // Highlight the Drop All button
+                HighlightDropAllButton(); 
             }
         }
 
-        // Disable character movement
+       
         if (characterMovement != null)
         {
             characterMovement.enabled = false;
         }
-        //currentSelectedIndex = FindFirstOccupiedSlot();
-        //HighlightInventoryItem();
+       
         inventoryNextNavigationTime = Time.time + 0.5f;
     }
 
@@ -216,7 +215,7 @@ public class InventoryManager : MonoBehaviour
         float verticalInput = Input.GetAxisRaw(navigateAxis);
         float horizontalInput = Input.GetAxisRaw(inventoryAxis);
 
-        if (verticalInput > 0.5f) // Navigate Up
+        if (verticalInput > 0.5f) 
         {
             if (!IsDropAllButtonHighlighted())
             {
@@ -226,7 +225,7 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
-        else if (verticalInput < -0.5f) // Navigate Down
+        else if (verticalInput < -0.5f) 
         {
             if (IsDropAllButtonHighlighted())
             {
@@ -237,7 +236,7 @@ public class InventoryManager : MonoBehaviour
                 return;
             }
         }
-        else if (horizontalInput > 0.5f || horizontalInput < -0.5f) // Navigate Left or Right
+        else if (horizontalInput > 0.5f || horizontalInput < -0.5f) 
         {
             if (!IsDropAllButtonHighlighted())
             {
@@ -282,7 +281,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (Input.GetButtonDown(selectButton))
             {
-                DropAllObjectsIntoPot(); // Perform the "Drop All" action
+                DropAllObjectsIntoPot(); 
                 return;
             }
         }
@@ -486,7 +485,7 @@ public class InventoryManager : MonoBehaviour
     if (currentlyGrabbedObject == null)
         return;
 
-    // For Potions objects - only allow head nod drops
+    
     if (currentlyGrabbedObject.CompareTag("Potions"))
     {
         if (!isHeadNodDrop)
@@ -517,14 +516,14 @@ public class InventoryManager : MonoBehaviour
             characterMovement.enabled = true;
         return;
     }
-    // For regular objects - only allow button drops
+   
     else if (isHeadNodDrop)
     {
         Debug.Log("Regular objects can only be dropped with the drop button!");
         return;
     }
 
-        // Existing drop logic for non-potion objects
+       
         Ray ray = raycastSelector.CurrentRay;
         RaycastHit hit;
         float rayDistance = raycastSelector.rayLength;
@@ -607,13 +606,13 @@ public class InventoryManager : MonoBehaviour
             inventoryCanvas.gameObject.SetActive(false);
             inventoryActive = false;
 
-            // Disable the Drop All button
+        
             if (dropAllButton != null)
             {
                 dropAllButton.gameObject.SetActive(false);
             }
 
-            // Restore the pause state
+          
             if (gamePausedBeforeInventory)
             {
                 Time.timeScale = 0;
@@ -624,7 +623,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // Enable character movement
+      
         if (characterMovement != null)
         {
             characterMovement.enabled = true;
@@ -633,7 +632,7 @@ public class InventoryManager : MonoBehaviour
 
     public void DropAllObjectsIntoPot()
     {
-        // Find the closest visible pot
+       
         GameObject visiblePot = FindVisiblePot();
 
         if (visiblePot == null)
@@ -659,32 +658,32 @@ public class InventoryManager : MonoBehaviour
             if (inventoryObjects[i] != null)
             {
                 GameObject obj = inventoryObjects[i];
-                inventoryObjects[i] = null; // Clear the inventory slot immediately
+                inventoryObjects[i] = null; 
                 inventorySprites[i] = null;
 
-                // Get the position of the inventory slot
+              
                 Vector3 startPosition = inventorySlots[i].transform.position;
                 Vector3 potPosition = pot.transform.position;
-                Vector3 endPosition = potPosition + Vector3.up * 0.25f; // Pot's position + slight offset above
+                Vector3 endPosition = potPosition + Vector3.up * 0.25f; 
 
-                // Instantiate a temporary object for animation
+               
                 GameObject tempObject = Instantiate(obj);
-                tempObject.SetActive(true); // Make sure it's active
+                tempObject.SetActive(true); 
                 tempObject.transform.position = startPosition;
 
-                // Disable the original object
+                
                 obj.SetActive(false);
 
-                // Animate the temporary object
-                float animationDuration = 0.75f; // Adjust as needed
+                
+                float animationDuration = 0.75f;
                 float time = 0;
                 while (time < animationDuration)
                 {
                     time += Time.deltaTime;
                     float fraction = time / animationDuration;
 
-                    // Parabolic motion calculation
-                    float height = Mathf.Sin(fraction * Mathf.PI) * 1.0f; // Adjust height multiplier as needed
+                 
+                    float height = Mathf.Sin(fraction * Mathf.PI) * 1.0f; 
                     Vector3 currentPosition = Vector3.Lerp(startPosition, endPosition, fraction);
                     currentPosition.y += height;
 
@@ -693,11 +692,11 @@ public class InventoryManager : MonoBehaviour
                     yield return null;
                 }
 
-                // After animation, add the ingredient to the pot
+                
                 pot.AddIngredient(tempObject);
-                pot.addedIngredients.Add(tempObject); // Add to the list of added ingredients
+                pot.addedIngredients.Add(tempObject); 
 
-                // Clear the inventory slot
+             
                 Image slotImage = inventorySlots[i].GetComponent<Image>();
                 if (slotImage != null)
                 {
@@ -709,23 +708,23 @@ public class InventoryManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
     
-        // Check if recipe is complete after dropping all items
+        
         if (pot.IsRecipeComplete())
         {
-            // Recipe is complete, hide the dropAll button
+           
             if (dropAllButton != null)
             {
                 dropAllButton.gameObject.SetActive(false);
             }
         }
 
-        // Optionally, close the inventory after dropping all items
+        
         CloseInventory();
     }
 
     private GameObject FindVisiblePot()
     {
-        // First check if raycast is pointing at a pot
+        
         if (raycastSelector != null)
         {
             Ray ray = raycastSelector.CurrentRay;
@@ -740,7 +739,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
         
-        // If raycast didn't hit a pot, check if any pot is in camera view
+    
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
@@ -754,13 +753,13 @@ public class InventoryManager : MonoBehaviour
             return null;
         }
         
-        // Check which pots are visible in the camera's view
+       
         GameObject closestVisiblePot = null;
         float closestDistance = Mathf.Infinity;
         
         foreach (GameObject pot in pots)
         {
-            // Check if pot is in camera view
+           
             Vector3 screenPoint = mainCamera.WorldToViewportPoint(pot.transform.position);
             bool isVisible = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
             
@@ -785,7 +784,7 @@ public class InventoryManager : MonoBehaviour
             Image buttonImage = dropAllButton.GetComponent<Image>();
             if (buttonImage != null)
             {
-                buttonImage.color = Color.yellow; // Highlight color
+                buttonImage.color = Color.yellow; 
             }
         }
     }
@@ -797,7 +796,7 @@ public class InventoryManager : MonoBehaviour
             Image buttonImage = dropAllButton.GetComponent<Image>();
             if (buttonImage != null)
             {
-                buttonImage.color = Color.white; // Default color
+                buttonImage.color = Color.white; 
             }
         }
     }
@@ -830,19 +829,16 @@ public class InventoryManager : MonoBehaviour
             Debug.LogWarning("fullInventoryMessageText is not assigned, but continuing to show message object");
         }
 
-
-        // fullInventoryMessageText.text = message;
-        // Explicitly activate the game object
         fullInventoryMessageObject.SetActive(true);
         Debug.Log("Message object activated: " + fullInventoryMessageObject.activeSelf);
         
-        // Cancel previous hide coroutine if it exists
+    
         if (hideMessageCoroutine != null)
         {
             StopCoroutine(hideMessageCoroutine);
         }
         
-        // Start new hide coroutine
+
         hideMessageCoroutine = StartCoroutine(HideMessageAfterDelay());
     }
     

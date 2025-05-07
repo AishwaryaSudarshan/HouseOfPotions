@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class RaycastSelector : MonoBehaviour
 {
-    public float rayLength = 2f; // Shorten the ray length
+    public float rayLength = 2f; 
     public Color outlineColor = Color.red;
     public float outlineWidth = 5f;
     public LineRenderer lineRenderer;
@@ -19,8 +19,8 @@ public class RaycastSelector : MonoBehaviour
     public Ray CurrentRay { get; private set; }
 
     [Header("UI Prompt")]
-    public Canvas uiCanvas; // Canvas with Screen Space Camera rendering mode
-    public TextMeshProUGUI promptText; // TMP text component
+    public Canvas uiCanvas; 
+    public TextMeshProUGUI promptText; 
     public string interactPrompt = "Press B to store object";
     
 
@@ -49,7 +49,7 @@ public class RaycastSelector : MonoBehaviour
             SetupUIPrompt();
         }
         
-        // Hide prompt initially
+      
         if (promptText != null)
         {
             promptText.gameObject.SetActive(false);
@@ -58,7 +58,7 @@ public class RaycastSelector : MonoBehaviour
 
     private void SetupUIPrompt()
     {
-        // Create canvas if needed
+       
         if (uiCanvas == null)
         {
             GameObject canvasObj = new GameObject("PromptCanvas");
@@ -68,20 +68,20 @@ public class RaycastSelector : MonoBehaviour
             canvasObj.AddComponent<CanvasScaler>();
         }
         
-        // Create text if needed
+      
         if (promptText == null)
         {
             GameObject textObj = new GameObject("PromptText");
             textObj.transform.SetParent(uiCanvas.transform, false);
             promptText = textObj.AddComponent<TextMeshProUGUI>();
             
-            // Set text properties
+          
             promptText.text = interactPrompt;
             promptText.fontSize = 36;
             promptText.alignment = TextAlignmentOptions.Center;
             promptText.color = Color.white;
             
-            // Set position (center bottom of screen)
+           
             RectTransform rt = promptText.GetComponent<RectTransform>();
             rt.anchorMin = new Vector2(0.5f, 0.1f);
             rt.anchorMax = new Vector2(0.5f, 0.1f);

@@ -23,7 +23,7 @@ public class GrabObj : MonoBehaviour
 #elif UNITY_ANDROID
         grabButton = "js10";
 #else
-               grabButton = "js8"; // Default to js8 for other platforms
+               grabButton = "js8"; 
 #endif
     }
 

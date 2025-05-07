@@ -7,7 +7,7 @@ public class InteractableObject : MonoBehaviour
     private Sprite inventoryIcon;
 
     private RaycastSelector raycastSelector;
-    private InventoryManager inventoryManager; // Changed from SettingsMenu to InventoryManager
+    private InventoryManager inventoryManager; 
 
     private void Start()
     {
@@ -18,11 +18,10 @@ public class InteractableObject : MonoBehaviour
         #elif UNITY_ANDROID
             storeKey = "js5";
         #else
-            storeKey = "js5"; // Default to js1 for other platforms
+            storeKey = "js5"; 
         #endif
 
         raycastSelector = Object.FindFirstObjectByType<RaycastSelector>();
-        // Get the InventoryManager instance instead of SettingsMenu
         inventoryManager = Object.FindFirstObjectByType<InventoryManager>();
     }
 
@@ -42,7 +41,7 @@ public class InteractableObject : MonoBehaviour
             return;
         }
 
-        // Calculate the ray origin using the camera's position and orientation.
+      
         Vector3 rayOrigin = mainCamera.transform.position +
                             (mainCamera.transform.forward * 0.3f) +
                             (mainCamera.transform.up * -0.2f);
@@ -55,13 +54,13 @@ public class InteractableObject : MonoBehaviour
             {
                 if (inventoryManager != null)
                 {
-                    // Get the InteractableObject component from the hit object
+                    
                     InteractableObject hitInteractable = hitObject.GetComponent<InteractableObject>();
                     
-                    // Use the hit object's icon, not this object's icon
+                   
                     Sprite spriteToUse = hitInteractable != null ? hitInteractable.GetInventoryIcon() : null;
 
-                    // Use the InventoryManager's AddToInventory method.
+                   
                     bool stored = inventoryManager.AddToInventory(hitObject, spriteToUse);
                     if (stored)
                     {
@@ -80,7 +79,7 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    // Public method to calculate and return the distance from the main camera to this object's position.
+    
     public float GetDistanceFromMainCamera()
     {
         Camera mainCamera = Camera.main;
@@ -92,7 +91,7 @@ public class InteractableObject : MonoBehaviour
         return Vector3.Distance(mainCamera.transform.position, transform.position);
     }
 
-    // Getter for the inventory icon.
+
     public Sprite GetInventoryIcon()
     {
         return inventoryIcon;

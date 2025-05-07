@@ -19,10 +19,10 @@ public class SettingsMenu : MonoBehaviour
     public CharacterMovement characterMovement;
     public InventoryManager inventoryManager;
 
-    // Reference to the TMP object
+    
     public GameObject potionMenuTMPObject;
 
-    // Reference to the IngredientPot script
+   
     public IngredientPot ingredientPot;
 
 
@@ -165,13 +165,13 @@ public class SettingsMenu : MonoBehaviour
 
     private void OpenSettingsMenu()
     {
-        CloseAllMenus(); // Close other menus before opening this one
+        CloseAllMenus(); 
         menuActive = true;
 
-        // Store the pause state before opening settings
+        
         gamePausedBeforeSettings = Time.timeScale == 0;
 
-        // Pause the game when opening settings
+    
         Time.timeScale = 0;
 
         if (raycastSelector != null && raycastSelector.lineRenderer != null)
@@ -222,7 +222,7 @@ public class SettingsMenu : MonoBehaviour
             raycastSelector.lineRenderer.enabled = true;
         }
 
-        // Restore the pause state when closing settings
+
         if (!gamePausedBeforeSettings)
         {
             Time.timeScale = 1;
@@ -255,47 +255,47 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-    // SettingsMenu.cs
+
     private void ToggleSettingsMenu()
     {
-        // Check if settings menu is currently open
+      
         bool wasOpen = settingsMenuCanvas != null && settingsMenuCanvas.gameObject.activeSelf;
 
-        // Close any open menus first (including settings)
+       
         CloseAllMenus();
 
-        // If settings menu was closed before, open it now
+       
         if (!wasOpen)
         {
             if (resumeButton != null)
             {
-                resumeButton.gameObject.SetActive(true); // Ensure resume button is active
+                resumeButton.gameObject.SetActive(true); 
             }
-            OpenSettingsMenu(); // This already pauses the game
+            OpenSettingsMenu(); 
             if (settingsMenuCanvas != null)
             {
-                settingsMenuCanvas.gameObject.SetActive(true); // Activate the settings menu canvas
+                settingsMenuCanvas.gameObject.SetActive(true);  
             }
         }
         else
         {
             if (settingsMenuCanvas != null)
             {
-                settingsMenuCanvas.gameObject.SetActive(false); // Deactivate the settings menu canvas
+                settingsMenuCanvas.gameObject.SetActive(false); 
             }
-            CloseSettingsMenu(); // Resume the game
+            CloseSettingsMenu(); 
         }
     }
 
     private void ToggleInventoryMenu()
     {
-        // Check if inventory is currently open
+        
         bool wasOpen = inventoryMenuOpen;
         
-        // Close any open menus (including inventory)
+        
         CloseAllMenus();
         
-        // If inventory was closed before, open it now
+        
         if (!wasOpen)
         {
             inventoryMenuOpen = true;
@@ -307,7 +307,7 @@ public class SettingsMenu : MonoBehaviour
             if (inventoryManager != null)
             {
                 inventoryManager.OpenInventory();
-                // Check if inventory opened successfully
+                
                 if (!inventoryManager.inventoryCanvas.gameObject.activeSelf)
                 {
                     inventoryMenuOpen = false;
@@ -318,7 +318,7 @@ public class SettingsMenu : MonoBehaviour
                 }
             }
         }
-        // If inventory was open before, it's already closed by CloseAllMenus()
+
     }
     public void CloseAllMenus()
     {
@@ -326,15 +326,12 @@ public class SettingsMenu : MonoBehaviour
         {
             settingsMenuCanvas.gameObject.SetActive(false);
             menuActive = false;
-            //if (resumeButton != null)
-            //{
-            //    resumeButton.gameObject.SetActive(false);
-            //}
+           
         }
 
         if (inventoryManager != null)
         {
-            inventoryManager.CloseInventory(); // Use the new CloseInventory method
+            inventoryManager.CloseInventory(); 
             inventoryMenuOpen = false;
             if (inventoryButton != null)
             {

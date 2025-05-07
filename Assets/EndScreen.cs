@@ -52,7 +52,6 @@ public class EndGameManager : MonoBehaviour
             winCanvas.SetActive(true);
         }
 
-        // Disable player movement
         var playerHiding = FindFirstObjectByType<PlayerHiding>();
         if (playerHiding != null)
         {
@@ -62,14 +61,14 @@ public class EndGameManager : MonoBehaviour
                 playerHiding.characterController.enabled = false;
         }
 
-        // Disable NPC
+    
         var npcAgent = FindFirstObjectByType<HideAndSeekNPC>();
         if (npcAgent != null)
         {
             npcAgent.enabled = false;
         }
 
-        // Disable raycast teleport
+      
         var raycastTeleport = FindFirstObjectByType<RaycastTeleport>();
         if (raycastTeleport != null)
         {
