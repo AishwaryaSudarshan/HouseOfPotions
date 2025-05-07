@@ -46902,7 +46902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 43, y: 390}
+  m_AnchoredPosition: {x: 43, y: 283}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496752748
@@ -146128,7 +146128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1522917013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168709,7 +168709,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20, y: 298.00006}
+  m_AnchoredPosition: {x: 20, y: 190.99997}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1767803565
@@ -168732,29 +168732,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Game Instructions:  \n \u2022 When you start the game, your wand will
-    appear with a raycast to guide you.  \n \u2022 A potion recipe will appear in
-    the leftmost corner of the screen to follow.  \n \u2022 All interactable objects
-    are outlined in <color=red>red</color>.  \n \u2022 When you hover over an object,
-    it turns <color=yellow>yellow</color> to indicate that it\u2019s selected.  \n\u2022
-    If you get stuck, <color=blue>tilt your head right for 2 seconds</color> for
-    a hint to appear on the closest object that you can collect.  \n \u2022 Click
-    <color=purple>\u201CX\u201D</color> to store ingredients from the different rooms. 
-    \n \u2022 Once all necessary ingredients are collected, go to the Alchemy Room. 
-    \n \u2022 Hover over the pot, open your inventory by clicking <color=purple>\u201COK\u201D</color>,
-    and toggle through items with your joystick.  \n \u2022 Once you\u2019ve made
-    your selection, click <color=purple>\u201CB\u201D</color> to grab it.  \n \u2022
-    Make sure your raycast is pointing inside the pot and click <color=purple>\u201CA\u201D</color>
-    to drop the item. (Look for the pot bubble!)  \n \u2022 Keep adding ingredients
-    until the potion is complete. You\u2019ll know it worked when the room looks
-    magical.  \n\u2022 Potion bottles to throw at the rooms will appear on the table
-    next to the pot when you<color=blue> shake your head</color>. Click <color=purple>\u201CX\u201D</color>
-    to store them in your inventory.  \n \u2022 As you enter each room that needs
-    fixing, open your inventory and click <color=purple>\u201CB\u201D</color> to
-    grab a bottle.  \n \u2022 <color=blue>Nod your head</color> to cast the spell
-    and fix the room.  \n \u2022 Return to the Alchemy Room to grab more bottles
-    and fix the rest of the house. \n \u2022 Fix the entire house before <color=orange>time
-    runs out.</color> Press <color=purple>\u201CB\u201D</color> to begin!"
+  m_text: "Game Istructions:  \n \u2022 When you start the game, your raycast will
+    guide you. \n \u2022 An NPC will chase you, press <color=purple>\u201CX\u201D</color>
+    to hide from it when it gets close. To move again press <color=purple>\u201CX\u201D</color>.\n
+    \u2022 A potion recipe can be accessed with the menu button.  \n \u2022 All interactable
+    objects are outlined in <color=red>red</color>.  \n\u2022 If you get stuck, <color=blue>tilt
+    your head right for 2 secondsn</color> for a hint to appear on the closest object
+    that you can collect.  \n \u2022 Click <color=purple>\u201CB\u201D</color> to
+    store ingredients from the different rooms.  \n \u2022 Hover over the pot, open
+    your inventory by clicking <color=purple>\u201COK\u201D</color>, and press Drop
+    All to drop the ingredients.    \n\u2022 Potion bottles to throw at the rooms
+    will appear on the table next to the pot when you<color=blue> shake your head</color>.
+    Click <color=purple>\u201CB\u201D</color> to store them in your inventory.  \n
+    \u2022 As you enter each room that needs fixing, open your inventory, navigate
+    down, and click <color=purple>\u201CB\u201D</color> to grab a bottle.  \n \u2022
+    <color=blue>Nod your head</color> to cast the spell and fix the room.   \n \u2022
+    Fix the entire house before <color=orange>the NPC catches you.</color> Press
+    <color=purple>\u201CB\u201D</color> to begin!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
