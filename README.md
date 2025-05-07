@@ -1,4 +1,4 @@
-# House of Potions Preliminary Prototype
+# House of Potions Prototype
 
 **Unity Scene for Prototype**: "Project.unity"
 
