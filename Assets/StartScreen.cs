@@ -7,6 +7,8 @@ public class StartScreenManager : MonoBehaviour
     public string selectButton;     
     private RaycastSelector raycastSelector; 
     
+    [SerializeField] private MonoBehaviour npcMovementScript;
+
     private void Start()
     {
         #if UNITY_STANDALONE_OSX
@@ -22,6 +24,12 @@ public class StartScreenManager : MonoBehaviour
         raycastSelector = FindFirstObjectByType<RaycastSelector>();
         
         startScreen.SetActive(true);
+        
+        if (npcMovementScript != null)
+        {
+            npcMovementScript.enabled = false;
+        }
+        
         if (raycastSelector != null)
         {
             raycastSelector.enabled = false;
@@ -31,6 +39,7 @@ public class StartScreenManager : MonoBehaviour
             }
         }
     }
+    
     private void Update()
     {
         if (Input.GetButtonDown(selectButton))
@@ -41,6 +50,11 @@ public class StartScreenManager : MonoBehaviour
     private void OnStartButtonClicked()
     {
         startScreen.SetActive(false);
+        if (npcMovementScript != null)
+        {
+            npcMovementScript.enabled = true;
+        }
+        
         if (raycastSelector != null)
         {
             raycastSelector.enabled = true;

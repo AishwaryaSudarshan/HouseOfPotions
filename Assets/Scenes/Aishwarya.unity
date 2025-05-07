@@ -146143,6 +146143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startScreen: {fileID: 1522917012}
   selectButton: 
+  npcMovementScript: {fileID: 1010559791}
 --- !u!4 &1522917014
 Transform:
   m_ObjectHideFlags: 0
