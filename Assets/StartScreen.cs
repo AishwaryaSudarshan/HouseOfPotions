@@ -27,7 +27,7 @@ public class StartScreenManager : MonoBehaviour
         
         if (npcMovementScript != null)
         {
-            npcMovementScript.enabled = false;
+            npcMovementScript.gameObject.SetActive(false);
         }
         
         if (raycastSelector != null)
@@ -52,7 +52,7 @@ public class StartScreenManager : MonoBehaviour
         startScreen.SetActive(false);
         if (npcMovementScript != null)
         {
-            npcMovementScript.enabled = true;
+            npcMovementScript.gameObject.SetActive(true);
         }
         
         if (raycastSelector != null)
