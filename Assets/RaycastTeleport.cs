@@ -13,7 +13,7 @@ public class RaycastTeleport : MonoBehaviour
         #elif UNITY_STANDALONE_WIN
             teleportButton = "js0";
         #elif UNITY_ANDROID
-            teleportButton = "js3";
+            teleportButton = "Jump";
         #else
             teleportButton = "js0"; 
         #endif

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfTypeDate xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TypeDate>
+    <guid>dfc790663f7a16141b4a112a46f390b3</guid>
+    <fileName>Assets/Plugins/Editor/AssetCollector.cs</fileName>
+    <timeStamp>2025-05-08T20:01:58.1022493-05:00</timeStamp>
+    <typeFullName>
+      <string>UnitySweeper.AssetCollector</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>6098c89c5619101498ce81ffb0843a9d</guid>
+    <fileName>Assets/Plugins/Editor/AssetReferenceCollection.cs</fileName>
+    <timeStamp>2025-05-08T20:01:58.1022493-05:00</timeStamp>
+    <typeFullName>
+      <string>UnitySweeper.AssetReferenceCollection</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>341c2fe586a4a1c4aa4a39fa2090dae3</guid>
+    <fileName>Assets/Plugins/Editor/ClassReferenceCollection.cs</fileName>
+    <timeStamp>2025-05-08T20:01:58.1022493-05:00</timeStamp>
+    <typeFullName>
+      <string>UnitySweeper.ClassReferenceCollection</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>3ed4c75dd52aff645807dec32b656cfc</guid>
+    <fileName>Assets/Plugins/Editor/CollectionData.cs</fileName>
+    <timeStamp>2025-05-08T20:01:58.1022493-05:00</timeStamp>
+    <typeFullName>
+      <string>UnitySweeper.CollectionData</string>
+      <string>UnitySweeper.TypeDate</string>
+      <string>UnitySweeper.IReferenceCollection</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>34bf9d7338cffe645bc8095abc72d5a6</guid>
+    <fileName>Assets/Plugins/Editor/FindUnusedAssetsWindow.cs</fileName>
+    <timeStamp>2025-05-08T20:01:58.1022493-05:00</timeStamp>
+    <typeFullName>
+      <string>UnitySweeper.FindUnusedAssetsWindow</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>92f0ec2e9a3237a478f3d5601f64fc62</guid>
+    <fileName>Assets/Plugins/Editor/ShaderReferenceCollection.cs</fileName>
+    <timeStamp>2025-05-08T20:01:58.1022493-05:00</timeStamp>
+    <typeFullName>
+      <string>UnitySweeper.ShaderReferenceCollection</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>51a07726eaa3b4eb6b102c1be9c78d11</guid>
+    <fileName>Assets/CircleDetector.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8173949-05:00</timeStamp>
+    <typeFullName>
+      <string>CircleDetector</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>bb1092f959e384e8d8d420a15b3a9169</guid>
+    <fileName>Assets/EndScreen.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8194016-05:00</timeStamp>
+    <typeFullName>
+      <string>EndGameManager</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>f64093749f7b9a24c9c6723f591abf22</guid>
+    <fileName>Assets/GrabObj.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8214187-05:00</timeStamp>
+    <typeFullName>
+      <string>GrabObj</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>1a5478666ba894b9391e2b972def4ee3</guid>
+    <fileName>Assets/GyroMotionDetector.cs</fileName>
+    <timeStamp>2025-04-26T21:48:12.5767799-05:00</timeStamp>
+    <typeFullName>
+      <string>GyroMotionDetector</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>a5e6526ab99e56448875d414b7591fa4</guid>
+    <fileName>Assets/HideAndSeekNPC.cs</fileName>
+    <timeStamp>2025-05-05T19:31:49.8937426-05:00</timeStamp>
+    <typeFullName>
+      <string>HideAndSeekNPC</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>7572f1ec1b546445797bd1179c3f8ee5</guid>
+    <fileName>Assets/HintManager.cs</fileName>
+    <timeStamp>2025-04-26T21:48:12.5778775-05:00</timeStamp>
+    <typeFullName>
+      <string>HintManager</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>2906b8dcc9e390b4e9d5ea08468263b1</guid>
+    <fileName>Assets/InteractableObject.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8254317-05:00</timeStamp>
+    <typeFullName>
+      <string>InteractableObject</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>78b53a1a460ed4836bf7a6bf71544443</guid>
+    <fileName>Assets/InventoryManager.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8274376-05:00</timeStamp>
+    <typeFullName>
+      <string>InventoryManager</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>efef580dc2c30427fac864df0961607a</guid>
+    <fileName>Assets/MakePotion.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8294434-05:00</timeStamp>
+    <typeFullName>
+      <string>IngredientPot</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>b1eb852d84854455aaf91da65710b027</guid>
+    <fileName>Assets/ParticleAnimate.cs</fileName>
+    <timeStamp>2025-04-26T21:48:12.8000743-05:00</timeStamp>
+    <typeFullName>
+      <string>DropParticleEffectTrigger</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>31aab2d9ac863eb47ab8fc90f8bc4635</guid>
+    <fileName>Assets/PlayerHiding.cs</fileName>
+    <timeStamp>2025-05-05T19:31:50.0272658-05:00</timeStamp>
+    <typeFullName>
+      <string>PlayerHiding</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>ff08806e4f95e9641be8992342433d93</guid>
+    <fileName>Assets/RaycastSelector.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8314509-05:00</timeStamp>
+    <typeFullName>
+      <string>RaycastSelector</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>8469dc62da15a65488df94082b42eede</guid>
+    <fileName>Assets/RaycastTeleport.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8331985-05:00</timeStamp>
+    <typeFullName>
+      <string>RaycastTeleport</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>6d3a5ae2957b248f6ac93f684678c162</guid>
+    <fileName>Assets/RoomManager.cs</fileName>
+    <timeStamp>2025-04-26T21:48:12.9926849-05:00</timeStamp>
+    <typeFullName>
+      <string>RoomManager</string>
+      <string>RoomManager+RoomData</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>cac3fa70152a745049c0624ae2e52471</guid>
+    <fileName>Assets/RoomTrigger.cs</fileName>
+    <timeStamp>2025-04-26T21:48:12.9942078-05:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>c377680e30004ac47b93faf170dd400d</guid>
+    <fileName>Assets/SettingsMenu.cs</fileName>
+    <timeStamp>2025-05-08T19:58:52.8352052-05:00</timeStamp>
+    <typeFullName>
+      <string>SettingsMenu</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>524b8d1d4ac114d138fbfaecb53378cd</guid>
+    <fileName>Assets/StartScreen.cs</fileName>
+    <timeStamp>2025-05-07T11:37:54.9872252-05:00</timeStamp>
+    <typeFullName>
+      <string>StartScreenManager</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>897ca1066ee4c4219a3c6387e2db0288</guid>
+    <fileName>Assets/StoreAction.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.7655365-05:00</timeStamp>
+    <typeFullName>
+      <string>StoreAction</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>85d03078eb51b4b5b84ccd1f357157f6</guid>
+    <fileName>Assets/Timer.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.9775547-05:00</timeStamp>
+    <typeFullName>
+      <string>SimpleTimer</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>5ee1359076689fb429e33ad9b17c5484</guid>
+    <fileName>Assets/PolygonPi/FenceLayout/FenceLayout.cs</fileName>
+    <timeStamp>2025-04-26T20:45:30.4708973-05:00</timeStamp>
+    <typeFullName>
+      <string>FenceLayout</string>
+      <string>FenceLayout+EditMode</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>5fea29bb7c508c244a1f805a5fd3fc4d</guid>
+    <fileName>Assets/QuickOutline/Scripts/Outline.cs</fileName>
+    <timeStamp>2025-04-26T20:45:30.67266-05:00</timeStamp>
+    <typeFullName>
+      <string>Outline</string>
+      <string>Outline+Mode</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>05ad4166d373fed4abf2288f5c7a00cf</guid>
+    <fileName>Assets/PolygonPi/FenceLayout/Editor/FenceLayoutEditor.cs</fileName>
+    <timeStamp>2025-04-26T20:45:30.4419041-05:00</timeStamp>
+    <typeFullName>
+      <string>FenceLayoutEditor</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>aebfb4b86b2e54606894da54f755db2d</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/CameraPointer.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4209305-05:00</timeStamp>
+    <typeFullName>
+      <string>CameraPointer</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>dd68f027e715c44aa8d097000d4cccfb</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/CardboardStartup.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.425909-05:00</timeStamp>
+    <typeFullName>
+      <string>CardboardStartup</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>8bc1ae413c1be9b40ade6253e39620c2</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/CharacterMovement.cs</fileName>
+    <timeStamp>2025-04-26T21:48:12.9962533-05:00</timeStamp>
+    <typeFullName>
+      <string>CharacterMovement</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>a6e858f9314cf4903a8b6b60d93e3437</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/GraphicsAPITextController.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4312228-05:00</timeStamp>
+    <typeFullName>
+      <string>GraphicsAPITextController</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>101b889bf01d5424fafb51950f80e88a</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/MapBlueToothKey.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4352247-05:00</timeStamp>
+    <typeFullName>
+      <string>MapBlueToothKey</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>fb0fad8e3b2754aaeb18724ea18d2a3e</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/ObjectController.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.438226-05:00</timeStamp>
+    <typeFullName>
+      <string>ObjectController</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>82aadc19cf149c34288a2cc589c963e4</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/UnityFloatEvent.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4405823-05:00</timeStamp>
+    <typeFullName>
+      <string>UnityFloatEvent</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>f478d43f27e324b7199d5dccff4298b7</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/VrModeController.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4437593-05:00</timeStamp>
+    <typeFullName>
+      <string>VrModeController</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>701ab2146163f7d48ba334bdf1d54790</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/XRCardboard/XRCardboardController.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4507645-05:00</timeStamp>
+    <typeFullName>
+      <string>XRCardboardController</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>3fbad1c580bb6cf4face9c289b0cb7e3</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/XRCardboard/XRCardboardInputModule.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4548098-05:00</timeStamp>
+    <typeFullName>
+      <string>XRCardboardInputModule</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>54d5a0573e1760842b39c9f418c64355</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/XRCardboard/XRCardboardInputSettings.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4562105-05:00</timeStamp>
+    <typeFullName>
+      <string>XRCardboardInputSettings</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>778ff5e5e084bb1439deadbced6a24fc</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/XRCardboard/XRCardboardReticle.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.4592307-05:00</timeStamp>
+    <typeFullName>
+      <string>XRCardboardReticle</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+  <TypeDate>
+    <guid>12d0e27d0932d466c93329375c1f5dc6</guid>
+    <fileName>Assets/Samples/Google Cardboard XR Plugin for Unity/1.19.0/Hello Cardboard/Scripts/XRCardboard/XRCardboardStartup.cs</fileName>
+    <timeStamp>2025-04-26T20:45:33.461679-05:00</timeStamp>
+    <typeFullName>
+      <string>XRCardboardStartup</string>
+    </typeFullName>
+    <assembly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assembly>
+  </TypeDate>
+</ArrayOfTypeDate>
