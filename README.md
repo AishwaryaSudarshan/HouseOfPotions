@@ -2,7 +2,7 @@
 
 **Unity Scene for Prototype**: "Project.unity"
 
-**Target Device**: Android Phone Deivice
+**Target Device**: Android Phone Device
 
 **Interaction Techniques:**
 
@@ -24,11 +24,11 @@
   
   - Open inventory menu with Joystick button "OK" on Android, use DropAll Ingredients if the Alchemy Pot is in view to drop all objects into it
 
-  - Once potion is complete (all necessary ingredients have been added) Shake phone screen side to side to to pour the potion into the bottles
+  - Once potion is complete (all necessary ingredients have been added) Shake phone screen side to side to pour the potion into the bottles
   
   - Store potions in inventory with Joystick button "B" on Android when raycast hovers over an interactable object
 
-  - Once entering a broken room, naviagate to inventory potions individually and select potions with Joystick button "B" on Android
+  - Once entering a broken room, navigate to inventory potions individually and select potions with Joystick button "B" on Android
   
   - To drop potion in a room, make a nod with head while potion is grabbed (fix Library, Dining Room, Garden)
 
