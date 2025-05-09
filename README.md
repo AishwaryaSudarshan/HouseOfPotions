@@ -51,4 +51,5 @@
 
 **Youtube Link**: 
 
-- Prelim Prototype: [https://youtu.be/Z2CZQeiSFkQ](https://youtu.be/Z2CZQeiSFkQ)
+- Prelim Prototype: [https://youtu.be/Z2CZQeiSFkQ](https://youtu.be/Z2CZQeiSFk)
+- Final Demo: [https://youtu.be/poLaI7piNKE](https://youtu.be/poLaI7piNKE)
